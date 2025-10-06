@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeft, Users, MessageSquare, TrendingUp } from "lucide-react";
+import { ArrowLeft, Users, MessageSquare, TrendingUp, Download } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import type { Feedback, Product } from "@shared/schema";
@@ -59,16 +59,32 @@ export default function Analytics() {
     .sort((a, b) => new Date(b.submittedAt || 0).getTime() - new Date(a.submittedAt || 0).getTime())
     .slice(0, 5) || [];
 
+  const exportFeedback = () => {
+    window.location.href = '/api/feedback/export';
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <Link href="/admin">
-            <Button variant="ghost" size="icon" data-testid="button-back">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          </Link>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Analytics Dashboard</h1>
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-4">
+            <Link href="/admin">
+              <Button variant="ghost" size="icon" data-testid="button-back">
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+            </Link>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Analytics Dashboard</h1>
+          </div>
+          <Button 
+            onClick={exportFeedback}
+            variant="outline"
+            className="gap-2"
+            disabled={!feedbackData || feedbackData.length === 0}
+            data-testid="button-export"
+          >
+            <Download className="h-4 w-4" />
+            Export CSV
+          </Button>
         </div>
 
         {/* Stats Overview */}

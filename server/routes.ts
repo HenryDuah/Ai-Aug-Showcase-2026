@@ -73,6 +73,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Export feedback as CSV (admin endpoint)
+  app.get("/api/feedback/export", async (req, res) => {
+    try {
+      const feedback = await storage.getAllFeedback();
+      const products = await storage.getAllProducts();
+      
+      // Helper function to escape CSV values
+      const escapeCSV = (value: string) => {
+        const escaped = value.replace(/"/g, '""');
+        return `"${escaped}"`;
+      };
+      
+      // Create CSV headers
+      const headers = [
+        'Submission Date',
+        'Visitor Name',
+        'Email',
+        'Company',
+        'Interesting Products',
+        'Comments'
+      ];
+      
+      // Create CSV rows
+      const rows = feedback.map(f => {
+        const productNames = f.interestingProducts
+          ?.map(id => {
+            const product = products.find(p => p.id === id);
+            return product ? product.name : `Unknown (${id})`;
+          })
+          .join('; ') || '';
+        
+        return [
+          escapeCSV(f.submittedAt || ''),
+          escapeCSV(f.visitorName || ''),
+          escapeCSV(f.visitorEmail || ''),
+          escapeCSV(f.visitorCompany || ''),
+          escapeCSV(productNames),
+          escapeCSV(f.comments || '')
+        ].join(',');
+      });
+      
+      const csv = [headers.join(','), ...rows].join('\n');
+      
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', `attachment; filename="feedback-export-${new Date().toISOString().split('T')[0]}.csv"`);
+      res.send(csv);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to export feedback" });
+    }
+  });
+
   // Update product display status (admin endpoint)
   app.patch("/api/products/:id/display", async (req, res) => {
     try {
