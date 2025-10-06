@@ -1,11 +1,17 @@
-import { type Product, type InsertProduct, type Feedback, type InsertFeedback } from "@shared/schema";
+import { type Product, type InsertProduct, type Feedback, type InsertFeedback, products, feedback } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { neon } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-http";
+import { eq } from "drizzle-orm";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+const sql = neon(process.env.DATABASE_URL!);
+const db = drizzle(sql);
 
 export interface IStorage {
   // Product methods
@@ -98,23 +104,18 @@ export class MemStorage implements IStorage {
   }
 
   async createFeedback(insertFeedback: InsertFeedback): Promise<Feedback> {
-    const id = randomUUID();
-    const feedback: Feedback = {
-      ...insertFeedback,
-      id,
+    const [newFeedback] = await db.insert(feedback).values({
       visitorName: insertFeedback.visitorName ?? null,
       visitorEmail: insertFeedback.visitorEmail ?? null,
       visitorCompany: insertFeedback.visitorCompany ?? null,
       interestingProducts: insertFeedback.interestingProducts ? [...insertFeedback.interestingProducts] : null,
       comments: insertFeedback.comments ?? null,
-      submittedAt: new Date().toISOString(),
-    };
-    this.feedbacks.set(id, feedback);
-    return feedback;
+    }).returning();
+    return newFeedback;
   }
 
   async getAllFeedback(): Promise<Feedback[]> {
-    return Array.from(this.feedbacks.values());
+    return await db.select().from(feedback);
   }
 }
 
