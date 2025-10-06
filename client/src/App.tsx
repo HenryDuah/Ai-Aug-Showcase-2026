@@ -9,6 +9,7 @@ import Section from "@/pages/section";
 import ProductDetail from "@/pages/product-detail";
 import Feedback from "@/pages/feedback";
 import Admin from "@/pages/admin";
+import Analytics from "@/pages/analytics";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/product/:productId" component={ProductDetail} />
       <Route path="/feedback" component={Feedback} />
       <Route path="/admin" component={Admin} />
+      <Route path="/analytics" component={Analytics} />
       <Route component={NotFound} />
     </Switch>
   );
