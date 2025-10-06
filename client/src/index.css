@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Architects+Daughter&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --card: hsl(180deg 6.67% 97.06%);
+  --ring: hsl(202.8169 89.1213% 53.1373%);
+  --input: hsl(200 23.0769% 97.4510%);
+  --muted: hsl(201.43deg 53.85% 94.9%);
+  --accent: hsl(201.43deg 53.85% 94.9%);
+  --border: hsl(201.4286 30.4348% 90.9804%);
+  --radius: 1.3rem;
+  --shadow: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --chart-1: hsl(183.67deg 61% 47.25%);
+  --chart-2: hsl(220.94deg 81.73% 59.22%);
+  --chart-3: hsl(279.34deg 53.51% 55.29%);
+  --chart-4: hsl(268.87deg 57.61% 36.08%);
+  --chart-5: hsl(239.26deg 43.32% 36.67%);
+  --popover: hsl(0 0% 100%);
+  --primary: hsl(279.34deg 53.51% 55.29%);
+  --sidebar: hsl(180 6.6667% 97.0588%);
+  --spacing: 0.25rem;
+  --font-mono: Architects Daughter;
+  --font-sans: Open Sans;
+  --secondary: hsl(239.26deg 43.32% 36.67%);
+  --shadow-lg: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 4px 6px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 2px 4px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --background: hsl(0deg 0% 100%);
+  --font-serif: Architects Daughter;
+  --foreground: hsl(243.24deg 44.58% 16.27%);
+  --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --destructive: hsl(356.3033 90.5579% 54.3137%);
+  --sidebar-ring: hsl(202.8169 89.1213% 53.1373%);
+  --sidebar-accent: hsl(211.5789 51.3514% 92.7451%);
+  --sidebar-border: hsl(205.0000 25.0000% 90.5882%);
+  --card-foreground: hsl(210 25% 7.8431%);
+  --sidebar-primary: hsl(203.8863 88.2845% 53.1373%);
+  --tracking-normal: 0em;
+  --muted-foreground: hsl(210 25% 7.8431%);
+  --accent-foreground: hsl(203.89deg 88.28% 53.14%);
+  --popover-foreground: hsl(210 25% 7.8431%);
+  --primary-foreground: hsl(260deg 23.08% 97.45%);
+  --sidebar-foreground: hsl(210 25% 7.8431%);
+  --secondary-foreground: hsl(0 0% 100%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --sidebar-accent-foreground: hsl(203.8863 88.2845% 53.1373%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .fade-in {
+    animation: fadeIn 0.4s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from { 
+      opacity: 0; 
+      transform: translateY(10px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+
+  .product-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .product-card:active {
+    transform: scale(0.98);
+  }
+
+  .floor-plan-section {
+    position: relative;
+    height: 8px;
+    background: var(--muted);
+    border-radius: 999px;
+    overflow: visible;
+  }
+
+  .floor-plan-section.active {
+    background: var(--primary);
+  }
+
+  .floor-plan-dot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: 3px solid var(--primary);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--muted);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.3s;
+  }
+
+  .checkbox-custom {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .checkbox-custom:checked {
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+
+  .checkbox-custom:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+  }
+}

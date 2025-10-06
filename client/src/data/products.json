@@ -1,0 +1,34 @@
+{
+  "sections": [
+    {
+      "id": 1,
+      "name": "Maternal",
+      "description": "Maternal health monitoring devices",
+      "color": "from-primary to-chart-3"
+    },
+    {
+      "id": 2,
+      "name": "Neonatal",
+      "description": "Newborn care technologies",
+      "color": "from-chart-2 to-chart-1"
+    },
+    {
+      "id": 3,
+      "name": "General Screening",
+      "description": "Diagnostic screening solutions",
+      "color": "from-chart-1 to-chart-2"
+    },
+    {
+      "id": 4,
+      "name": "Rapid Diagnostic Tests",
+      "description": "Fast testing technologies",
+      "color": "from-chart-4 to-chart-3"
+    },
+    {
+      "id": 5,
+      "name": "Software Solutions",
+      "description": "Digital health platforms",
+      "color": "from-secondary to-chart-4"
+    }
+  ]
+}

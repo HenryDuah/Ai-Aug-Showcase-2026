@@ -1,0 +1,131 @@
+{
+  "products": [
+    {
+      "id": "keyar-echo",
+      "name": "Keyar Echo",
+      "company": "Janitri",
+      "type": "Smart handheld fetal doppler",
+      "description": "A compact, AI-powered fetal doppler designed to measure fetal heart rate with accuracy and ease of use in maternal health settings.",
+      "image": "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      "features": [
+        "AI-powered heart rate detection",
+        "Clear audio output",
+        "Portable and lightweight design",
+        "Easy-to-use interface"
+      ],
+      "sectionId": 1,
+      "sectionName": "Maternal",
+      "onDisplay": true
+    },
+    {
+      "id": "maternawatch-pro",
+      "name": "MaternaWatch Pro",
+      "company": "HealthTech Solutions",
+      "type": "Maternal monitoring system",
+      "description": "Advanced maternal vital signs monitoring system with real-time data tracking, early warning alerts, and seamless integration with hospital management systems.",
+      "image": "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "audioUrl": null,
+      "features": [
+        "Real-time vital signs monitoring",
+        "Early warning system",
+        "Hospital system integration",
+        "Comprehensive data tracking"
+      ],
+      "sectionId": 1,
+      "sectionName": "Maternal",
+      "onDisplay": true
+    },
+    {
+      "id": "ultraview-mobile",
+      "name": "UltraView Mobile",
+      "company": "MediScan Inc",
+      "type": "Portable ultrasound device",
+      "description": "Portable ultrasound solution offering high-resolution imaging for prenatal examinations. Lightweight, battery-powered design enables use in remote locations.",
+      "image": "https://images.unsplash.com/photo-1579154341594-0c6ab0d8f2e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+      "features": [
+        "High-resolution imaging",
+        "Battery-powered operation",
+        "Lightweight and portable",
+        "Remote location capable"
+      ],
+      "sectionId": 1,
+      "sectionName": "Maternal",
+      "onDisplay": true
+    },
+    {
+      "id": "neosafe-incubator",
+      "name": "NeoSafe Incubator",
+      "company": "BabyCare Systems",
+      "type": "Neonatal incubator system",
+      "description": "State-of-the-art neonatal incubator with precise temperature and humidity control, integrated monitoring systems, and advanced infection prevention features.",
+      "image": "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "audioUrl": null,
+      "features": [
+        "Precise temperature control",
+        "Humidity regulation",
+        "Integrated monitoring",
+        "Infection prevention"
+      ],
+      "sectionId": 2,
+      "sectionName": "Neonatal",
+      "onDisplay": true
+    },
+    {
+      "id": "screenpro-analyzer",
+      "name": "ScreenPro Analyzer",
+      "company": "DiagnoTech Labs",
+      "type": "Diagnostic analyzer system",
+      "description": "Multi-parameter diagnostic analyzer capable of performing comprehensive health screenings with rapid results and AI-assisted result interpretation.",
+      "image": "https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "audioUrl": null,
+      "features": [
+        "Multi-parameter analysis",
+        "Rapid result delivery",
+        "AI-assisted interpretation",
+        "Automated sample processing"
+      ],
+      "sectionId": 3,
+      "sectionName": "General Screening",
+      "onDisplay": true
+    },
+    {
+      "id": "quicktest-pro",
+      "name": "QuickTest Pro",
+      "company": "RapidDx Solutions",
+      "type": "Rapid test platform",
+      "description": "Comprehensive rapid diagnostic test platform delivering accurate results in minutes with minimal sample requirements.",
+      "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "audioUrl": null,
+      "features": [
+        "Results in minutes",
+        "Minimal sample requirements",
+        "Multiple test types",
+        "High accuracy"
+      ],
+      "sectionId": 4,
+      "sectionName": "Rapid Diagnostic Tests",
+      "onDisplay": true
+    },
+    {
+      "id": "healthhub-platform",
+      "name": "HealthHub Platform",
+      "company": "MediSoft Technologies",
+      "type": "Healthcare management software",
+      "description": "Comprehensive healthcare management platform integrating patient records, diagnostic results, and treatment planning with AI-powered analytics.",
+      "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "audioUrl": null,
+      "features": [
+        "Patient record integration",
+        "Diagnostic result management",
+        "Treatment planning",
+        "AI-powered analytics",
+        "Telemedicine capabilities"
+      ],
+      "sectionId": 5,
+      "sectionName": "Software Solutions",
+      "onDisplay": true
+    }
+  ]
+}
