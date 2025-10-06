@@ -2,7 +2,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import { ArrowLeft, Settings, BarChart } from "lucide-react";
+import { ArrowLeft, Settings, BarChart, QrCode } from "lucide-react";
 import { useLocation, Link } from "wouter";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -67,17 +67,25 @@ export default function Admin() {
 
         <div className="px-6 py-6">
           <Card className="mb-6">
-            <CardContent className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <p className="text-foreground/80">
+            <CardContent className="pt-6">
+              <p className="text-foreground/80 mb-4">
                 Toggle products on/off to control which devices are displayed in each section. 
                 Changes are saved automatically and persist to the products JSON file.
               </p>
-              <Link href="/analytics">
-                <Button variant="outline" className="gap-2" data-testid="button-analytics">
-                  <BarChart className="w-4 h-4" />
-                  View Analytics
-                </Button>
-              </Link>
+              <div className="flex flex-wrap gap-3">
+                <Link href="/analytics">
+                  <Button variant="outline" className="gap-2" data-testid="button-analytics">
+                    <BarChart className="w-4 h-4" />
+                    View Analytics
+                  </Button>
+                </Link>
+                <Link href="/qr-codes">
+                  <Button variant="outline" className="gap-2" data-testid="button-qr-codes">
+                    <QrCode className="w-4 h-4" />
+                    QR Codes
+                  </Button>
+                </Link>
+              </div>
             </CardContent>
           </Card>
 

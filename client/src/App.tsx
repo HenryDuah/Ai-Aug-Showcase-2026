@@ -10,6 +10,7 @@ import ProductDetail from "@/pages/product-detail";
 import Feedback from "@/pages/feedback";
 import Admin from "@/pages/admin";
 import Analytics from "@/pages/analytics";
+import QRCodes from "@/pages/qr-codes";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/feedback" component={Feedback} />
       <Route path="/admin" component={Admin} />
       <Route path="/analytics" component={Analytics} />
+      <Route path="/qr-codes" component={QRCodes} />
       <Route component={NotFound} />
     </Switch>
   );
