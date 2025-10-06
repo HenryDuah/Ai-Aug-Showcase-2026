@@ -1,0 +1,117 @@
+Build a mobile-first, tablet-friendly web app called "AI Lab Guided Tour" for Sand that provides an interactive self-guided experience of medical innovations displayed in a physical lab. Visitors access the app by scanning a QR code, which should open seamlessly in the browser without requiring sign-in or installation.
+
+Core Experience Flow
+The user journey should have 7 key screens that progress in order but allow navigation back and forth:
+Welcome Screen
+
+
+Displays Sand logo and “Welcome to the AI Lab Guided Tour” message.
+
+
+
+Overview
+
+
+Brief introduction about the lab and purpose of the tour.
+
+
+A simple floor plan or section layout graphic (like a horizontal line of 5 sections).
+
+
+Button: “Go to Section 1”.
+
+
+Sections 1–5 – Product Tour
+
+
+Each section corresponds to a physical area of the lab 
+Section 1- Maternal 
+Section 2- Neonatal 
+Section 3- General Screening 
+Section 4- Rapid Diagnostic Tests
+Section 5- Software Solutions
+
+Each section has up to 3 featured products displayed as cards with:
+
+
+Product name
+
+
+Company name
+
+
+Product image (high-resolution, tappable for full-screen view)
+
+
+Short description (about 50–100 words)
+
+
+Play Audio Guide
+
+
+Each product detail view should show:
+
+
+Product name
+
+
+Company name (as text only, no company page needed)
+
+
+Product type (e.g., Smart handheld fetal doppler)
+
+
+Description
+
+
+Optional audio clip (for voice explanation)
+
+
+Navigation buttons: “Next Section” / “Previous Section”.
+
+
+
+Feedback Section
+
+
+Simple feedback form (no login required):
+
+
+Optional Name, Email, your company,
+
+
+“Which products did you find most interesting?” (dropdown list of products with multiple selectin)
+
+
+“Any comments or suggestions?” (text box)
+
+
+Submit button confirms with: “Thank you for your feedback!”
+
+
+
+Content Management (Admin Simplicity)
+Admin should be able to easily sign add, remove, or edit products by updating this file in Replit without touching code.
+
+Admin should have the option to show which devices will be on display each day since we have more  devices per section hut would like to show a fee at a point
+
+
+
+Initial Content to Include
+Add a sample product page for demonstration:
+Section: Maternal
+Product: Keyar Echo
+
+
+Company: Janitri
+
+
+Type: Smart handheld fetal doppler
+
+
+Description: A compact, AI-powered fetal doppler designed to measure fetal heart rate with accuracy and ease of use in maternal health settings.
+
+
+Media: a short audio narration.
+
+
