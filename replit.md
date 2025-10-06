@@ -31,10 +31,13 @@ Preferred communication style: Simple, everyday language.
 
 **Routing Structure**
 - `/` - Welcome screen with lab introduction
-- `/overview` - Lab overview with section navigation
+- `/overview` - Lab overview with section navigation and product search
 - `/section/:sectionId` - Individual section views (1-5) displaying products
 - `/product/:productId` - Detailed product view with full description and audio
-- `/feedback` - Visitor feedback form
+- `/feedback` - Visitor feedback form with validation
+- `/admin` - Admin panel for managing product display settings
+- `/analytics` - Analytics dashboard with feedback statistics
+- `/qr-codes` - QR code generator for section direct access
 
 ### Backend Architecture
 
@@ -48,13 +51,16 @@ Preferred communication style: Simple, everyday language.
 - `GET /api/products` - Retrieve all products
 - `GET /api/products/section/:sectionId` - Get products filtered by section
 - `GET /api/products/:id` - Get single product details
+- `PATCH /api/products/:id/display` - Update product display status (admin)
 - `POST /api/feedback` - Submit visitor feedback
+- `GET /api/feedback` - Retrieve all feedback submissions (admin)
+- `GET /api/feedback/export` - Export feedback as CSV file (admin)
 
 **Data Access Layer**
 - Storage abstraction with `IStorage` interface for flexibility
-- Current implementation uses in-memory storage (`MemStorage` class)
-- Designed for easy migration to database-backed storage
-- Sample product data initialized on server start
+- Feedback data persists to PostgreSQL database via Drizzle ORM
+- Product data loaded from JSON file (`server/data/products.json`) on startup
+- Products cached in-memory with write-through to JSON file for admin updates
 
 **Data Validation**
 - Zod schemas for runtime type validation
@@ -92,6 +98,12 @@ Preferred communication style: Simple, everyday language.
 
 ### Application Features
 
+**Product Search & Filtering**
+- Real-time search across all products from overview page
+- Searches by name, company, type, and description
+- Graceful error handling with retry functionality
+- Loading states and disabled controls during data fetch
+
 **Audio Playback**
 - Custom audio player component with play/pause controls
 - Progress tracking and duration display
@@ -104,13 +116,31 @@ Preferred communication style: Simple, everyday language.
 
 **Section Navigation**
 - Linear flow with previous/next navigation
-- Direct section access from overview page
+- Direct section access from overview page or QR codes
 - Visual section identification with gradient color coding
 
-**Form Handling**
+**Feedback Collection**
 - React Hook Form with Zod resolver for validation
 - Multi-select product interest tracking
 - Success feedback with toast notifications
+- Data persists to PostgreSQL database
+
+**Admin Panel**
+- Toggle product visibility by section
+- Changes persist to products JSON file
+- Real-time updates across the application
+
+**Analytics Dashboard**
+- Total submissions and visitor statistics
+- Most interesting products ranking
+- Recent feedback display with visitor details
+- CSV export functionality with proper escaping
+
+**QR Code Generation**
+- Generate QR codes for all 5 sections
+- Individual and bulk download options
+- Direct section access via QR scan
+- Usage instructions for physical lab setup
 
 ## External Dependencies
 
@@ -148,3 +178,8 @@ Preferred communication style: Simple, everyday language.
 - TanStack Query for async state management
 - Built-in caching and background refetching
 - Optimistic updates support
+
+**QR Code Generation**
+- qrcode library for generating QR codes
+- Generates data URLs for section direct links
+- Download functionality for printing
