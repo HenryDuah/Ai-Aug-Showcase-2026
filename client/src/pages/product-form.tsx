@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useLocation } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -10,11 +10,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Upload, X } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Product, InsertProduct } from "@shared/schema";
+import type { UploadResult } from "@uppy/core";
 import sectionsData from "@/data/products.json";
+import { ObjectUploader } from "@/components/ObjectUploader";
 
 const productFormSchema = z.object({
   name: z.string().min(1, "Product name is required"),
@@ -22,7 +24,6 @@ const productFormSchema = z.object({
   type: z.string().min(1, "Product type is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().url("Must be a valid URL"),
-  audioUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
   sectionId: z.number().min(1).max(5),
   sectionName: z.string().min(1, "Section name is required"),
   features: z.string(),
@@ -36,6 +37,7 @@ export default function ProductForm() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const isEditMode = productId !== "new";
+  const [uploadedAudioUrl, setUploadedAudioUrl] = useState<string>("");
 
   const { data: product, isLoading } = useQuery<Product>({
     queryKey: ["/api/products", productId],
@@ -50,7 +52,6 @@ export default function ProductForm() {
       type: "",
       description: "",
       image: "",
-      audioUrl: "",
       sectionId: 1,
       sectionName: "",
       features: "",
@@ -66,12 +67,12 @@ export default function ProductForm() {
         type: product.type,
         description: product.description,
         image: product.image,
-        audioUrl: product.audioUrl || "",
         sectionId: product.sectionId,
         sectionName: product.sectionName,
         features: product.features?.join("\n") || "",
         onDisplay: product.onDisplay ?? true,
       });
+      setUploadedAudioUrl(product.audioUrl || "");
     }
   }, [product, form]);
 
@@ -122,7 +123,7 @@ export default function ProductForm() {
   const onSubmit = (data: ProductFormData) => {
     const productData = {
       ...data,
-      audioUrl: data.audioUrl || undefined,
+      audioUrl: uploadedAudioUrl || undefined,
       features: data.features.split("\n").filter(f => f.trim()),
     };
 
@@ -131,6 +132,40 @@ export default function ProductForm() {
     } else {
       createMutation.mutate(productData as InsertProduct);
     }
+  };
+
+  const handleGetUploadParameters = async () => {
+    const response = await apiRequest("POST", "/api/objects/upload");
+    const data = await response.json();
+    return {
+      method: "PUT" as const,
+      url: data.uploadURL,
+    };
+  };
+
+  const handleUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+    if (result.successful && result.successful.length > 0) {
+      const uploadURL = result.successful[0].uploadURL;
+      if (uploadURL) {
+        const objectPath = uploadURL.split("?")[0];
+        const pathParts = objectPath.split("/");
+        const objectId = pathParts[pathParts.length - 1];
+        const audioPath = `/objects/uploads/${objectId}`;
+        setUploadedAudioUrl(audioPath);
+        toast({
+          title: "Success",
+          description: "Audio file uploaded successfully.",
+        });
+      }
+    }
+  };
+
+  const handleRemoveAudio = () => {
+    setUploadedAudioUrl("");
+    toast({
+      title: "Removed",
+      description: "Audio file removed.",
+    });
   };
 
   const handleSectionChange = (sectionId: string) => {
@@ -272,19 +307,38 @@ export default function ProductForm() {
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="audioUrl"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Audio URL (Optional)</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="https://example.com/audio.mp3" data-testid="input-audio" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Audio Guide (Optional)</label>
+                  <div className="flex flex-col gap-2">
+                    {uploadedAudioUrl ? (
+                      <div className="flex items-center gap-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                        <audio controls src={uploadedAudioUrl} className="flex-1 h-10" data-testid="audio-preview" />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={handleRemoveAudio}
+                          data-testid="button-remove-audio"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <ObjectUploader
+                        maxNumberOfFiles={1}
+                        maxFileSize={10485760}
+                        allowedFileTypes={[".mp3", ".wav", ".ogg", ".m4a", "audio/*"]}
+                        onGetUploadParameters={handleGetUploadParameters}
+                        onComplete={handleUploadComplete}
+                      >
+                        <div className="flex items-center gap-2" data-testid="button-upload-audio">
+                          <Upload className="w-4 h-4" />
+                          <span>Upload Audio File</span>
+                        </div>
+                      </ObjectUploader>
+                    )}
+                  </div>
+                </div>
 
                 <FormField
                   control={form.control}
@@ -315,7 +369,7 @@ export default function ProductForm() {
                       ? "Saving..."
                       : isEditMode
                       ? "Update Product"
-                      : "Create Product"}
+                      : "Save"}
                   </Button>
                   <Button
                     type="button"

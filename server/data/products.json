@@ -2,12 +2,12 @@
   "products": [
     {
       "id": "keyar-echo",
-      "name": "Keyar Echo",
+      "name": "Keyar DT Lite®",
       "company": "Janitri",
-      "type": "Smart handheld fetal doppler",
-      "description": "A compact, AI-powered fetal doppler designed to measure fetal heart rate with accuracy and ease of use in maternal health settings.",
-      "image": "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
-      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      "type": "Portable Non-Stress Test Fetal Doppler",
+      "description": "The Keyar DT Lite connects wirelessly to a mobile app, enabling recording of fetal heartbeats, conducting Non Stress Tests (NST), and sharing real-time reports with doctors and specialists.",
+      "image": "https://mothers.janitri.in/cdn/shop/files/DTLitecopy.jpg?v=1737543227",
+      "audioUrl": "https://music.youtube.com/podcast/UTrNESXlOFg",
       "features": [
         "AI-powered heart rate detection",
         "Clear audio output",
@@ -20,17 +20,18 @@
     },
     {
       "id": "maternawatch-pro",
-      "name": "MaternaWatch Pro",
-      "company": "HealthTech Solutions",
-      "type": "Maternal monitoring system",
-      "description": "Advanced maternal vital signs monitoring system with real-time data tracking, early warning alerts, and seamless integration with hospital management systems.",
-      "image": "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "name": "JPD-100E",
+      "company": "Jumper",
+      "type": "Smart Handheld Fetal Doppler",
+      "description": "The device uses a 2.5 MHz ultrasound transducer to detect fetal heartbeats. Results are shown in real time on its LCD screen, with heartbeat values, waveforms and audio output.",
+      "image": "https://jumpermmed.com/wp-content/uploads/2022/10/100E-1.png",
       "audioUrl": null,
       "features": [
-        "Real-time vital signs monitoring",
-        "Early warning system",
-        "Hospital system integration",
-        "Comprehensive data tracking"
+        "Detects fetal heartbeat clearly from the 16th week of pregnancy.",
+        "High sensitivity ensures accurate readings",
+        "Safe, non-invasive monitoring ",
+        "Adjustable sound volume ",
+        "Lightweight and portable for home or clinical use."
       ],
       "sectionId": 1,
       "sectionName": "Maternal",
@@ -38,17 +39,16 @@
     },
     {
       "id": "ultraview-mobile",
-      "name": "UltraView Mobile",
-      "company": "MediScan Inc",
-      "type": "Portable ultrasound device",
-      "description": "Portable ultrasound solution offering high-resolution imaging for prenatal examinations. Lightweight, battery-powered design enables use in remote locations.",
-      "image": "https://images.unsplash.com/photo-1579154341594-0c6ab0d8f2e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "name": "MOMI®",
+      "company": "Janitri",
+      "type": "Smart Ring for Mothers",
+      "description": "Titanium ring that continuously monitors vital signs.",
+      "image": "https://m.media-amazon.com/images/I/51+WlEOl16L._UF1000,1000_QL80_.jpg",
       "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
       "features": [
-        "High-resolution imaging",
-        "Battery-powered operation",
-        "Lightweight and portable",
-        "Remote location capable"
+        "Dedicated modes for pregnancy, postpartum and daily health.",
+        "Tracks sleep quality, stress levels, nutrition, and activity.",
+        "Battery life of 7+ days with water resistance up to 50m."
       ],
       "sectionId": 1,
       "sectionName": "Maternal",
@@ -56,17 +56,17 @@
     },
     {
       "id": "neosafe-incubator",
-      "name": "NeoSafe Incubator",
-      "company": "BabyCare Systems",
-      "type": "Neonatal incubator system",
-      "description": "State-of-the-art neonatal incubator with precise temperature and humidity control, integrated monitoring systems, and advanced infection prevention features.",
-      "image": "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "name": "Bempu TempWatch® ",
+      "company": "Bempu",
+      "type": "Neonatal Hypothermia Monitor",
+      "description": "A simple wristband tracks a newborn’s temperature:\nBlinks blue if adequately warm\nBlinks red and plays alert sounds if cold\n",
+      "image": "https://images.squarespace-cdn.com/content/v1/5ff31b0e15120a7c1d22ace6/1612938477426-G9CNRZWBZ9IDC6DZFRSX/G4_1500px.jpg",
       "audioUrl": null,
       "features": [
-        "Precise temperature control",
-        "Humidity regulation",
-        "Integrated monitoring",
-        "Infection prevention"
+        "Easy to use, in home or clinics",
+        "Validated use for 60,000 babies in 14 countries",
+        "Available in both single-use and cost-saving multi-use options.",
+        "Use 30 day without charge"
       ],
       "sectionId": 2,
       "sectionName": "Neonatal",

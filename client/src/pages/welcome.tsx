@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Smartphone, FlaskConical, Settings } from "lucide-react";
+import { ArrowRight, Activity, Settings } from "lucide-react";
 
 export default function Welcome() {
   const [, setLocation] = useLocation();
@@ -10,7 +10,7 @@ export default function Welcome() {
       <div className="fade-in flex flex-col items-center">
         {/* Sand Logo Placeholder */}
         <div className="mb-8 w-32 h-32 bg-primary/10 rounded-3xl flex items-center justify-center" data-testid="sand-logo">
-          <FlaskConical className="text-6xl text-primary" size={64} />
+          <Activity className="text-6xl text-primary" size={64} />
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary font-serif" data-testid="title-welcome">
@@ -32,11 +32,6 @@ export default function Welcome() {
           Begin Tour
           <ArrowRight className="w-5 h-5" />
         </Button>
-
-        <div className="mt-12 text-sm text-muted-foreground flex items-center gap-2" data-testid="mobile-hint">
-          <Smartphone className="w-4 h-4" />
-          Tap anywhere to start exploring
-        </div>
 
         <Button
           variant="ghost"
