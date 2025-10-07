@@ -30,13 +30,15 @@ Preferred communication style: Simple, everyday language.
 - No global client state library needed due to React Query's caching
 
 **Routing Structure**
-- `/` - Welcome screen with lab introduction
+- `/` - Welcome screen with lab introduction and health icon
 - `/overview` - Lab overview with section navigation and product search
 - `/section/:sectionId` - Individual section views (1-5) displaying products
 - `/product/:productId` - Detailed product view with full description and audio
 - `/feedback` - Visitor feedback form with validation
-- `/admin` - Admin panel for managing product display settings
-- `/analytics` - Analytics dashboard with feedback statistics
+- `/admin` - Admin panel for product management (requires authentication)
+- `/admin/product/new` - Create new product with file upload (admin)
+- `/admin/product/:id` - Edit existing product (admin)
+- `/analytics` - Analytics dashboard with feedback statistics (admin)
 - `/qr-codes` - QR code generator for section direct access
 
 ### Backend Architecture
@@ -51,10 +53,15 @@ Preferred communication style: Simple, everyday language.
 - `GET /api/products` - Retrieve all products
 - `GET /api/products/section/:sectionId` - Get products filtered by section
 - `GET /api/products/:id` - Get single product details
-- `PATCH /api/products/:id/display` - Update product display status (admin)
+- `POST /api/products` - Create new product (admin, requires authentication)
+- `PATCH /api/products/:id` - Update product (admin, requires authentication)
+- `DELETE /api/products/:id` - Delete product (admin, requires authentication)
+- `PATCH /api/products/:id/display` - Update product display status (admin, requires authentication)
 - `POST /api/feedback` - Submit visitor feedback
-- `GET /api/feedback` - Retrieve all feedback submissions (admin)
-- `GET /api/feedback/export` - Export feedback as CSV file (admin)
+- `GET /api/feedback` - Retrieve all feedback submissions (admin, requires authentication)
+- `GET /api/feedback/export` - Export feedback as CSV file (admin, requires authentication)
+- `POST /api/objects/upload` - Get upload URL for audio files (admin, requires authentication)
+- `GET /objects/:objectPath(*)` - Serve uploaded audio files (public endpoint)
 
 **Data Access Layer**
 - Storage abstraction with `IStorage` interface for flexibility
@@ -104,10 +111,15 @@ Preferred communication style: Simple, everyday language.
 - Graceful error handling with retry functionality
 - Loading states and disabled controls during data fetch
 
-**Audio Playback**
+**Audio File Upload & Playback**
+- Direct audio file upload using Replit Object Storage
+- Uppy-based file uploader with size and type restrictions (max 10MB, audio formats)
+- Audio files stored in private object storage directory
+- Served publicly via `/objects/` endpoint
 - Custom audio player component with play/pause controls
 - Progress tracking and duration display
 - Automatic cleanup on component unmount
+- Optional audio guides for products
 
 **Image Viewing**
 - Full-screen image overlay modal
@@ -125,10 +137,20 @@ Preferred communication style: Simple, everyday language.
 - Success feedback with toast notifications
 - Data persists to PostgreSQL database
 
+**Authentication System**
+- Passport.js with local strategy for admin authentication
+- Express-session with PostgreSQL store for persistent sessions
+- Secure session management with httpOnly cookies
+- Admin user seeding on startup
+- Protected admin routes with requireAuth middleware
+
 **Admin Panel**
+- Full product CRUD operations (create, read, update, delete)
 - Toggle product visibility by section
+- Direct audio file upload for products
 - Changes persist to products JSON file
 - Real-time updates across the application
+- Button text shows "Save" for new products, "Update Product" for edits
 
 **Analytics Dashboard**
 - Total submissions and visitor statistics
@@ -148,6 +170,12 @@ Preferred communication style: Simple, everyday language.
 - Neon serverless PostgreSQL via `@neondatabase/serverless`
 - Connection via `DATABASE_URL` environment variable
 - Drizzle ORM for database interactions
+
+**Object Storage**
+- Replit Object Storage backed by Google Cloud Storage
+- `@google-cloud/storage` for object storage client
+- Environment variables: `PRIVATE_OBJECT_DIR`, `PUBLIC_OBJECT_SEARCH_PATHS`
+- Used for storing uploaded audio files
 
 **UI Libraries**
 - Radix UI primitives for 30+ accessible components (dialogs, dropdowns, tabs, etc.)
@@ -173,6 +201,12 @@ Preferred communication style: Simple, everyday language.
 - React Hook Form for form state management
 - Zod for schema validation
 - Hookform resolvers for integration
+
+**File Upload**
+- Uppy (@uppy/core, @uppy/react, @uppy/aws-s3, @uppy/dashboard)
+- Client-side file upload with progress tracking
+- Direct-to-storage uploads using presigned URLs
+- File type and size validation
 
 **Data Fetching**
 - TanStack Query for async state management
