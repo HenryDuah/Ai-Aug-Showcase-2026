@@ -1,6 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { execSync } from "child_process";
 
 const app = express();
 
@@ -47,6 +48,10 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Seed admin user on startup
+  const { seedAdmin } = await import("./seed-admin");
+  await seedAdmin();
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

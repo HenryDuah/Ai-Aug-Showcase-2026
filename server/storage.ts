@@ -1,4 +1,4 @@
-import { type Product, type InsertProduct, type Feedback, type InsertFeedback, products, feedback } from "@shared/schema";
+import { type Product, type InsertProduct, type Feedback, type InsertFeedback, type User, type InsertUser, products, feedback, users } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
@@ -6,12 +6,16 @@ import { fileURLToPath } from "url";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { eq } from "drizzle-orm";
+import session from "express-session";
+import createMemoryStore from "memorystore";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const sql = neon(process.env.DATABASE_URL!);
 const db = drizzle(sql);
+
+const MemoryStore = createMemoryStore(session);
 
 export interface IStorage {
   // Product methods
@@ -25,6 +29,14 @@ export interface IStorage {
   // Feedback methods
   createFeedback(feedback: InsertFeedback): Promise<Feedback>;
   getAllFeedback(): Promise<Feedback[]>;
+
+  // User methods
+  getUserByUsername(username: string): Promise<User | undefined>;
+  getUser(id: number): Promise<User | undefined>;
+  createUser(user: InsertUser): Promise<User>;
+
+  // Session store
+  sessionStore: any;
 }
 
 const PRODUCTS_FILE = join(__dirname, "data", "products.json");
@@ -32,10 +44,14 @@ const PRODUCTS_FILE = join(__dirname, "data", "products.json");
 export class MemStorage implements IStorage {
   private products: Map<string, Product>;
   private feedbacks: Map<string, Feedback>;
+  public sessionStore: any;
 
   constructor() {
     this.products = new Map();
     this.feedbacks = new Map();
+    this.sessionStore = new MemoryStore({
+      checkPeriod: 86400000,
+    });
     this.loadProducts();
   }
 
@@ -76,15 +92,16 @@ export class MemStorage implements IStorage {
   }
 
   async createProduct(insertProduct: InsertProduct): Promise<Product> {
-    const id = insertProduct.id || randomUUID();
+    const id = randomUUID();
     const product: Product = { 
       ...insertProduct, 
       id,
       audioUrl: insertProduct.audioUrl ?? null,
       features: insertProduct.features ? [...insertProduct.features] : null,
-      onDisplay: insertProduct.onDisplay ?? null,
+      onDisplay: insertProduct.onDisplay ?? true,
     };
     this.products.set(id, product);
+    this.saveProducts();
     return product;
   }
 
@@ -100,7 +117,11 @@ export class MemStorage implements IStorage {
   }
 
   async deleteProduct(id: string): Promise<boolean> {
-    return this.products.delete(id);
+    const deleted = this.products.delete(id);
+    if (deleted) {
+      this.saveProducts();
+    }
+    return deleted;
   }
 
   async createFeedback(insertFeedback: InsertFeedback): Promise<Feedback> {
@@ -116,6 +137,21 @@ export class MemStorage implements IStorage {
 
   async getAllFeedback(): Promise<Feedback[]> {
     return await db.select().from(feedback);
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user;
+  }
+
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db.insert(users).values(insertUser).returning();
+    return user;
   }
 }
 

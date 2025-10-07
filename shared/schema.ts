@@ -1,7 +1,14 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, json, boolean, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, json, boolean, integer, serial } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+
+// User schema for authentication
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  username: text("username").notNull().unique(),
+  password: text("password").notNull(),
+});
 
 // Product schema
 export const products = pgTable("products", {
@@ -30,7 +37,8 @@ export const feedback = pgTable("feedback", {
 });
 
 // Insert schemas
-export const insertProductSchema = createInsertSchema(products);
+export const insertUserSchema = createInsertSchema(users);
+export const insertProductSchema = createInsertSchema(products).omit({ id: true });
 export const insertFeedbackSchema = createInsertSchema(feedback).pick({
   visitorName: true,
   visitorEmail: true,
@@ -40,6 +48,8 @@ export const insertFeedbackSchema = createInsertSchema(feedback).pick({
 });
 
 // Types
+export type User = typeof users.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;
 export type Product = typeof products.$inferSelect;
 export type InsertProduct = z.infer<typeof insertProductSchema>;
 export type Feedback = typeof feedback.$inferSelect;

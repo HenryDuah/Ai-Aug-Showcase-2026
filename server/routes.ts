@@ -1,10 +1,13 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertFeedbackSchema } from "@shared/schema";
+import { insertFeedbackSchema, insertProductSchema, type Product } from "@shared/schema";
 import { z } from "zod";
+import { setupAuth, requireAuth } from "./auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Setup authentication - must be before other routes
+  setupAuth(app);
   // Get all products
   app.get("/api/products", async (req, res) => {
     try {
@@ -64,7 +67,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get all feedback (admin endpoint)
-  app.get("/api/feedback", async (req, res) => {
+  app.get("/api/feedback", requireAuth, async (req, res) => {
     try {
       const feedback = await storage.getAllFeedback();
       res.json(feedback);
@@ -74,7 +77,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Export feedback as CSV (admin endpoint)
-  app.get("/api/feedback/export", async (req, res) => {
+  app.get("/api/feedback/export", requireAuth, async (req, res) => {
     try {
       const feedback = await storage.getAllFeedback();
       const products = await storage.getAllProducts();
@@ -124,8 +127,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Create product (admin endpoint)
+  app.post("/api/products", requireAuth, async (req, res) => {
+    try {
+      const validatedData = insertProductSchema.parse(req.body);
+      const product = await storage.createProduct(validatedData);
+      res.status(201).json(product);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid product data", 
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Failed to create product" });
+    }
+  });
+
+  // Update product (admin endpoint)
+  app.patch("/api/products/:id", requireAuth, async (req, res) => {
+    try {
+      // Validate update data using partial schema
+      const updateSchema = insertProductSchema.partial();
+      const validatedData = updateSchema.parse(req.body);
+
+      if (Object.keys(validatedData).length === 0) {
+        return res.status(400).json({ message: "No valid fields to update" });
+      }
+
+      const product = await storage.updateProduct(req.params.id, validatedData);
+      res.json(product);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid product data", 
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Failed to update product" });
+    }
+  });
+
+  // Delete product (admin endpoint)
+  app.delete("/api/products/:id", requireAuth, async (req, res) => {
+    try {
+      const deleted = await storage.deleteProduct(req.params.id);
+      if (!deleted) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      res.json({ message: "Product deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete product" });
+    }
+  });
+
   // Update product display status (admin endpoint)
-  app.patch("/api/products/:id/display", async (req, res) => {
+  app.patch("/api/products/:id/display", requireAuth, async (req, res) => {
     try {
       const { onDisplay } = req.body;
       if (typeof onDisplay !== 'boolean') {
