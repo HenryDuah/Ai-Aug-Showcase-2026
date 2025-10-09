@@ -189,10 +189,11 @@ export default function Overview() {
                 {sectionsData.sections.map((section, index) => (
                   <div 
                     key={section.id}
-                    className={`flex items-center gap-4 p-4 rounded-lg border-l-4 ${
+                    onClick={() => setLocation(`/section/${section.id}`)}
+                    className={`flex items-center gap-4 p-4 rounded-lg border-l-4 cursor-pointer transition-all hover:shadow-md ${
                       index === 0 
-                        ? 'bg-primary/5 border-primary' 
-                        : 'bg-muted border-muted'
+                        ? 'bg-primary/5 border-primary hover:bg-primary/10' 
+                        : 'bg-muted border-muted hover:bg-muted/80'
                     }`}
                     data-testid={`section-card-${section.id}`}
                   >

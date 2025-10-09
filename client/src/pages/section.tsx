@@ -33,11 +33,7 @@ export default function Section() {
   }
 
   const handlePrevious = () => {
-    if (sectionId === 1) {
-      setLocation("/overview");
-    } else {
-      setLocation(`/section/${sectionId - 1}`);
-    }
+    setLocation("/overview");
   };
 
   const handleNext = () => {
@@ -69,7 +65,7 @@ export default function Section() {
             data-testid={`button-back-section-${sectionId}`}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            {sectionId === 1 ? "Back to Overview" : "Previous Section"}
+            Back to Overview
           </Button>
           
           <div className="flex items-center gap-3 mb-2">
@@ -145,8 +141,8 @@ export default function Section() {
               className="flex-1"
               data-testid={`button-previous-${sectionId}`}
             >
-              {sectionId === 1 ? <List className="w-4 h-4 mr-2" /> : <ArrowLeft className="w-4 h-4 mr-2" />}
-              {sectionId === 1 ? "Overview" : "Previous"}
+              <List className="w-4 h-4 mr-2" />
+              Overview
             </Button>
             <Button 
               onClick={handleNext}

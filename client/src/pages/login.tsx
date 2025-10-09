@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Lock, User } from "lucide-react";
+import { Lock, User, ArrowLeft } from "lucide-react";
 
 const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -112,6 +112,16 @@ export default function Login() {
                   data-testid="button-login"
                 >
                   {loginMutation.isPending ? "Logging in..." : "Login"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => setLocation("/")}
+                  data-testid="button-back-to-tour"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Tour
                 </Button>
               </form>
             </Form>

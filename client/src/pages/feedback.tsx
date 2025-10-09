@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -8,17 +8,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowLeft, NotebookPen, CheckCircle } from "lucide-react";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { insertFeedbackSchema } from "@shared/schema";
-import type { Product, InsertFeedback } from "@shared/schema";
+import type { InsertFeedback } from "@shared/schema";
 import { z } from "zod";
 
-const feedbackFormSchema = insertFeedbackSchema.extend({
-  interestingProducts: z.array(z.string()).default([]),
-});
+const feedbackFormSchema = insertFeedbackSchema;
 
 type FeedbackForm = z.infer<typeof feedbackFormSchema>;
 
@@ -27,17 +24,13 @@ export default function Feedback() {
   const { toast } = useToast();
   const [showThankYou, setShowThankYou] = useState(false);
 
-  const { data: products } = useQuery<Product[]>({
-    queryKey: ["/api/products"],
-  });
-
   const form = useForm<FeedbackForm>({
     resolver: zodResolver(feedbackFormSchema),
     defaultValues: {
       visitorName: "",
-      visitorEmail: "",
       visitorCompany: "",
-      interestingProducts: [],
+      visitorEmail: "",
+      visitorPhone: "",
       comments: "",
     },
   });
@@ -124,15 +117,15 @@ export default function Feedback() {
         <div className="bg-gradient-to-r from-primary to-secondary text-white px-6 py-8">
           <Button
             variant="ghost"
-            onClick={() => setLocation("/section/5")}
+            onClick={() => setLocation("/overview")}
             className="text-white mb-4 p-0 h-auto font-normal"
-            data-testid="button-back-section-5"
+            data-testid="button-back-overview"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            Back to Overview
           </Button>
-          <h1 className="text-3xl font-bold mb-2" data-testid="title-feedback">Share Your Feedback</h1>
-          <p className="text-white/90" data-testid="subtitle-help-improve">Help us improve your experience</p>
+          <h1 className="text-3xl font-bold mb-2" data-testid="title-feedback">Share your Thoughts</h1>
+          <p className="text-white/90" data-testid="subtitle-ai-healthcare">AI in Healthcare</p>
         </div>
 
         <div className="px-6 py-6">
@@ -142,7 +135,7 @@ export default function Feedback() {
               <Card>
                 <CardContent className="pt-5">
                   <h3 className="text-lg font-bold text-foreground mb-4" data-testid="title-your-info">
-                    Your Information (Optional)
+                    Your Information
                   </h3>
                   
                   <div className="space-y-4">
@@ -151,13 +144,34 @@ export default function Feedback() {
                       name="visitorName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-sm font-semibold text-foreground">Name</FormLabel>
+                          <FormLabel className="text-sm font-semibold text-foreground">
+                            Name <span className="text-destructive">*</span>
+                          </FormLabel>
                           <FormControl>
                             <Input
                               {...field}
                               placeholder="Enter your name"
                               data-testid="input-name"
-                              value={field.value || ""}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="visitorCompany"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm font-semibold text-foreground">
+                            Company <span className="text-destructive">*</span>
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Your organization"
+                              data-testid="input-company"
                             />
                           </FormControl>
                           <FormMessage />
@@ -170,7 +184,7 @@ export default function Feedback() {
                       name="visitorEmail"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-sm font-semibold text-foreground">Email</FormLabel>
+                          <FormLabel className="text-sm font-semibold text-foreground">Email (Optional)</FormLabel>
                           <FormControl>
                             <Input
                               {...field}
@@ -187,15 +201,16 @@ export default function Feedback() {
 
                     <FormField
                       control={form.control}
-                      name="visitorCompany"
+                      name="visitorPhone"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-sm font-semibold text-foreground">Company</FormLabel>
+                          <FormLabel className="text-sm font-semibold text-foreground">Phone Number (Optional)</FormLabel>
                           <FormControl>
                             <Input
                               {...field}
-                              placeholder="Your organization"
-                              data-testid="input-company"
+                              type="tel"
+                              placeholder="Enter your phone number"
+                              data-testid="input-phone"
                               value={field.value || ""}
                             />
                           </FormControl>
@@ -204,58 +219,6 @@ export default function Feedback() {
                       )}
                     />
                   </div>
-                </CardContent>
-              </Card>
-
-              {/* Product Interest */}
-              <Card>
-                <CardContent className="pt-5">
-                  <h3 className="text-lg font-bold text-foreground mb-4" data-testid="title-interesting-products">
-                    Which products did you find most interesting?
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-4">Select all that apply</p>
-                  
-                  <FormField
-                    control={form.control}
-                    name="interestingProducts"
-                    render={() => (
-                      <FormItem>
-                        <div className="space-y-3" data-testid="product-checkboxes">
-                          {products?.map((product) => (
-                            <FormField
-                              key={product.id}
-                              control={form.control}
-                              name="interestingProducts"
-                              render={({ field }) => (
-                                <FormItem className="flex items-start gap-3 p-3 bg-accent/50 rounded-lg">
-                                  <FormControl>
-                                    <Checkbox
-                                      checked={field.value?.includes(product.name)}
-                                      onCheckedChange={(checked) => {
-                                        return checked
-                                          ? field.onChange([...field.value, product.name])
-                                          : field.onChange(field.value?.filter((value) => value !== product.name));
-                                      }}
-                                      data-testid={`checkbox-${product.id}`}
-                                    />
-                                  </FormControl>
-                                  <FormLabel className="flex-1 cursor-pointer font-normal">
-                                    <span className="font-semibold text-foreground block" data-testid={`product-name-${product.id}`}>
-                                      {product.name}
-                                    </span>
-                                    <span className="text-xs text-muted-foreground" data-testid={`product-info-${product.id}`}>
-                                      {product.company} - {product.type}
-                                    </span>
-                                  </FormLabel>
-                                </FormItem>
-                              )}
-                            />
-                          ))}
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                 </CardContent>
               </Card>
 
@@ -268,13 +231,13 @@ export default function Feedback() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-lg font-bold text-foreground">
-                          Any comments or suggestions?
+                          Share your thoughts on AI in Health for frontline workers
                         </FormLabel>
                         <FormControl>
                           <Textarea
                             {...field}
                             rows={5}
-                            placeholder="Share your thoughts about the AI Lab tour, specific products, or suggestions for improvement..."
+                            placeholder="How do you think AI can help frontline healthcare workers? Share your thoughts and ideas..."
                             className="resize-none"
                             data-testid="textarea-comments"
                             value={field.value || ""}

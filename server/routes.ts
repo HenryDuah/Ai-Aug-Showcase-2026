@@ -81,7 +81,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/feedback/export", requireAuth, async (req, res) => {
     try {
       const feedback = await storage.getAllFeedback();
-      const products = await storage.getAllProducts();
       
       // Helper function to escape CSV values
       const escapeCSV = (value: string) => {
@@ -93,27 +92,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const headers = [
         'Submission Date',
         'Visitor Name',
-        'Email',
         'Company',
-        'Interesting Products',
+        'Email',
+        'Phone',
         'Comments'
       ];
       
       // Create CSV rows
       const rows = feedback.map(f => {
-        const productNames = f.interestingProducts
-          ?.map(id => {
-            const product = products.find(p => p.id === id);
-            return product ? product.name : `Unknown (${id})`;
-          })
-          .join('; ') || '';
-        
         return [
           escapeCSV(f.submittedAt || ''),
           escapeCSV(f.visitorName || ''),
-          escapeCSV(f.visitorEmail || ''),
           escapeCSV(f.visitorCompany || ''),
-          escapeCSV(productNames),
+          escapeCSV(f.visitorEmail || ''),
+          escapeCSV(f.visitorPhone || ''),
           escapeCSV(f.comments || '')
         ].join(',');
       });
@@ -132,6 +124,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/products", requireAuth, async (req, res) => {
     try {
       const validatedData = insertProductSchema.parse(req.body);
+      
+      // Check if section already has 6 products
+      const sectionProducts = await storage.getProductsBySection(validatedData.sectionId);
+      if (sectionProducts.length >= 6) {
+        return res.status(400).json({ 
+          message: `Section ${validatedData.sectionId} already has the maximum of 6 products. Please delete a product or choose a different section.` 
+        });
+      }
+      
       const product = await storage.createProduct(validatedData);
       res.status(201).json(product);
     } catch (error) {
@@ -154,6 +155,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (Object.keys(validatedData).length === 0) {
         return res.status(400).json({ message: "No valid fields to update" });
+      }
+
+      // If changing section, check if new section already has 6 products
+      if (validatedData.sectionId !== undefined) {
+        const currentProduct = await storage.getProductById(req.params.id);
+        if (currentProduct && currentProduct.sectionId !== validatedData.sectionId) {
+          const sectionProducts = await storage.getProductsBySection(validatedData.sectionId);
+          if (sectionProducts.length >= 6) {
+            return res.status(400).json({ 
+              message: `Section ${validatedData.sectionId} already has the maximum of 6 products. Please delete a product from that section first.` 
+            });
+          }
+        }
       }
 
       const product = await storage.updateProduct(req.params.id, validatedData);

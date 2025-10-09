@@ -18,7 +18,9 @@ export const products = pgTable("products", {
   type: text("type").notNull(),
   description: text("description").notNull(),
   image: text("image").notNull(),
-  audioUrl: text("audio_url"),
+  videoUrl: text("video_url"),
+  howItWorks: text("how_it_works"),
+  theImpact: text("the_impact"),
   features: json("features").$type<string[]>().default([]),
   sectionId: integer("section_id").notNull(),
   sectionName: text("section_name").notNull(),
@@ -28,10 +30,10 @@ export const products = pgTable("products", {
 // Feedback schema
 export const feedback = pgTable("feedback", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  visitorName: text("visitor_name"),
+  visitorName: text("visitor_name").notNull(),
+  visitorCompany: text("visitor_company").notNull(),
   visitorEmail: text("visitor_email"),
-  visitorCompany: text("visitor_company"),
-  interestingProducts: json("interesting_products").$type<string[]>().default([]),
+  visitorPhone: text("visitor_phone"),
   comments: text("comments"),
   submittedAt: text("submitted_at").default(sql`CURRENT_TIMESTAMP`),
 });
@@ -41,9 +43,9 @@ export const insertUserSchema = createInsertSchema(users);
 export const insertProductSchema = createInsertSchema(products).omit({ id: true });
 export const insertFeedbackSchema = createInsertSchema(feedback).pick({
   visitorName: true,
-  visitorEmail: true,
   visitorCompany: true,
-  interestingProducts: true,
+  visitorEmail: true,
+  visitorPhone: true,
   comments: true,
 });
 
