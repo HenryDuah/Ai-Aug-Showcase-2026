@@ -32,6 +32,10 @@ export default function Section() {
     return null;
   }
 
+  const handleBackToOverview = () => {
+    setLocation("/overview");
+  };
+
   const handlePrevious = () => {
     if (sectionId === 1) {
       setLocation("/overview");
@@ -64,7 +68,7 @@ export default function Section() {
         <div className={`bg-gradient-to-r ${sectionGradients[sectionId - 1]} text-white px-6 py-8`}>
           <Button
             variant="ghost"
-            onClick={handlePrevious}
+            onClick={handleBackToOverview}
             className="text-white mb-4 p-0 h-auto font-normal"
             data-testid={`button-back-section-${sectionId}`}
           >
