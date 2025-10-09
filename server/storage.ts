@@ -96,7 +96,9 @@ export class MemStorage implements IStorage {
     const product: Product = { 
       ...insertProduct, 
       id,
-      audioUrl: insertProduct.audioUrl ?? null,
+      videoUrl: insertProduct.videoUrl ?? null,
+      howItWorks: insertProduct.howItWorks ?? null,
+      theImpact: insertProduct.theImpact ?? null,
       features: insertProduct.features ? [...insertProduct.features] : null,
       onDisplay: insertProduct.onDisplay ?? true,
     };
@@ -126,10 +128,10 @@ export class MemStorage implements IStorage {
 
   async createFeedback(insertFeedback: InsertFeedback): Promise<Feedback> {
     const [newFeedback] = await db.insert(feedback).values({
-      visitorName: insertFeedback.visitorName ?? null,
+      visitorName: insertFeedback.visitorName,
+      visitorCompany: insertFeedback.visitorCompany,
       visitorEmail: insertFeedback.visitorEmail ?? null,
-      visitorCompany: insertFeedback.visitorCompany ?? null,
-      interestingProducts: insertFeedback.interestingProducts ? [...insertFeedback.interestingProducts] : null,
+      visitorPhone: insertFeedback.visitorPhone ?? null,
       comments: insertFeedback.comments ?? null,
     }).returning();
     return newFeedback;

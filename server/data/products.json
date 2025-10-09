@@ -39,7 +39,7 @@
       ],
       "sectionId": 1,
       "sectionName": "Maternal",
-      "onDisplay": false
+      "onDisplay": true
     },
     {
       "id": "ultraview-mobile",
@@ -58,7 +58,7 @@
       ],
       "sectionId": 1,
       "sectionName": "Maternal",
-      "onDisplay": false
+      "onDisplay": true
     },
     {
       "id": "neosafe-incubator",
