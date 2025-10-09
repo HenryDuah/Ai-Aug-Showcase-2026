@@ -8,8 +8,8 @@
       "description": "The Keyar DT Lite connects wirelessly to a mobile app, enabling recording of fetal heartbeats, conducting Non Stress Tests (NST), and sharing real-time reports with doctors and specialists.",
       "image": "https://mothers.janitri.in/cdn/shop/files/DTLitecopy.jpg?v=1737543227",
       "videoUrl": "https://music.youtube.com/podcast/UTrNESXlOFg",
-      "howItWorks": null,
-      "theImpact": null,
+      "howItWorks": "",
+      "theImpact": "",
       "features": [
         "AI-powered heart rate detection",
         "Clear audio output",
@@ -39,7 +39,7 @@
       ],
       "sectionId": 1,
       "sectionName": "Maternal",
-      "onDisplay": true
+      "onDisplay": false
     },
     {
       "id": "ultraview-mobile",
@@ -58,7 +58,7 @@
       ],
       "sectionId": 1,
       "sectionName": "Maternal",
-      "onDisplay": true
+      "onDisplay": false
     },
     {
       "id": "neosafe-incubator",
@@ -136,6 +136,366 @@
         "Treatment planning",
         "AI-powered analytics",
         "Telemedicine capabilities"
+      ],
+      "sectionId": 5,
+      "sectionName": "Software Solutions",
+      "onDisplay": true
+    },
+    {
+      "id": "maternal-monitor-4",
+      "name": "BabyBeat Monitor",
+      "company": "CareTech",
+      "type": "Continuous Fetal Monitor",
+      "description": "Advanced continuous monitoring system for tracking fetal heart rate and maternal contractions during labor and delivery.",
+      "image": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Continuous heart rate monitoring",
+        "Contraction pattern analysis",
+        "Real-time alerts",
+        "Wireless connectivity"
+      ],
+      "sectionId": 1,
+      "sectionName": "Maternal",
+      "onDisplay": true
+    },
+    {
+      "id": "maternal-monitor-5",
+      "name": "PregnaCare Plus",
+      "company": "HealthFirst",
+      "type": "Maternal Health Tracker",
+      "description": "Comprehensive maternal health monitoring system tracking blood pressure, glucose levels, and vital signs throughout pregnancy.",
+      "image": "https://images.unsplash.com/photo-1584982751601-97dcc096659c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Multi-parameter monitoring",
+        "Trend analysis",
+        "Risk prediction alerts",
+        "Cloud data storage"
+      ],
+      "sectionId": 1,
+      "sectionName": "Maternal",
+      "onDisplay": true
+    },
+    {
+      "id": "neonatal-care-2",
+      "name": "NeoVent Respirator",
+      "company": "BabyBreath Technologies",
+      "type": "Neonatal Ventilator",
+      "description": "Specialized ventilation system designed for premature and critically ill newborns with gentle, precise respiratory support.",
+      "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Gentle ventilation modes",
+        "Precise volume control",
+        "Built-in safety alarms",
+        "Easy-to-use interface"
+      ],
+      "sectionId": 2,
+      "sectionName": "Neonatal",
+      "onDisplay": true
+    },
+    {
+      "id": "neonatal-care-3",
+      "name": "PhotoTherapy Pro",
+      "company": "LightCare Medical",
+      "type": "Phototherapy Device",
+      "description": "Advanced LED phototherapy system for treating neonatal jaundice with optimal light wavelength and intensity control.",
+      "image": "https://images.unsplash.com/photo-1631815589278-64f2a7d6e5f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Optimal wavelength LED lights",
+        "Adjustable intensity",
+        "Energy efficient",
+        "Timer and dosage tracking"
+      ],
+      "sectionId": 2,
+      "sectionName": "Neonatal",
+      "onDisplay": true
+    },
+    {
+      "id": "neonatal-care-4",
+      "name": "BabyGuard Monitor",
+      "company": "InfantCare Systems",
+      "type": "Vital Signs Monitor",
+      "description": "Comprehensive neonatal vital signs monitoring system tracking heart rate, oxygen saturation, and temperature.",
+      "image": "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Multi-parameter monitoring",
+        "Touchscreen display",
+        "Wireless data transmission",
+        "Alarm system"
+      ],
+      "sectionId": 2,
+      "sectionName": "Neonatal",
+      "onDisplay": true
+    },
+    {
+      "id": "neonatal-care-5",
+      "name": "TinyWarmer Incubator",
+      "company": "NeoTech Solutions",
+      "type": "Transport Incubator",
+      "description": "Portable transport incubator maintaining optimal temperature and humidity for safe neonatal transfer between facilities.",
+      "image": "https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Battery-powered operation",
+        "Temperature and humidity control",
+        "Oxygen supply integration",
+        "Lightweight and portable"
+      ],
+      "sectionId": 2,
+      "sectionName": "Neonatal",
+      "onDisplay": true
+    },
+    {
+      "id": "screening-device-2",
+      "name": "VisionCheck Scanner",
+      "company": "OptiMed",
+      "type": "Vision Screening Device",
+      "description": "Automated vision screening system for early detection of eye conditions and visual impairments in all age groups.",
+      "image": "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Automated screening",
+        "Quick results",
+        "Non-invasive testing",
+        "Portable design"
+      ],
+      "sectionId": 3,
+      "sectionName": "General Screening",
+      "onDisplay": true
+    },
+    {
+      "id": "screening-device-3",
+      "name": "AudioTest Pro",
+      "company": "HearWell Tech",
+      "type": "Hearing Screening Device",
+      "description": "Professional audiometry system for comprehensive hearing assessment and early detection of hearing loss.",
+      "image": "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Wide frequency range",
+        "Automated testing protocols",
+        "Result documentation",
+        "Easy calibration"
+      ],
+      "sectionId": 3,
+      "sectionName": "General Screening",
+      "onDisplay": true
+    },
+    {
+      "id": "screening-device-4",
+      "name": "GlucoseGuard Monitor",
+      "company": "DiabetesCare Inc",
+      "type": "Glucose Monitoring System",
+      "description": "Continuous glucose monitoring system with real-time tracking and predictive alerts for diabetes management.",
+      "image": "https://images.unsplash.com/photo-1615486511484-92e172cc4fe0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Continuous monitoring",
+        "Trend analysis",
+        "Predictive alerts",
+        "Mobile app integration"
+      ],
+      "sectionId": 3,
+      "sectionName": "General Screening",
+      "onDisplay": true
+    },
+    {
+      "id": "screening-device-5",
+      "name": "CardioCheck Plus",
+      "company": "HeartHealth Systems",
+      "type": "ECG Screening Device",
+      "description": "Portable ECG device for rapid cardiac screening and detection of arrhythmias and heart conditions.",
+      "image": "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "12-lead ECG capability",
+        "AI-assisted interpretation",
+        "Instant results",
+        "Cloud storage"
+      ],
+      "sectionId": 3,
+      "sectionName": "General Screening",
+      "onDisplay": true
+    },
+    {
+      "id": "rapid-test-2",
+      "name": "InfectiScan Rapid",
+      "company": "BioDetect Labs",
+      "type": "Infectious Disease Test",
+      "description": "Rapid point-of-care testing for multiple infectious diseases with results in under 15 minutes.",
+      "image": "https://images.unsplash.com/photo-1582560475093-ba66accbc424?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Multi-pathogen detection",
+        "Results in 15 minutes",
+        "High sensitivity",
+        "Minimal training required"
+      ],
+      "sectionId": 4,
+      "sectionName": "Rapid Diagnostic Tests",
+      "onDisplay": true
+    },
+    {
+      "id": "rapid-test-3",
+      "name": "CardioMarker Test",
+      "company": "HeartDx",
+      "type": "Cardiac Biomarker Test",
+      "description": "Rapid testing for cardiac biomarkers to assess heart attack and cardiovascular conditions at point of care.",
+      "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Troponin detection",
+        "Quick turnaround time",
+        "Quantitative results",
+        "Point-of-care testing"
+      ],
+      "sectionId": 4,
+      "sectionName": "Rapid Diagnostic Tests",
+      "onDisplay": true
+    },
+    {
+      "id": "rapid-test-4",
+      "name": "MalariaDetect Kit",
+      "company": "TropicHealth",
+      "type": "Malaria Rapid Test",
+      "description": "Highly sensitive rapid diagnostic test for malaria detection using minimal blood sample.",
+      "image": "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Species-specific detection",
+        "High sensitivity",
+        "No equipment required",
+        "Stable in tropical conditions"
+      ],
+      "sectionId": 4,
+      "sectionName": "Rapid Diagnostic Tests",
+      "onDisplay": true
+    },
+    {
+      "id": "rapid-test-5",
+      "name": "InflammaCheck",
+      "company": "BioResponse",
+      "type": "Inflammation Marker Test",
+      "description": "Rapid CRP and inflammation marker testing for quick assessment of infection and inflammatory conditions.",
+      "image": "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "CRP quantification",
+        "Rapid results",
+        "Easy interpretation",
+        "Cost-effective"
+      ],
+      "sectionId": 4,
+      "sectionName": "Rapid Diagnostic Tests",
+      "onDisplay": true
+    },
+    {
+      "id": "software-solution-2",
+      "name": "AI Radiology Assistant",
+      "company": "ImageAI Solutions",
+      "type": "Medical Imaging Software",
+      "description": "AI-powered radiology software that assists in detecting abnormalities in X-rays, CT scans, and MRI images.",
+      "image": "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "AI-powered detection",
+        "Multiple imaging modalities",
+        "Second opinion support",
+        "Fast processing"
+      ],
+      "sectionId": 5,
+      "sectionName": "Software Solutions",
+      "onDisplay": true
+    },
+    {
+      "id": "software-solution-3",
+      "name": "TeleCare Connect",
+      "company": "RemoteMed",
+      "type": "Telemedicine Platform",
+      "description": "Comprehensive telemedicine platform enabling remote consultations, e-prescriptions, and patient monitoring.",
+      "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Video consultations",
+        "E-prescription system",
+        "Appointment scheduling",
+        "Secure messaging"
+      ],
+      "sectionId": 5,
+      "sectionName": "Software Solutions",
+      "onDisplay": true
+    },
+    {
+      "id": "software-solution-4",
+      "name": "LabConnect LIMS",
+      "company": "LabTech Systems",
+      "type": "Laboratory Information System",
+      "description": "Complete laboratory information management system for tracking samples, results, and quality control.",
+      "image": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Sample tracking",
+        "Result management",
+        "Quality control",
+        "Regulatory compliance"
+      ],
+      "sectionId": 5,
+      "sectionName": "Software Solutions",
+      "onDisplay": true
+    },
+    {
+      "id": "software-solution-5",
+      "name": "PharmaTrack Pro",
+      "company": "MediSupply Tech",
+      "type": "Pharmacy Management System",
+      "description": "Advanced pharmacy management software with inventory control, prescription processing, and billing integration.",
+      "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "videoUrl": null,
+      "howItWorks": null,
+      "theImpact": null,
+      "features": [
+        "Inventory management",
+        "Prescription processing",
+        "Billing integration",
+        "Drug interaction alerts"
       ],
       "sectionId": 5,
       "sectionName": "Software Solutions",
