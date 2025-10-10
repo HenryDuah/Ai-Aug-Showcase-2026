@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { X, ArrowLeft, ArrowRight, Tag, CheckCircle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import AudioPlayer from "@/components/audio-player";
 import ImageOverlay from "@/components/image-overlay";
 import { useState } from "react";
 import type { Product } from "@shared/schema";
@@ -132,9 +131,46 @@ export default function ProductDetail() {
             </CardContent>
           </Card>
 
-          {/* Audio Player */}
-          {product.audioUrl && (
-            <AudioPlayer audioUrl={product.audioUrl} />
+          {/* Product Video */}
+          {product.videoUrl && (
+            <Card>
+              <CardContent className="pt-5">
+                <h3 className="text-lg font-bold text-foreground mb-3">Product Video</h3>
+                {product.videoUrl.includes('youtube.com') || product.videoUrl.includes('youtu.be') ? (
+                  <div className="aspect-video">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={product.videoUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')}
+                      title="Product video"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      data-testid="product-video-youtube"
+                    />
+                  </div>
+                ) : (
+                  <video
+                    controls
+                    src={product.videoUrl}
+                    className="w-full rounded-lg"
+                    data-testid="product-video"
+                  />
+                )}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* The Impact */}
+          {product.theImpact && (
+            <Card>
+              <CardContent className="pt-5">
+                <h3 className="text-lg font-bold text-foreground mb-3">The Impact</h3>
+                <p className="text-foreground/80 leading-relaxed" data-testid="product-impact">
+                  {product.theImpact}
+                </p>
+              </CardContent>
+            </Card>
           )}
 
           {/* Key Features */}

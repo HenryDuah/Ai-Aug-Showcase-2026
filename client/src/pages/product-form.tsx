@@ -24,8 +24,8 @@ const productFormSchema = z.object({
   type: z.string().min(1, "Product type is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().url("Must be a valid URL"),
-  howItWorks: z.string().optional(),
-  theImpact: z.string().optional(),
+  videoUrl: z.string().min(1, "Product video is required"),
+  theImpact: z.string().min(1, "The Impact is required"),
   sectionId: z.number().min(1).max(5),
   sectionName: z.string().min(1, "Section name is required"),
   features: z.string(),
@@ -39,7 +39,6 @@ export default function ProductForm() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const isEditMode = productId !== "new";
-  const [uploadedVideoUrl, setUploadedVideoUrl] = useState<string>("");
 
   const { data: product, isLoading } = useQuery<Product>({
     queryKey: ["/api/products", productId],
@@ -54,7 +53,7 @@ export default function ProductForm() {
       type: "",
       description: "",
       image: "",
-      howItWorks: "",
+      videoUrl: "",
       theImpact: "",
       sectionId: 1,
       sectionName: "",
@@ -71,14 +70,13 @@ export default function ProductForm() {
         type: product.type,
         description: product.description,
         image: product.image,
-        howItWorks: product.howItWorks || "",
+        videoUrl: product.videoUrl || "",
         theImpact: product.theImpact || "",
         sectionId: product.sectionId,
         sectionName: product.sectionName,
         features: product.features?.join("\n") || "",
         onDisplay: product.onDisplay ?? true,
       });
-      setUploadedVideoUrl(product.videoUrl || "");
     }
   }, [product, form]);
 
@@ -129,7 +127,6 @@ export default function ProductForm() {
   const onSubmit = (data: ProductFormData) => {
     const productData = {
       ...data,
-      videoUrl: uploadedVideoUrl || undefined,
       features: data.features.split("\n").filter(f => f.trim()),
     };
 
@@ -157,21 +154,13 @@ export default function ProductForm() {
         const pathParts = objectPath.split("/");
         const objectId = pathParts[pathParts.length - 1];
         const videoPath = `/objects/uploads/${objectId}`;
-        setUploadedVideoUrl(videoPath);
+        form.setValue("videoUrl", videoPath);
         toast({
           title: "Success",
           description: "Video file uploaded successfully.",
         });
       }
     }
-  };
-
-  const handleRemoveVideo = () => {
-    setUploadedVideoUrl("");
-    toast({
-      title: "Removed",
-      description: "Video file removed.",
-    });
   };
 
   const handleSectionChange = (sectionId: string) => {
@@ -315,29 +304,10 @@ export default function ProductForm() {
 
                 <FormField
                   control={form.control}
-                  name="howItWorks"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>How it Works (Optional)</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          placeholder="Explain how this product works"
-                          rows={3}
-                          data-testid="textarea-how-it-works"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
                   name="theImpact"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>The Impact (Optional)</FormLabel>
+                      <FormLabel>The Impact</FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
@@ -351,38 +321,40 @@ export default function ProductForm() {
                   )}
                 />
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Video Guide (Optional)</label>
-                  <div className="flex flex-col gap-2">
-                    {uploadedVideoUrl ? (
-                      <div className="flex items-center gap-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                        <video controls src={uploadedVideoUrl} className="flex-1 max-h-40" data-testid="video-preview" />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={handleRemoveVideo}
-                          data-testid="button-remove-video"
-                        >
-                          <X className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    ) : (
-                      <ObjectUploader
-                        maxNumberOfFiles={1}
-                        maxFileSize={52428800}
-                        allowedFileTypes={[".mp4", ".mov", ".avi", ".wmv", ".webm", "video/*"]}
-                        onGetUploadParameters={handleGetUploadParameters}
-                        onComplete={handleUploadComplete}
-                      >
-                        <div className="flex items-center gap-2" data-testid="button-upload-video">
-                          <Upload className="w-4 h-4" />
-                          <span>Upload Video File</span>
+                <FormField
+                  control={form.control}
+                  name="videoUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Product Video</FormLabel>
+                      <FormControl>
+                        <div className="space-y-2">
+                          <Input 
+                            {...field} 
+                            placeholder="YouTube URL or video link (e.g., https://www.youtube.com/watch?v=...)" 
+                            data-testid="input-video-url" 
+                          />
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-muted-foreground">Or upload a video file:</span>
+                            <ObjectUploader
+                              maxNumberOfFiles={1}
+                              maxFileSize={52428800}
+                              allowedFileTypes={[".mp4", ".mov", ".avi", ".wmv", ".webm", "video/*"]}
+                              onGetUploadParameters={handleGetUploadParameters}
+                              onComplete={handleUploadComplete}
+                            >
+                              <Button type="button" variant="outline" size="sm" data-testid="button-upload-video">
+                                <Upload className="w-4 h-4 mr-2" />
+                                Upload Video
+                              </Button>
+                            </ObjectUploader>
+                          </div>
                         </div>
-                      </ObjectUploader>
-                    )}
-                  </div>
-                </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
                 <FormField
                   control={form.control}

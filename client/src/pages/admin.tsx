@@ -63,7 +63,7 @@ export default function Admin() {
 
   const productsBySection = sectionsData.sections.map((section) => ({
     ...section,
-    products: products?.filter((p) => p.sectionId === section.id) || [],
+    products: products?.filter((p) => p.sectionId === section.id && p.onDisplay) || [],
   }));
 
   return (

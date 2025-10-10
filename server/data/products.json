@@ -5,16 +5,17 @@
       "name": "Keyar DT Lite®",
       "company": "Janitri",
       "type": "Portable Non-Stress Test Fetal Doppler",
-      "description": "The Keyar DT Lite connects wirelessly to a mobile app, enabling recording of fetal heartbeats, conducting Non Stress Tests (NST), and sharing real-time reports with doctors and specialists.",
+      "description": "The Keyar DT Lite connects wirelessly to a mobile app, enabling recording of fetal heartbeats, conducting Non Stress Tests (NST), and sharing real-time reports with doctors and specialists.\n",
       "image": "https://mothers.janitri.in/cdn/shop/files/DTLitecopy.jpg?v=1737543227",
       "videoUrl": "https://music.youtube.com/podcast/UTrNESXlOFg",
       "howItWorks": "",
-      "theImpact": "",
+      "theImpact": "Enables early detection and continuous monitoring of high-risk pregnancies through frontline care—reducing delays in care and minimizing frequent hospital visits.\n",
       "features": [
-        "AI-powered heart rate detection",
-        "Clear audio output",
-        "Portable and lightweight design",
-        "Easy-to-use interface"
+        "Medical-grade (ISO 13485 certified)",
+        "Portable and easy-to-use",
+        "In-built battery",
+        "Record results and access past reports",
+        "Virtual training and support available"
       ],
       "sectionId": 1,
       "sectionName": "Maternal",
@@ -159,7 +160,7 @@
       ],
       "sectionId": 1,
       "sectionName": "Maternal",
-      "onDisplay": true
+      "onDisplay": false
     },
     {
       "id": "maternal-monitor-5",
@@ -179,7 +180,7 @@
       ],
       "sectionId": 1,
       "sectionName": "Maternal",
-      "onDisplay": true
+      "onDisplay": false
     },
     {
       "id": "neonatal-care-2",

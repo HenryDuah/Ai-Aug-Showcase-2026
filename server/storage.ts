@@ -96,9 +96,6 @@ export class MemStorage implements IStorage {
     const product: Product = { 
       ...insertProduct, 
       id,
-      videoUrl: insertProduct.videoUrl ?? null,
-      howItWorks: insertProduct.howItWorks ?? null,
-      theImpact: insertProduct.theImpact ?? null,
       features: insertProduct.features ? [...insertProduct.features] : null,
       onDisplay: insertProduct.onDisplay ?? true,
     };
