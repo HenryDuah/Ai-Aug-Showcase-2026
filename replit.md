@@ -2,11 +2,32 @@
 
 ## Overview
 
-The AI Lab Guided Tour is a mobile-first, tablet-friendly web application designed for Sand's physical medical innovation lab. It provides visitors with an interactive self-guided experience through five specialized sections showcasing cutting-edge healthcare technologies. The application features product displays with images, descriptions, audio guides, and a feedback collection system to capture visitor engagement.
+The AI Lab Guided Tour is a mobile-first, tablet-friendly web application designed for Sand's physical medical innovation lab. It provides visitors with an interactive self-guided experience through five specialized sections showcasing cutting-edge healthcare technologies. The application features product displays with images, descriptions, product videos (YouTube or direct upload), impact statements, and a feedback collection system to capture visitor engagement.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+
+## Recent Changes
+
+**October 10, 2025 - Product Schema Updates**
+- Removed "How it Works" field completely from the application
+  - Removed from schema (shared/schema.ts)
+  - Removed from storage layer (server/storage.ts)
+  - Removed from product form (client/src/pages/product-form.tsx)
+  - Removed from product detail page (client/src/pages/product-detail.tsx)
+  - Removed from all products in products.json
+- Made "The Impact" field required (previously optional)
+  - Updated schema to make theImpact non-nullable
+  - Updated form label to show "The Impact" (removed "Optional")
+  - Product detail page displays "The Impact" section prominently
+- Converted video system from audio to support YouTube URLs and video uploads
+  - Changed schema from audioUrl to videoUrl (required field)
+  - Form supports both YouTube URL text input and video file upload via ObjectUploader
+  - Product detail page renders YouTube URLs in iframe and other URLs in HTML5 video player
+  - All products updated with valid YouTube video URLs
+- Renamed "Video Guide" to "Product Video" and made it required
+- Admin panel updated to show only visible products (onDisplay: true)
 
 ## System Architecture
 
@@ -33,7 +54,7 @@ Preferred communication style: Simple, everyday language.
 - `/` - Welcome screen with lab introduction and health icon
 - `/overview` - Lab overview with section navigation and product search
 - `/section/:sectionId` - Individual section views (1-5) displaying products
-- `/product/:productId` - Detailed product view with full description and audio
+- `/product/:productId` - Detailed product view with full description, product video, and impact statement
 - `/feedback` - Visitor feedback form with validation
 - `/admin` - Admin panel for product management (requires authentication)
 - `/admin/product/new` - Create new product with file upload (admin)
@@ -60,8 +81,8 @@ Preferred communication style: Simple, everyday language.
 - `POST /api/feedback` - Submit visitor feedback
 - `GET /api/feedback` - Retrieve all feedback submissions (admin, requires authentication)
 - `GET /api/feedback/export` - Export feedback as CSV file (admin, requires authentication)
-- `POST /api/objects/upload` - Get upload URL for audio files (admin, requires authentication)
-- `GET /objects/:objectPath(*)` - Serve uploaded audio files (public endpoint)
+- `POST /api/objects/upload` - Get upload URL for video files (admin, requires authentication)
+- `GET /objects/:objectPath(*)` - Serve uploaded video files (public endpoint)
 
 **Data Access Layer**
 - Storage abstraction with `IStorage` interface for flexibility
@@ -86,7 +107,8 @@ Preferred communication style: Simple, everyday language.
    - `id` (varchar, primary key) - Unique product identifier
    - `name`, `company`, `type`, `description` (text) - Product metadata
    - `image` (text) - Product image URL
-   - `audioUrl` (text, nullable) - Optional audio guide URL
+   - `videoUrl` (text, required) - Product video URL (YouTube or direct link)
+   - `theImpact` (text, required) - Impact statement describing the product's effect
    - `features` (json array) - List of product features
    - `sectionId` (integer) - Section assignment (1-5)
    - `sectionName` (text) - Section display name
@@ -111,15 +133,15 @@ Preferred communication style: Simple, everyday language.
 - Graceful error handling with retry functionality
 - Loading states and disabled controls during data fetch
 
-**Audio File Upload & Playback**
-- Direct audio file upload using Replit Object Storage
-- Uppy-based file uploader with size and type restrictions (max 10MB, audio formats)
-- Audio files stored in private object storage directory
+**Product Video Upload & Display**
+- Direct video file upload using Replit Object Storage
+- Uppy-based file uploader with size and type restrictions (max 50MB, video formats)
+- Video files stored in private object storage directory
 - Served publicly via `/objects/` endpoint
-- Custom audio player component with play/pause controls
-- Progress tracking and duration display
-- Automatic cleanup on component unmount
-- Optional audio guides for products
+- Supports both YouTube URLs and direct video file uploads
+- YouTube videos displayed via iframe embed
+- Direct video files displayed via HTML5 video player
+- Required field for all products
 
 **Image Viewing**
 - Full-screen image overlay modal
@@ -147,10 +169,11 @@ Preferred communication style: Simple, everyday language.
 **Admin Panel**
 - Full product CRUD operations (create, read, update, delete)
 - Toggle product visibility by section
-- Direct audio file upload for products
+- Direct video file upload for products
 - Changes persist to products JSON file
 - Real-time updates across the application
-- Button text shows "Save" for new products, "Update Product" for edits
+- Button text shows "Add Product" for new products, "Update Product" for edits
+- Filters to show only visible products (onDisplay: true)
 
 **Analytics Dashboard**
 - Total submissions and visitor statistics
