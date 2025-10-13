@@ -24,9 +24,8 @@ const createProductFormSchema = (isEditMode: boolean) => z.object({
   type: z.string().min(1, "Product type is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().url("Must be a valid URL"),
-  videoUrl: isEditMode 
-    ? z.string().optional()
-    : z.string().min(1, "Product video is required"),
+  videoUrl: z.string().optional(),
+  videoType: z.string().optional(),
   brochureUrl: z.string().optional(),
   theImpact: z.string().min(1, "The Impact is required"),
   sectionId: z.number().min(1).max(5),
@@ -57,6 +56,7 @@ export default function ProductForm() {
       description: "",
       image: "",
       videoUrl: "",
+      videoType: "",
       brochureUrl: "",
       theImpact: "",
       sectionId: 1,
@@ -75,6 +75,7 @@ export default function ProductForm() {
         description: product.description,
         image: product.image,
         videoUrl: product.videoUrl || "",
+        videoType: product.videoType || "",
         brochureUrl: product.brochureUrl || "",
         theImpact: product.theImpact || "",
         sectionId: product.sectionId,
@@ -366,33 +367,41 @@ export default function ProductForm() {
                   name="videoUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Product Video {isEditMode && "(Optional - leave blank to keep existing)"}</FormLabel>
+                      <FormLabel>Product Video URL (Optional)</FormLabel>
                       <FormControl>
-                        <div className="space-y-3">
-                          <Input 
-                            {...field} 
-                            placeholder="Video URL (auto-filled when you upload)" 
-                            data-testid="input-video-url"
-                            readOnly
-                            className="bg-muted"
-                          />
-                          <div>
-                            <ObjectUploader
-                              maxNumberOfFiles={1}
-                              allowedFileTypes={[".mp4", ".mov", ".avi", ".wmv", ".webm", "video/*"]}
-                              onGetUploadParameters={handleGetUploadParameters}
-                              onComplete={handleUploadComplete}
-                              buttonVariant="outline"
-                            >
-                              <>
-                                <Upload className="w-4 h-4 mr-2" />
-                                Upload Video File (any size)
-                              </>
-                            </ObjectUploader>
-                            <p className="text-sm text-muted-foreground mt-2">Supported formats: MP4, MOV, AVI, WMV, WebM</p>
-                          </div>
-                        </div>
+                        <Input 
+                          {...field} 
+                          placeholder="Enter YouTube or Vimeo video URL" 
+                          data-testid="input-video-url"
+                        />
                       </FormControl>
+                      <p className="text-sm text-muted-foreground mt-1">Enter a YouTube or Vimeo video link</p>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="videoType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Video Type (Optional)</FormLabel>
+                      <Select
+                        value={field.value || ""}
+                        onValueChange={field.onChange}
+                      >
+                        <FormControl>
+                          <SelectTrigger data-testid="select-video-type">
+                            <SelectValue placeholder="Select video type" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="">None</SelectItem>
+                          <SelectItem value="Overview Video">Overview Video</SelectItem>
+                          <SelectItem value="Demo Video">Demo Video</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}

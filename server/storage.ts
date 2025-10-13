@@ -104,6 +104,8 @@ export class MemStorage implements IStorage {
       ...insertProduct, 
       id,
       features: insertProduct.features ? [...insertProduct.features] : null,
+      videoUrl: insertProduct.videoUrl ?? null,
+      videoType: insertProduct.videoType ?? null,
       brochureUrl: insertProduct.brochureUrl ?? null,
       onDisplay: insertProduct.onDisplay ?? true,
     };
@@ -208,7 +210,8 @@ export class DbStorage implements IStorage {
       type: insertProduct.type,
       description: insertProduct.description,
       image: insertProduct.image,
-      videoUrl: insertProduct.videoUrl,
+      videoUrl: insertProduct.videoUrl ?? null,
+      videoType: insertProduct.videoType ?? null,
       brochureUrl: insertProduct.brochureUrl ?? null,
       theImpact: insertProduct.theImpact,
       features: insertProduct.features ? [...insertProduct.features] : [],
