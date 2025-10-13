@@ -23,7 +23,7 @@ interface ObjectUploaderProps {
 
 export function ObjectUploader({
   maxNumberOfFiles = 1,
-  maxFileSize = 10485760,
+  maxFileSize,
   allowedFileTypes,
   onGetUploadParameters,
   onComplete,
@@ -35,7 +35,7 @@ export function ObjectUploader({
     new Uppy({
       restrictions: {
         maxNumberOfFiles,
-        maxFileSize,
+        ...(maxFileSize !== undefined && { maxFileSize }),
         allowedFileTypes,
       },
       autoProceed: false,

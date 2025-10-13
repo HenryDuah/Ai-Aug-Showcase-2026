@@ -335,10 +335,9 @@ export default function ProductForm() {
                             data-testid="input-video-url" 
                           />
                           <div className="flex items-center gap-2">
-                            <span className="text-sm text-muted-foreground">Or upload a video file:</span>
+                            <span className="text-sm text-muted-foreground">Or upload a video file (any size):</span>
                             <ObjectUploader
                               maxNumberOfFiles={1}
-                              maxFileSize={52428800}
                               allowedFileTypes={[".mp4", ".mov", ".avi", ".wmv", ".webm", "video/*"]}
                               onGetUploadParameters={handleGetUploadParameters}
                               onComplete={handleUploadComplete}
