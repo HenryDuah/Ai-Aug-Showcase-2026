@@ -16,7 +16,7 @@ The frontend is built with React 18 and TypeScript, using Vite for fast developm
 
 ### Backend Architecture
 
-The backend is an Express.js server developed with TypeScript, following a RESTful API design. It uses middleware for request logging and JSON parsing. Product data is loaded from a JSON file and cached in-memory with write-through for admin updates, while feedback data persists in a PostgreSQL database. Zod schemas are used for robust data validation across the API.
+The backend is an Express.js server developed with TypeScript, following a RESTful API design. It uses middleware for request logging and JSON parsing. All product and feedback data now persists in PostgreSQL database using Drizzle ORM with the DbStorage implementation. Zod schemas are used for robust data validation across the API.
 
 ### Database Design
 
@@ -33,7 +33,7 @@ The application utilizes Drizzle ORM with a PostgreSQL database, specifically Ne
 - **Section Navigation**: Linear navigation flow with direct access via overview or QR codes.
 - **Feedback Collection**: Form with validation (React Hook Form, Zod) to capture visitor feedback, stored in PostgreSQL.
 - **Authentication System**: Passport.js with local strategy and Express-session for secure admin login.
-- **Admin Panel**: Provides full CRUD operations for products, product visibility toggling, direct file uploads, and persistence to the product JSON file.
+- **Admin Panel**: Provides full CRUD operations for products, product visibility toggling, direct file uploads, and persistence to PostgreSQL database.
 - **Analytics Dashboard**: Displays feedback statistics, most interesting products, and offers CSV export.
 - **QR Code Generation**: Generates QR codes for each section, with download options for physical deployment.
 
@@ -49,7 +49,20 @@ The application utilizes Drizzle ORM with a PostgreSQL database, specifically Ne
 
 ## Recent Changes
 
-**October 13, 2025 - File Upload System Enhancements**
+**October 13, 2025 - Database Migration for Production Persistence**
+- **Complete Product Storage Migration**: Migrated from JSON file storage to PostgreSQL database
+  - Created DbStorage class replacing MemStorage for production-ready persistence
+  - All 25 products successfully migrated from `server/data/products.json` to database
+  - Migration script (`server/migrate-products.ts`) uses upsert logic to preserve product IDs
+  - SQL-level filtering for `onDisplay` status prevents hidden products from loading
+  - Admin panel now persists product changes across deployments
+  - Fixes deployment issues: products and admin changes survive Replit's read-only filesystem
+- **Database Schema Updates**: 
+  - Added `brochure_url` column to products table
+  - Removed obsolete `how_it_works` column
+- **TypeScript Improvements**: Fixed type safety for features array handling in create/update operations
+
+**October 13, 2025 (Earlier) - File Upload System Enhancements**
 - **Upload Progress Visibility**: Added real-time progress indicators showing upload percentage and completion status outside the Uppy modal
 - **Non-Blocking Uploads**: Made video uploads optional when editing existing products (required only for new products)
 - **URL Normalization Fix**: Implemented proper file URL normalization system
