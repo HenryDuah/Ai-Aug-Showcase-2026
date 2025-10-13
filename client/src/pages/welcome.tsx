@@ -1,6 +1,7 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Activity, Settings } from "lucide-react";
+import { ArrowRight, Settings } from "lucide-react";
+import sandLogo from "@assets/Sand Tech_ Logo_Dark (1)_1760379109163.png";
 
 export default function Welcome() {
   const [, setLocation] = useLocation();
@@ -8,20 +9,17 @@ export default function Welcome() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6 bg-gradient-to-br from-primary/5 via-background to-accent/10">
       <div className="fade-in flex flex-col items-center">
-        {/* Sand Logo Placeholder */}
-        <div className="mb-8 w-32 h-32 bg-primary/10 rounded-3xl flex items-center justify-center" data-testid="sand-logo">
-          <Activity className="text-6xl text-primary" size={64} />
+        {/* Sand Logo */}
+        <div className="mb-8" data-testid="sand-logo">
+          <img src={sandLogo} alt="Sand Technologies Logo" className="h-24 md:h-32 w-auto" />
         </div>
         
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary font-serif" data-testid="title-welcome">
-          Welcome to the
+        <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary font-serif" data-testid="title-welcome">
+          Welcome to the Innovative Healthcare Solutions Showcase
         </h1>
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-secondary" data-testid="title-lab-tour">
-          AI Lab Guided Tour
-        </h2>
         
-        <p className="text-lg text-center text-muted-foreground max-w-md mb-12" data-testid="description-welcome">
-          Discover Innovative Medical Technologies Transforming Healthcare
+        <p className="text-lg md:text-xl text-center text-muted-foreground max-w-2xl mb-12" data-testid="description-welcome">
+          Discover AI-enabled Medical Devices and Software Innovations for Frontline Healthcare workers
         </p>
 
         <Button 
