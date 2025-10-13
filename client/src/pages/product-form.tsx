@@ -151,36 +151,54 @@ export default function ProductForm() {
     };
   };
 
-  const handleUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+  const handleUploadComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
     if (result.successful && result.successful.length > 0) {
       const uploadURL = result.successful[0].uploadURL;
       if (uploadURL) {
-        const objectPath = uploadURL.split("?")[0];
-        const pathParts = objectPath.split("/");
-        const objectId = pathParts[pathParts.length - 1];
-        const videoPath = `/objects/uploads/${objectId}`;
-        form.setValue("videoUrl", videoPath);
-        toast({
-          title: "Success",
-          description: "Video file uploaded successfully.",
-        });
+        try {
+          // Normalize the upload URL to get the proper object path
+          const response = await apiRequest("POST", "/api/objects/normalize", { 
+            uploadURL: uploadURL.split("?")[0] 
+          });
+          const data = await response.json();
+          form.setValue("videoUrl", data.normalizedPath);
+          toast({
+            title: "Success",
+            description: "Video file uploaded successfully.",
+          });
+        } catch (error) {
+          toast({
+            title: "Error",
+            description: "Failed to process uploaded video.",
+            variant: "destructive",
+          });
+        }
       }
     }
   };
 
-  const handleBrochureUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+  const handleBrochureUploadComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
     if (result.successful && result.successful.length > 0) {
       const uploadURL = result.successful[0].uploadURL;
       if (uploadURL) {
-        const objectPath = uploadURL.split("?")[0];
-        const pathParts = objectPath.split("/");
-        const objectId = pathParts[pathParts.length - 1];
-        const brochurePath = `/objects/uploads/${objectId}`;
-        form.setValue("brochureUrl", brochurePath);
-        toast({
-          title: "Success",
-          description: "Brochure uploaded successfully.",
-        });
+        try {
+          // Normalize the upload URL to get the proper object path
+          const response = await apiRequest("POST", "/api/objects/normalize", { 
+            uploadURL: uploadURL.split("?")[0] 
+          });
+          const data = await response.json();
+          form.setValue("brochureUrl", data.normalizedPath);
+          toast({
+            title: "Success",
+            description: "Brochure uploaded successfully.",
+          });
+        } catch (error) {
+          toast({
+            title: "Error",
+            description: "Failed to process uploaded brochure.",
+            variant: "destructive",
+          });
+        }
       }
     }
   };

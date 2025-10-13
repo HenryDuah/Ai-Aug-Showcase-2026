@@ -18,7 +18,8 @@
       ],
       "sectionId": 1,
       "sectionName": "Maternal",
-      "onDisplay": true
+      "onDisplay": true,
+      "brochureUrl": ""
     },
     {
       "id": "maternawatch-pro",

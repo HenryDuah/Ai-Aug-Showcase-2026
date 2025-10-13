@@ -223,6 +223,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Normalize upload URL to object path (admin endpoint)
+  app.post("/api/objects/normalize", requireAuth, async (req, res) => {
+    try {
+      const { uploadURL } = req.body;
+      if (!uploadURL) {
+        return res.status(400).json({ error: "uploadURL is required" });
+      }
+      
+      // Try to use the object storage service normalization
+      try {
+        const objectStorageService = new ObjectStorageService();
+        const normalizedPath = objectStorageService.normalizeObjectEntityPath(uploadURL);
+        return res.json({ normalizedPath });
+      } catch (normalizeError) {
+        // Fallback to manual path extraction if env vars not set
+        console.warn("Normalization failed, using fallback:", normalizeError);
+        const pathParts = uploadURL.split("/");
+        const objectId = pathParts[pathParts.length - 1];
+        const normalizedPath = `/objects/uploads/${objectId}`;
+        return res.json({ normalizedPath });
+      }
+    } catch (error) {
+      console.error("Error normalizing upload URL:", error);
+      res.status(500).json({ error: "Failed to normalize upload URL" });
+    }
+  });
+
   // Serve uploaded audio files (public endpoint)
   app.get("/objects/:objectPath(*)", async (req, res) => {
     const objectStorageService = new ObjectStorageService();
