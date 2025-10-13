@@ -2,7 +2,8 @@ import { useLocation, useParams } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { X, ArrowLeft, ArrowRight, Tag, CheckCircle } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { X, ArrowLeft, ArrowRight, Tag, CheckCircle, FileText } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import ImageOverlay from "@/components/image-overlay";
 import { useState } from "react";
@@ -12,6 +13,7 @@ export default function ProductDetail() {
   const params = useParams();
   const [, setLocation] = useLocation();
   const [showImageOverlay, setShowImageOverlay] = useState(false);
+  const [showBrochure, setShowBrochure] = useState(false);
   
   const productId = params.productId;
   
@@ -194,6 +196,27 @@ export default function ProductDetail() {
               </Card>
             )}
 
+            {/* Product Brochure */}
+            {product.brochureUrl && (
+              <Card>
+                <CardContent className="pt-5">
+                  <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+                    <FileText className="text-primary" size={20} />
+                    Product Brochure
+                  </h3>
+                  <Button 
+                    variant="outline"
+                    onClick={() => setShowBrochure(true)}
+                    className="w-full sm:w-auto"
+                    data-testid="button-view-brochure"
+                  >
+                    <FileText className="w-4 h-4 mr-2" />
+                    View Brochure (PDF)
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Key Features */}
             {product.features && product.features.length > 0 && (
               <Card>
@@ -246,6 +269,26 @@ export default function ProductDetail() {
           altText={product.name}
           onClose={() => setShowImageOverlay(false)}
         />
+
+        {/* Brochure Dialog */}
+        <Dialog open={showBrochure} onOpenChange={setShowBrochure}>
+          <DialogContent className="max-w-4xl max-h-[90vh] p-0">
+            <DialogHeader className="p-6 pb-4">
+              <DialogTitle className="flex items-center gap-2">
+                <FileText className="text-primary" size={24} />
+                Product Brochure
+              </DialogTitle>
+            </DialogHeader>
+            <div className="px-6 pb-6 h-[70vh]">
+              <iframe
+                src={product.brochureUrl || ""}
+                className="w-full h-full rounded-lg border"
+                title="Product Brochure"
+                data-testid="brochure-viewer"
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
