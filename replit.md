@@ -46,3 +46,15 @@ The application utilizes Drizzle ORM with a PostgreSQL database, specifically Ne
 - **File Upload**: Uppy (`@uppy/core`, `@uppy/react`, `@uppy/aws-s3`, `@uppy/dashboard`) for client-side direct-to-storage uploads.
 - **Data Fetching**: TanStack Query for asynchronous state management, caching, and background refetching.
 - **QR Code Generation**: `qrcode` library for generating scannable QR codes.
+
+## Recent Changes
+
+**October 13, 2025 - File Upload System Enhancements**
+- **Upload Progress Visibility**: Added real-time progress indicators showing upload percentage and completion status outside the Uppy modal
+- **Non-Blocking Uploads**: Made video uploads optional when editing existing products (required only for new products)
+- **URL Normalization Fix**: Implemented proper file URL normalization system
+  - Added `/api/objects/normalize` endpoint to convert Google Cloud Storage URLs to visitor-accessible paths
+  - Upload handlers now normalize URLs after upload completes
+  - Fallback path extraction ensures resilience when environment variables aren't configured
+  - Files are properly accessible to visitors at paths like `/objects/uploads/{id}`
+  - Complete upload flow: file upload → GCS signed URL → normalize to /objects/ path → save to product → visitors can view
