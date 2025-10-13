@@ -1,0 +1,27 @@
+Implement these changes and fix issues that are still persisting
+Issues persisting
+Product details and data in development do not migrate to production
+When we try to add new products, they do not save. Fix the issue to ensure that when products are added, it can be saved and not updated, but added to the database and appear in the section it was added to.
+
+Implement these changes
+On the landing page - replace content with “ Welcome to the Innovative Healthcare Solutions Showcase”
+“Discover AI-enabled Medical Devices and Software Innovations for Frontline Healthcare workers”
+Also, add the send logo which is attached, and remove the icon.
+
+On the over page - use this for the about tour 
+“Welcome to Sand's Innovative Healthcare Solutions Showcase, where we explore cutting-edge medical innovations empowering healthcare workers to deliver better patient outcomes.
+
+This interactive tour will guide you through five specialized sections, each showcasing breakthrough technologies designed to improve healthcare outcomes at the frontlines.
+
+Take your time exploring each section, view product details, and watch product demo videos to learn more about these transformative medical solutions.”
+
+
+Also, for the section name, remove the second line of content, for example, maternal should be Maternal without the “Maternal health monitoring devices”. Do the same for all the sections and on the sections pages too.
+
+In the sections pages for the product blocks - add the product type description to the name of the product for example, Keyar DT Lite® - Portable Non-Stress Test Fetal Doppler
+
+Replace “give feedback” button content description to “Share Your Thoughts”
+
+For media upload we will upload on YouTube link for now, using the link to the video on YouTube:
+In addition to the Product video the admin should have the option to indicate the video type as “Overview Video” or “Demo Video”
+So pdf upload is no longer needed - video upload should be option and should show in product view when the youtube link is added.

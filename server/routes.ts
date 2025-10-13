@@ -125,8 +125,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertProductSchema.parse(req.body);
       
-      // Check if section already has 6 products
-      const sectionProducts = await storage.getProductsBySection(validatedData.sectionId);
+      // Check if section already has 6 products (count all products, including hidden ones)
+      const sectionProducts = await storage.getAllProductsBySection(validatedData.sectionId);
       if (sectionProducts.length >= 6) {
         return res.status(400).json({ 
           message: `Section ${validatedData.sectionId} already has the maximum of 6 products. Please delete a product or choose a different section.` 
@@ -157,11 +157,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "No valid fields to update" });
       }
 
-      // If changing section, check if new section already has 6 products
+      // If changing section, check if new section already has 6 products (count all products, including hidden ones)
       if (validatedData.sectionId !== undefined) {
         const currentProduct = await storage.getProductById(req.params.id);
         if (currentProduct && currentProduct.sectionId !== validatedData.sectionId) {
-          const sectionProducts = await storage.getProductsBySection(validatedData.sectionId);
+          const sectionProducts = await storage.getAllProductsBySection(validatedData.sectionId);
           if (sectionProducts.length >= 6) {
             return res.status(400).json({ 
               message: `Section ${validatedData.sectionId} already has the maximum of 6 products. Please delete a product from that section first.` 

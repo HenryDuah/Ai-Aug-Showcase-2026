@@ -21,6 +21,7 @@ export interface IStorage {
   // Product methods
   getAllProducts(): Promise<Product[]>;
   getProductsBySection(sectionId: number): Promise<Product[]>;
+  getAllProductsBySection(sectionId: number): Promise<Product[]>;
   getProductById(id: string): Promise<Product | undefined>;
   createProduct(product: InsertProduct): Promise<Product>;
   updateProduct(id: string, product: Partial<Product>): Promise<Product>;
@@ -84,6 +85,12 @@ export class MemStorage implements IStorage {
   async getProductsBySection(sectionId: number): Promise<Product[]> {
     return Array.from(this.products.values()).filter(
       product => product.sectionId === sectionId && product.onDisplay
+    );
+  }
+
+  async getAllProductsBySection(sectionId: number): Promise<Product[]> {
+    return Array.from(this.products.values()).filter(
+      product => product.sectionId === sectionId
     );
   }
 
@@ -181,6 +188,10 @@ export class DbStorage implements IStorage {
         eq(products.onDisplay, true)
       )
     );
+  }
+
+  async getAllProductsBySection(sectionId: number): Promise<Product[]> {
+    return await db.select().from(products).where(eq(products.sectionId, sectionId));
   }
 
   async getProductById(id: string): Promise<Product | undefined> {
