@@ -170,7 +170,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      const product = await storage.updateProduct(req.params.id, validatedData);
+      // Convert readonly features array to regular array if present
+      const updateData: Partial<Product> = {
+        ...validatedData,
+        ...(validatedData.features && { features: validatedData.features as string[] }),
+      } as Partial<Product>;
+
+      const product = await storage.updateProduct(req.params.id, updateData);
       res.json(product);
     } catch (error) {
       if (error instanceof z.ZodError) {

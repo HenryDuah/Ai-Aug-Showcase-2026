@@ -97,6 +97,7 @@ export class MemStorage implements IStorage {
       ...insertProduct, 
       id,
       features: insertProduct.features ? [...insertProduct.features] : null,
+      brochureUrl: insertProduct.brochureUrl ?? null,
       onDisplay: insertProduct.onDisplay ?? true,
     };
     this.products.set(id, product);
@@ -109,7 +110,12 @@ export class MemStorage implements IStorage {
     if (!existing) {
       throw new Error(`Product with id ${id} not found`);
     }
-    const updated = { ...existing, ...updates };
+    // Ensure features is properly typed as string[] when present
+    const normalizedUpdates = {
+      ...updates,
+      ...(updates.features && { features: Array.isArray(updates.features) ? updates.features : null }),
+    };
+    const updated = { ...existing, ...normalizedUpdates };
     this.products.set(id, updated);
     this.saveProducts();
     return updated;
