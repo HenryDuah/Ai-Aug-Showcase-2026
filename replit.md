@@ -29,6 +29,15 @@ Preferred communication style: Simple, everyday language.
   - Removed 50MB limit from video uploads
   - ObjectUploader component now supports unlimited file sizes
   - UI text updated to indicate "any size" for video uploads
+- Added centered content layout for desktop/tablet:
+  - Overview page: Content below header centered with max-w-4xl container (header remains full width)
+  - Product detail page: Content below header centered with max-w-4xl container (header remains full width)
+  - Improves readability on larger screens while maintaining mobile responsiveness
+- Simplified video upload workflow:
+  - Removed manual YouTube/Vimeo URL input
+  - Video URL field now read-only and auto-populated on upload
+  - Single "Upload Video File (any size)" button for all video uploads
+  - Clear format guidance: "Supported formats: MP4, MOV, AVI, WMV, WebM"
 
 **October 10, 2025 - Product Schema Updates**
 - Removed "How it Works" field completely from the application
