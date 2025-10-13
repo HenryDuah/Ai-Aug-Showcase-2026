@@ -21,7 +21,7 @@ export default function Welcome() {
         </h2>
         
         <p className="text-lg text-center text-muted-foreground max-w-md mb-12" data-testid="description-welcome">
-          Discover innovative medical technologies transforming healthcare
+          Discover Innovative Medical Technologies Transforming Healthcare
         </p>
 
         <Button 
