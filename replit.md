@@ -25,6 +25,10 @@ Preferred communication style: Simple, everyday language.
   - Added line-clamp for text overflow prevention (2 lines for titles, 3 for descriptions)
   - Updated badge from "Audio Available" to "Video" with Video icon
   - Cards now maintain equal heights in grid with flex layout
+- Removed video file upload size restrictions:
+  - Removed 50MB limit from video uploads
+  - ObjectUploader component now supports unlimited file sizes
+  - UI text updated to indicate "any size" for video uploads
 
 **October 10, 2025 - Product Schema Updates**
 - Removed "How it Works" field completely from the application
@@ -151,12 +155,13 @@ Preferred communication style: Simple, everyday language.
 
 **Product Video Upload & Display**
 - Direct video file upload using Replit Object Storage
-- Uppy-based file uploader with size and type restrictions (max 50MB, video formats)
+- Uppy-based file uploader with no size restrictions (any file size supported)
+- Allowed video formats: mp4, mov, avi, wmv, webm, and all video/* types
 - Video files stored in private object storage directory
 - Served publicly via `/objects/` endpoint
-- Supports both YouTube URLs and direct video file uploads
-- YouTube videos displayed via iframe embed
-- Direct video files displayed via HTML5 video player
+- Supports YouTube URLs, Vimeo URLs, and direct video file uploads
+- YouTube/Vimeo videos displayed via iframe embed
+- Direct video files displayed via HTML5 video player with multiple source formats
 - Required field for all products
 
 **Image Viewing**
