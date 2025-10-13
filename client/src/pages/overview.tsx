@@ -211,7 +211,6 @@ export default function Overview() {
                       </div>
                       <div className="flex-1">
                         <h4 className="font-bold text-foreground" data-testid={`section-name-${section.id}`}>{section.name}</h4>
-                        <p className="text-sm text-muted-foreground" data-testid={`section-description-${section.id}`}>{section.description}</p>
                       </div>
                       <ChevronRight className={`w-5 h-5 ${index === 0 ? 'text-primary' : 'text-muted-foreground'}`} />
                     </div>

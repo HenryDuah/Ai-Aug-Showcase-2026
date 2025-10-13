@@ -76,16 +76,15 @@ export default function Section() {
             Back to Overview
           </Button>
           
-          <div className="flex items-center gap-3 mb-2">
+          <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center font-bold text-2xl" data-testid={`section-number-${sectionId}`}>
               {sectionId}
             </div>
             <h1 className="text-3xl font-bold" data-testid={`section-title-${sectionId}`}>{section.name}</h1>
           </div>
-          <p className="text-white/90" data-testid={`section-description-${sectionId}`}>{section.description}</p>
           
           {/* Progress Indicator */}
-          <div className="mt-4 flex gap-2" data-testid="progress-indicator">
+          <div className="flex gap-2" data-testid="progress-indicator">
             {progressDots}
           </div>
         </div>
