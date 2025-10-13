@@ -5,7 +5,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import session from "express-session";
 import createMemoryStore from "memorystore";
 
@@ -160,4 +160,100 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Database-backed storage for production use
+export class DbStorage implements IStorage {
+  public sessionStore: any;
+
+  constructor() {
+    this.sessionStore = new MemoryStore({
+      checkPeriod: 86400000,
+    });
+  }
+
+  async getAllProducts(): Promise<Product[]> {
+    return await db.select().from(products);
+  }
+
+  async getProductsBySection(sectionId: number): Promise<Product[]> {
+    return await db.select().from(products).where(
+      and(
+        eq(products.sectionId, sectionId),
+        eq(products.onDisplay, true)
+      )
+    );
+  }
+
+  async getProductById(id: string): Promise<Product | undefined> {
+    const [product] = await db.select().from(products).where(eq(products.id, id));
+    return product;
+  }
+
+  async createProduct(insertProduct: InsertProduct): Promise<Product> {
+    const id = randomUUID();
+    const [product] = await db.insert(products).values({
+      id,
+      name: insertProduct.name,
+      company: insertProduct.company,
+      type: insertProduct.type,
+      description: insertProduct.description,
+      image: insertProduct.image,
+      videoUrl: insertProduct.videoUrl,
+      brochureUrl: insertProduct.brochureUrl ?? null,
+      theImpact: insertProduct.theImpact,
+      features: insertProduct.features ? [...insertProduct.features] : [],
+      sectionId: insertProduct.sectionId,
+      sectionName: insertProduct.sectionName,
+      onDisplay: insertProduct.onDisplay ?? true,
+    }).returning();
+    return product;
+  }
+
+  async updateProduct(id: string, updates: Partial<Product>): Promise<Product> {
+    const [product] = await db.update(products)
+      .set(updates)
+      .where(eq(products.id, id))
+      .returning();
+    if (!product) {
+      throw new Error(`Product with id ${id} not found`);
+    }
+    return product;
+  }
+
+  async deleteProduct(id: string): Promise<boolean> {
+    const result = await db.delete(products).where(eq(products.id, id)).returning();
+    return result.length > 0;
+  }
+
+  async createFeedback(insertFeedback: InsertFeedback): Promise<Feedback> {
+    const [newFeedback] = await db.insert(feedback).values({
+      visitorName: insertFeedback.visitorName,
+      visitorCompany: insertFeedback.visitorCompany,
+      visitorEmail: insertFeedback.visitorEmail ?? null,
+      visitorPhone: insertFeedback.visitorPhone ?? null,
+      comments: insertFeedback.comments ?? null,
+    }).returning();
+    return newFeedback;
+  }
+
+  async getAllFeedback(): Promise<Feedback[]> {
+    return await db.select().from(feedback);
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user;
+  }
+
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db.insert(users).values(insertUser).returning();
+    return user;
+  }
+}
+
+// Use database storage for both development and production
+export const storage = new DbStorage();
