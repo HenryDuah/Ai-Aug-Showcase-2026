@@ -133,7 +133,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const product = await storage.createProduct(validatedData);
+      // Clean up video fields - convert "none" or empty strings to undefined (which becomes null in DB)
+      const cleanedData = {
+        ...validatedData,
+        videoUrl: validatedData.videoUrl && validatedData.videoUrl.trim() && validatedData.videoUrl.toLowerCase() !== "none" 
+          ? validatedData.videoUrl 
+          : undefined,
+        videoType: validatedData.videoType && validatedData.videoType.trim() && validatedData.videoType.toLowerCase() !== "none" 
+          ? validatedData.videoType 
+          : undefined,
+      };
+      
+      const product = await storage.createProduct(cleanedData);
       res.status(201).json(product);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -170,10 +181,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
+      // Clean up video fields - convert "none" or empty strings to null, treat explicit null as clearing the field
+      let cleanedVideoUrl: string | null | undefined = undefined;
+      if (validatedData.videoUrl !== undefined) {
+        cleanedVideoUrl = validatedData.videoUrl === null || !validatedData.videoUrl?.trim() || validatedData.videoUrl.toLowerCase() === "none"
+          ? null
+          : validatedData.videoUrl;
+      }
+      
+      let cleanedVideoType: string | null | undefined = undefined;
+      if (validatedData.videoType !== undefined) {
+        cleanedVideoType = validatedData.videoType === null || !validatedData.videoType?.trim() || validatedData.videoType.toLowerCase() === "none"
+          ? null
+          : validatedData.videoType;
+      }
+
       // Convert readonly features array to regular array if present
       const updateData: Partial<Product> = {
         ...validatedData,
         ...(validatedData.features && { features: validatedData.features as string[] }),
+        ...(cleanedVideoUrl !== undefined && { videoUrl: cleanedVideoUrl }),
+        ...(cleanedVideoType !== undefined && { videoType: cleanedVideoType }),
       } as Partial<Product>;
 
       const product = await storage.updateProduct(req.params.id, updateData);

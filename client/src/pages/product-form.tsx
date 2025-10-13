@@ -131,9 +131,21 @@ export default function ProductForm() {
   });
 
   const onSubmit = (data: ProductFormData) => {
+    // Clean up video fields - convert empty, "none", or falsy values to null (not undefined, so PATCH includes them)
+    const cleanVideoUrl = data.videoUrl?.trim() && data.videoUrl.toLowerCase() !== "none" 
+      ? data.videoUrl 
+      : null;
+    const cleanVideoType = data.videoType?.trim() && 
+      data.videoType.toLowerCase() !== "none" && 
+      data.videoType !== "" 
+        ? data.videoType 
+        : null;
+
     const productData = {
       ...data,
       features: data.features.split("\n").filter(f => f.trim()),
+      videoUrl: cleanVideoUrl,
+      videoType: cleanVideoType,
     };
 
     if (isEditMode) {
@@ -393,11 +405,11 @@ export default function ProductForm() {
                       >
                         <FormControl>
                           <SelectTrigger data-testid="select-video-type">
-                            <SelectValue placeholder="Select video type" />
+                            <SelectValue placeholder="Select video type (optional)" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="">None</SelectItem>
+                          <SelectItem value="">Clear selection</SelectItem>
                           <SelectItem value="Overview Video">Overview Video</SelectItem>
                           <SelectItem value="Demo Video">Demo Video</SelectItem>
                         </SelectContent>

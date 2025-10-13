@@ -156,7 +156,7 @@ export default function Section() {
               className="flex-1"
               data-testid={`button-next-${sectionId}`}
             >
-              {sectionId === 5 ? "Give Feedback" : "Next Section"}
+              {sectionId === 5 ? "Share Your Thoughts" : "Next Section"}
               {sectionId === 5 ? <MessageCircle className="w-4 h-4 ml-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
             </Button>
           </div>
