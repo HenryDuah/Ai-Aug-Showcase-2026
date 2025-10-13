@@ -328,25 +328,27 @@ export default function ProductForm() {
                     <FormItem>
                       <FormLabel>Product Video</FormLabel>
                       <FormControl>
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                           <Input 
                             {...field} 
-                            placeholder="YouTube URL or video link (e.g., https://www.youtube.com/watch?v=...)" 
-                            data-testid="input-video-url" 
+                            placeholder="Video URL (auto-filled when you upload)" 
+                            data-testid="input-video-url"
+                            readOnly
+                            className="bg-muted"
                           />
                           <div className="flex items-center gap-2">
-                            <span className="text-sm text-muted-foreground">Or upload a video file (any size):</span>
                             <ObjectUploader
                               maxNumberOfFiles={1}
                               allowedFileTypes={[".mp4", ".mov", ".avi", ".wmv", ".webm", "video/*"]}
                               onGetUploadParameters={handleGetUploadParameters}
                               onComplete={handleUploadComplete}
                             >
-                              <Button type="button" variant="outline" size="sm" data-testid="button-upload-video">
+                              <Button type="button" variant="outline" data-testid="button-upload-video">
                                 <Upload className="w-4 h-4 mr-2" />
-                                Upload Video
+                                Upload Video File (any size)
                               </Button>
                             </ObjectUploader>
+                            <span className="text-sm text-muted-foreground">Supported formats: MP4, MOV, AVI, WMV, WebM</span>
                           </div>
                         </div>
                       </FormControl>

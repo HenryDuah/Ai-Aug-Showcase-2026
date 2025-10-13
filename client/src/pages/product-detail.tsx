@@ -93,125 +93,127 @@ export default function ProductDetail() {
           <p className="text-white/90 text-lg" data-testid="product-company">{product.company}</p>
         </div>
 
-        <div className="px-6 py-6 space-y-6">
-          {/* Product Image */}
-          <div 
-            className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl overflow-hidden cursor-pointer"
-            onClick={() => setShowImageOverlay(true)}
-            data-testid="product-image-container"
-          >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-cover"
-              data-testid="product-image"
-            />
-          </div>
+        <div className="px-6 py-6">
+          <div className="max-w-4xl mx-auto space-y-6">
+            {/* Product Image */}
+            <div 
+              className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl overflow-hidden cursor-pointer"
+              onClick={() => setShowImageOverlay(true)}
+              data-testid="product-image-container"
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-full object-cover"
+                data-testid="product-image"
+              />
+            </div>
 
-          {/* Product Type */}
-          <Card>
-            <CardContent className="pt-4">
-              <div className="flex items-center gap-3">
-                <Tag className="text-primary text-xl flex-shrink-0" size={20} />
-                <div>
-                  <p className="text-xs text-muted-foreground mb-1">Product Type</p>
-                  <p className="font-semibold text-foreground" data-testid="product-type">{product.type}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Description */}
-          <Card>
-            <CardContent className="pt-5">
-              <h3 className="text-lg font-bold text-foreground mb-3">Description</h3>
-              <p className="text-foreground/80 leading-relaxed" data-testid="product-description">
-                {product.description}
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Product Video */}
-          {product.videoUrl && (
+            {/* Product Type */}
             <Card>
-              <CardContent className="pt-5">
-                <h3 className="text-lg font-bold text-foreground mb-3">Product Video</h3>
-                {product.videoUrl.includes('youtube.com') || product.videoUrl.includes('youtu.be') ? (
-                  <div className="aspect-video">
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={product.videoUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')}
-                      title="Product video"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      data-testid="product-video-youtube"
-                    />
+              <CardContent className="pt-4">
+                <div className="flex items-center gap-3">
+                  <Tag className="text-primary text-xl flex-shrink-0" size={20} />
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">Product Type</p>
+                    <p className="font-semibold text-foreground" data-testid="product-type">{product.type}</p>
                   </div>
-                ) : product.videoUrl.includes('vimeo.com') ? (
-                  <div className="aspect-video">
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={product.videoUrl.replace('vimeo.com/', 'player.vimeo.com/video/')}
-                      title="Product video"
-                      frameBorder="0"
-                      allow="autoplay; fullscreen; picture-in-picture"
-                      allowFullScreen
-                      data-testid="product-video-vimeo"
-                    />
-                  </div>
-                ) : (
-                  <div className="aspect-video">
-                    <video
-                      controls
-                      preload="metadata"
-                      className="w-full h-full rounded-lg object-contain bg-black"
-                      data-testid="product-video"
-                    >
-                      <source src={product.videoUrl} type="video/mp4" />
-                      <source src={product.videoUrl} type="video/webm" />
-                      <source src={product.videoUrl} type="video/ogg" />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                )}
+                </div>
               </CardContent>
             </Card>
-          )}
 
-          {/* The Impact */}
-          {product.theImpact && (
+            {/* Description */}
             <Card>
               <CardContent className="pt-5">
-                <h3 className="text-lg font-bold text-foreground mb-3">The Impact</h3>
-                <p className="text-foreground/80 leading-relaxed" data-testid="product-impact">
-                  {product.theImpact}
+                <h3 className="text-lg font-bold text-foreground mb-3">Description</h3>
+                <p className="text-foreground/80 leading-relaxed" data-testid="product-description">
+                  {product.description}
                 </p>
               </CardContent>
             </Card>
-          )}
 
-          {/* Key Features */}
-          {product.features && product.features.length > 0 && (
-            <Card>
-              <CardContent className="pt-5">
-                <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
-                  <CheckCircle className="text-primary" size={20} />
-                  Key Features
-                </h3>
-                <ul className="space-y-2" data-testid="product-features">
-                  {product.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <CheckCircle className="text-primary mt-1 flex-shrink-0" size={16} />
-                      <span className="text-foreground/80" data-testid={`feature-${index}`}>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          )}
+            {/* Product Video */}
+            {product.videoUrl && (
+              <Card>
+                <CardContent className="pt-5">
+                  <h3 className="text-lg font-bold text-foreground mb-3">Product Video</h3>
+                  {product.videoUrl.includes('youtube.com') || product.videoUrl.includes('youtu.be') ? (
+                    <div className="aspect-video">
+                      <iframe
+                        width="100%"
+                        height="100%"
+                        src={product.videoUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')}
+                        title="Product video"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        data-testid="product-video-youtube"
+                      />
+                    </div>
+                  ) : product.videoUrl.includes('vimeo.com') ? (
+                    <div className="aspect-video">
+                      <iframe
+                        width="100%"
+                        height="100%"
+                        src={product.videoUrl.replace('vimeo.com/', 'player.vimeo.com/video/')}
+                        title="Product video"
+                        frameBorder="0"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowFullScreen
+                        data-testid="product-video-vimeo"
+                      />
+                    </div>
+                  ) : (
+                    <div className="aspect-video">
+                      <video
+                        controls
+                        preload="metadata"
+                        className="w-full h-full rounded-lg object-contain bg-black"
+                        data-testid="product-video"
+                      >
+                        <source src={product.videoUrl} type="video/mp4" />
+                        <source src={product.videoUrl} type="video/webm" />
+                        <source src={product.videoUrl} type="video/ogg" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+
+            {/* The Impact */}
+            {product.theImpact && (
+              <Card>
+                <CardContent className="pt-5">
+                  <h3 className="text-lg font-bold text-foreground mb-3">The Impact</h3>
+                  <p className="text-foreground/80 leading-relaxed" data-testid="product-impact">
+                    {product.theImpact}
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Key Features */}
+            {product.features && product.features.length > 0 && (
+              <Card>
+                <CardContent className="pt-5">
+                  <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+                    <CheckCircle className="text-primary" size={20} />
+                    Key Features
+                  </h3>
+                  <ul className="space-y-2" data-testid="product-features">
+                    {product.features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <CheckCircle className="text-primary mt-1 flex-shrink-0" size={16} />
+                        <span className="text-foreground/80" data-testid={`feature-${index}`}>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
 
         {/* Navigation */}
