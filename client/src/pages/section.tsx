@@ -94,7 +94,7 @@ export default function Section() {
         <div className="px-6 py-6 space-y-6">
           <p className="text-sm text-muted-foreground flex items-center gap-2" data-testid="tap-instruction">
             <InfoIcon className="w-4 h-4" />
-            Tap on any product card to view details and listen to audio guides
+            Tap on any product card to view details
           </p>
 
           {isLoading ? (

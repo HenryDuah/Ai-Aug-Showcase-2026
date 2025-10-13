@@ -149,13 +149,33 @@ export default function ProductDetail() {
                       data-testid="product-video-youtube"
                     />
                   </div>
+                ) : product.videoUrl.includes('vimeo.com') ? (
+                  <div className="aspect-video">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={product.videoUrl.replace('vimeo.com/', 'player.vimeo.com/video/')}
+                      title="Product video"
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                      data-testid="product-video-vimeo"
+                    />
+                  </div>
                 ) : (
-                  <video
-                    controls
-                    src={product.videoUrl}
-                    className="w-full rounded-lg"
-                    data-testid="product-video"
-                  />
+                  <div className="aspect-video">
+                    <video
+                      controls
+                      preload="metadata"
+                      className="w-full h-full rounded-lg object-contain bg-black"
+                      data-testid="product-video"
+                    >
+                      <source src={product.videoUrl} type="video/mp4" />
+                      <source src={product.videoUrl} type="video/webm" />
+                      <source src={product.videoUrl} type="video/ogg" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
                 )}
               </CardContent>
             </Card>

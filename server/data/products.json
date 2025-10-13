@@ -5,10 +5,10 @@
       "name": "Keyar DT Lite®",
       "company": "Janitri",
       "type": "Portable Non-Stress Test Fetal Doppler",
-      "description": "The Keyar DT Lite connects wirelessly to a mobile app, enabling recording of fetal heartbeats, conducting Non Stress Tests (NST), and sharing real-time reports with doctors and specialists.\n",
+      "description": "The Keyar DT Lite connects wirelessly to a mobile app, enabling recording of fetal heartbeats, conducting Non Stress Tests (NST), and sharing real-time reports with doctors and specialists.",
       "image": "https://mothers.janitri.in/cdn/shop/files/DTLitecopy.jpg?v=1737543227",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "theImpact": "Enables early detection and continuous monitoring of high-risk pregnancies through frontline care—reducing delays in care and minimizing frequent hospital visits.\n",
+      "videoUrl": "https://www.youtube.com/shorts/bl3PBjScI3I",
+      "theImpact": "Enables early detection and continuous monitoring of high-risk pregnancies through frontline care—reducing delays in care and minimizing frequent hospital visits.",
       "features": [
         "Medical-grade (ISO 13485 certified)",
         "Portable and easy-to-use",
@@ -25,15 +25,14 @@
       "name": "JPD-100E",
       "company": "Jumper",
       "type": "Smart Handheld Fetal Doppler",
-      "description": "The device uses a 2.5 MHz ultrasound transducer to detect fetal heartbeats. Results are shown in real time on its LCD screen, with heartbeat values, waveforms and audio output.",
+      "description": "The device uses a 2.5 MHz ultrasound transducer to detect fetal heart rate. Results are shown in real time on its LCD screen, with heartbeat values, waveforms and audio output.",
       "image": "https://jumpermmed.com/wp-content/uploads/2022/10/100E-1.png",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "theImpact": "Empowers frontline healthcare workers with smart handheld fetal doppler technology to improve patient outcomes and deliver better care at the point of need.",
+      "videoUrl": "https://www.youtube.com/watch?v=HwHdpSEqRhw",
+      "theImpact": "Empowering health care workers to detect any abnormal fetal heart patterns early, and provide timely reassurance and guidance to mothers to act promptly to ensure safer outcomes. ",
       "features": [
         "Detects fetal heartbeat clearly from the 16th week of pregnancy.",
         "High sensitivity ensures accurate readings",
         "Safe, non-invasive monitoring ",
-        "Adjustable sound volume ",
         "Lightweight and portable for home or clinical use."
       ],
       "sectionId": 1,
@@ -45,14 +44,14 @@
       "name": "MOMI®",
       "company": "Janitri",
       "type": "Smart Ring for Mothers",
-      "description": "Titanium ring that continuously monitors vital signs.",
+      "description": "Lightweight titanium ring that continuously monitors essential vital signs. Connects to the Janitri app and provides insights for expectant and new mothers.",
       "image": "https://m.media-amazon.com/images/I/51+WlEOl16L._UF1000,1000_QL80_.jpg",
-      "videoUrl": "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
-      "theImpact": "Empowers frontline healthcare workers with smart ring for mothers technology to improve patient outcomes and deliver better care at the point of need.",
+      "videoUrl": "https://www.instagram.com/reel/DLRX2XMTRmY/",
+      "theImpact": "Supports healthier pregnancies & smoother postpartum recovery - transforming maternal care with continuous data and early alerts.",
       "features": [
-        "Dedicated modes for pregnancy, postpartum and daily health.",
-        "Tracks sleep quality, stress levels, nutrition, and activity.",
-        "Battery life of 7+ days with water resistance up to 50m."
+        "Dedicated modes for pregnancy, postpartum and daily health. ",
+        "Tracks Heart rate, Heart rate variability, SpO2, body temperature, sleep quality, stress levels, nutrition, and activity.",
+        "Extended battery life of 7+ days with water resistance up to 50m."
       ],
       "sectionId": 1,
       "sectionName": "Maternal",
@@ -60,18 +59,18 @@
     },
     {
       "id": "neosafe-incubator",
-      "name": "Bempu TempWatch® ",
+      "name": "Bempu Tempwatch & BellyButton",
       "company": "Bempu",
-      "type": "Neonatal Hypothermia Monitor",
-      "description": "A simple wristband tracks a newborn’s temperature:\nBlinks blue if adequately warm\nBlinks red and plays alert sounds if cold\n",
+      "type": "Neonatal Hypothermia and Breathing Monitors",
+      "description": "Tempwatch tracks the body temperature — blue when warm and orange with alert when cold.\n\nBellyButton tracks abdominal breathing — green when normal, and red with alert and vibration to stimulate the baby when movement slow or stops. \n",
       "image": "https://images.squarespace-cdn.com/content/v1/5ff31b0e15120a7c1d22ace6/1612938477426-G9CNRZWBZ9IDC6DZFRSX/G4_1500px.jpg",
       "videoUrl": "https://www.youtube.com/watch?v=9bZkp7q19f0",
-      "theImpact": "Empowers frontline healthcare workers with neonatal hypothermia monitor technology to improve patient outcomes and deliver better care at the point of need.",
+      "theImpact": "Up to 40% of neonatal deaths and complications from hypothermia can be prevented with early detection.",
       "features": [
-        "Easy to use, in home or clinics",
-        "Validated use for 60,000 babies in 14 countries",
-        "Available in both single-use and cost-saving multi-use options.",
-        "Use 30 day without charge"
+        "Easy to use in home or clinics",
+        "Instant alerts through sound, light and notifications on phones/tablets. ",
+        "Safe and comfortable radiation-free design. Rechargable.",
+        "Proven use for 60,000 babies in 14 countries"
       ],
       "sectionId": 2,
       "sectionName": "Neonatal",
@@ -79,18 +78,19 @@
     },
     {
       "id": "screenpro-analyzer",
-      "name": "ScreenPro Analyzer",
-      "company": "DiagnoTech Labs",
-      "type": "Diagnostic analyzer system",
-      "description": "Multi-parameter diagnostic analyzer capable of performing comprehensive health screenings with rapid results and AI-assisted result interpretation.",
-      "image": "https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
-      "videoUrl": "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
-      "theImpact": "Empowers frontline healthcare workers with diagnostic analyzer system technology to improve patient outcomes and deliver better care at the point of need.",
+      "name": "echOpen O1",
+      "company": "echOpen",
+      "type": "Portable Point-of-Care Ultrasound",
+      "description": "The echOpen O1 operates across three frequencies in a single probe, enabling quick visualization of major organs such as the heart, lungs, and kidneys in 5 minutes. Connects to a mobile application that displays real-time images.",
+      "image": "https://i.ytimg.com/vi/NbKOA-3X8Cg/maxresdefault.jpg",
+      "videoUrl": "https://www.youtube.com/watch?v=NbKOA-3X8Cg",
+      "theImpact": "\nAlmost 50% of diagnosis are modified after a POCUS examination.\n13% decrease in patients referral to secondary care.\n",
       "features": [
-        "Multi-parameter analysis",
-        "Rapid result delivery",
-        "AI-assisted interpretation",
-        "Automated sample processing"
+        "Validated image quality through clinical studies.",
+        "Easy-to-use interface for diverse medical specialties.",
+        "Single battery charge allows multiple examinations throughout the day.",
+        "Continuous updates through a digital platform. ",
+        "Enables remote access and collaborative learning."
       ],
       "sectionId": 3,
       "sectionName": "General Screening",
@@ -98,18 +98,18 @@
     },
     {
       "id": "quicktest-pro",
-      "name": "QuickTest Pro",
-      "company": "RapidDx Solutions",
-      "type": "Rapid test platform",
-      "description": "Comprehensive rapid diagnostic test platform delivering accurate results in minutes with minimal sample requirements.",
-      "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "name": "LVOCheck",
+      "company": "abcdX",
+      "type": "Rapid Stroke Triage Test",
+      "description": "LVOCheck combines stroke-specific biomarkers with AI analysis to deliver an accurate diagnosis in under 10 minutes. Usable in ambulances, health centres, or by community healthcare workers.\n",
+      "image": "https://cdn.prod.website-files.com/6393b235fa1a6f52abdd5c6b/65818ad583f7e167a8a09242_Group%206008.png",
       "videoUrl": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
-      "theImpact": "Empowers frontline healthcare workers with rapid test platform technology to improve patient outcomes and deliver better care at the point of need.",
+      "theImpact": "Helps prevent long-term disability, addressing the cause of 95% of stroke-related disabilities.\nEnables frontline healthcare workers to act early and guide patients to the right care.\n",
       "features": [
-        "Results in minutes",
-        "Minimal sample requirements",
-        "Multiple test types",
-        "High accuracy"
+        "Accurately identifies Large Vessel Occlusion (LVO) strokes caused by major brain artery blockage.",
+        "Also identifies other stroke types or heart attacks.",
+        "Simple to use for pre-hospital triage, no specialist expertise required.",
+        "Affordable and widely accessible solution."
       ],
       "sectionId": 4,
       "sectionName": "Rapid Diagnostic Tests",
@@ -117,19 +117,19 @@
     },
     {
       "id": "healthhub-platform",
-      "name": "HealthHub Platform",
-      "company": "MediSoft Technologies",
-      "type": "Healthcare management software",
-      "description": "Comprehensive healthcare management platform integrating patient records, diagnostic results, and treatment planning with AI-powered analytics.",
-      "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "name": "MEDSINC ",
+      "company": "ThinkMD",
+      "type": "Digital Health Platform",
+      "description": "The platform uses machine learning to analyze clinical data entered by healthcare workers to determine illness severity, provides diagnostic insights, and recommends treatment or referrals.\n",
+      "image": "https://vator.tv/wp-content/uploads/2024/12/230404150300932.jpg",
       "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "theImpact": "Empowers frontline healthcare workers with healthcare management software technology to improve patient outcomes and deliver better care at the point of need.",
+      "theImpact": "Enables community and frontline health workers to assess over 300 clinical risks.\nFacilitated over 2.1 million clinical encounters across 5 countries, helping close the healthcare gap for underserved communities.\n",
       "features": [
-        "Patient record integration",
-        "Diagnostic result management",
-        "Treatment planning",
-        "AI-powered analytics",
-        "Telemedicine capabilities"
+        "Clinically validated with accuracy of up to 95% ",
+        "Improves adherence to medical protocols by ~ 40%",
+        "Reduces supervision and training costs by ~ 50%",
+        "Works offline and supports over 15 languages",
+        "Generates real-time data for population health monitoring and disease surveillance"
       ],
       "sectionId": 5,
       "sectionName": "Software Solutions",
@@ -175,18 +175,17 @@
     },
     {
       "id": "neonatal-care-2",
-      "name": "NeoVent Respirator",
-      "company": "BabyBreath Technologies",
-      "type": "Neonatal Ventilator",
-      "description": "Specialized ventilation system designed for premature and critically ill newborns with gentle, precise respiratory support.",
-      "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
-      "videoUrl": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
-      "theImpact": "Empowers frontline healthcare workers with neonatal ventilator technology to improve patient outcomes and deliver better care at the point of need.",
+      "name": "Navam SpO₂",
+      "company": "Janitri",
+      "type": "Smart Baby Monitoring Device",
+      "description": "Lightweight sensor is attached to the baby’s foot, where it continuously measures oxygen saturation (SpO₂) and heart rate which is transmitted to a mobile app.\n",
+      "image": "https://mothers.janitri.in/cdn/shop/files/homepageunderproducts.jpg?v=1742613748",
+      "videoUrl": "https://www.instagram.com/reel/DDY8y4ZiFku/",
+      "theImpact": "Empowers caregivers at the community level to improve neonatal outcomes by enabling timely interventions, reducing preventable complications.",
       "features": [
-        "Gentle ventilation modes",
-        "Precise volume control",
-        "Built-in safety alarms",
-        "Easy-to-use interface"
+        "Enables early detection of abnormalities in oxygen levels or heart rate.",
+        "Non-invasive and safe. ",
+        "Lightweight, soft and breathable material ensures long-wear comfort for babies."
       ],
       "sectionId": 2,
       "sectionName": "Neonatal",
@@ -194,18 +193,18 @@
     },
     {
       "id": "neonatal-care-3",
-      "name": "PhotoTherapy Pro",
-      "company": "LightCare Medical",
-      "type": "Phototherapy Device",
-      "description": "Advanced LED phototherapy system for treating neonatal jaundice with optimal light wavelength and intensity control.",
-      "image": "https://images.unsplash.com/photo-1631815589278-64f2a7d6e5f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "name": "IMPALA system",
+      "company": "GOAL 3",
+      "type": "Neonatal Vital Signs Monitoring",
+      "description": "The IMPALA System delivers real-time patient monitoring and decision support. The monitor tracks vital signs, while the app and server connect healthcare workers to patient data, alerts and trend analysis.",
+      "image": "https://www.designboom.com/wp-content/dbsub/454613/2023-07-07/goal3-impala-health-monitor-for-africa-9-64a82a034449d.jpg",
+      "videoUrl": "https://www.youtube.com/watch?v=fCkONDpQ8b8",
       "theImpact": "Empowers frontline healthcare workers with phototherapy device technology to improve patient outcomes and deliver better care at the point of need.",
       "features": [
-        "Optimal wavelength LED lights",
-        "Adjustable intensity",
-        "Energy efficient",
-        "Timer and dosage tracking"
+        "Implemented in hospitals in Malawi, Tanzania, and Rwanda.",
+        "42% Reduction of mortality",
+        "½ day Reduced admission time",
+        "32% Reduced critical illness"
       ],
       "sectionId": 2,
       "sectionName": "Neonatal",
@@ -228,7 +227,7 @@
       ],
       "sectionId": 2,
       "sectionName": "Neonatal",
-      "onDisplay": true
+      "onDisplay": false
     },
     {
       "id": "neonatal-care-5",
@@ -247,22 +246,21 @@
       ],
       "sectionId": 2,
       "sectionName": "Neonatal",
-      "onDisplay": true
+      "onDisplay": false
     },
     {
       "id": "screening-device-2",
-      "name": "VisionCheck Scanner",
-      "company": "OptiMed",
-      "type": "Vision Screening Device",
-      "description": "Automated vision screening system for early detection of eye conditions and visual impairments in all age groups.",
-      "image": "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "name": "Ostium  ",
+      "company": "AI Diagnosi",
+      "type": "AI-powered Digital Stethoscope for TB",
+      "description": "Health workers use the portable digital stethoscope to record a patient’s breath sounds in six positions in less than 5 minutes. The AI model analyzes the sound patterns in real time to detect signs of pulmonary TB.\n",
+      "image": "https://cdn.prod.website-files.com/66d05282072fcab2ca79e953/66f3be93b45215e3539631fd_ostium-1.png",
       "videoUrl": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
-      "theImpact": "Empowers frontline healthcare workers with vision screening device technology to improve patient outcomes and deliver better care at the point of need.",
+      "theImpact": "63% reduction in missed TB-positive cases.\n2.7x more effective than symptomatic screening\nBuilt and validated on over 30,000 lung recordings.\n",
       "features": [
-        "Automated screening",
-        "Quick results",
-        "Non-invasive testing",
-        "Portable design"
+        "Portable and easy to use anywhere without specialist operators.",
+        "Guided device placement to ensure proper recording.",
+        "Cost-effective at < $2 per screening, meeting WHO’s TB cost guideline."
       ],
       "sectionId": 3,
       "sectionName": "General Screening",
@@ -270,18 +268,17 @@
     },
     {
       "id": "screening-device-3",
-      "name": "AudioTest Pro",
-      "company": "HearWell Tech",
-      "type": "Hearing Screening Device",
-      "description": "Professional audiometry system for comprehensive hearing assessment and early detection of hearing loss.",
-      "image": "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "theImpact": "Empowers frontline healthcare workers with hearing screening device technology to improve patient outcomes and deliver better care at the point of need.",
+      "name": "Omron COMPLETE ",
+      "company": "Omron",
+      "type": "Validated ECG + Blood Pressure Monitor",
+      "description": "With a simple cuff wrap and one-touch operation, the device measures blood pressure and ECG . It syncs with the OMRON Connect app, allowing users to track results, view trends, and share health data for timely intervention.\n",
+      "image": "https://www.omron-healthcare.com/images/fit=crop-50-50,fm=jpg,h=1600,w=1600/products/complete_01-1.jpg?signature=01ef374de7cfa8b4b633b40589a894821735a1b97508052ddd9aa33d3e2ab085",
+      "videoUrl": "https://www.youtube.com/watch?v=5xrEOPRTRro",
+      "theImpact": "Empowers front line health care workers to detect cardiac issues early and take preventive actions that improve heart health and saves lives.\n",
       "features": [
-        "Wide frequency range",
-        "Automated testing protocols",
-        "Result documentation",
-        "Easy calibration"
+        "Clinically validated accuracy with Intellisense technology",
+        "Identifies Atrial Fibrillation, Bradycardia, Tachycardia and Sinus rhythms",
+        "Portable, user-friendly design for non specialist user with clear display and memory for 90 readings"
       ],
       "sectionId": 3,
       "sectionName": "General Screening",
@@ -304,7 +301,7 @@
       ],
       "sectionId": 3,
       "sectionName": "General Screening",
-      "onDisplay": true
+      "onDisplay": false
     },
     {
       "id": "screening-device-5",
@@ -323,22 +320,21 @@
       ],
       "sectionId": 3,
       "sectionName": "General Screening",
-      "onDisplay": true
+      "onDisplay": false
     },
     {
       "id": "rapid-test-2",
-      "name": "InfectiScan Rapid",
-      "company": "BioDetect Labs",
-      "type": "Infectious Disease Test",
-      "description": "Rapid point-of-care testing for multiple infectious diseases with results in under 15 minutes.",
-      "image": "https://images.unsplash.com/photo-1582560475093-ba66accbc424?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "name": "EDKD® ",
+      "company": "Myriad Innovations",
+      "type": "AI-powered Kidney Health Monitoring Kit",
+      "description": "Test kit is used to collect a sample and upload an image via the app. The image is analysed to generate a Kidney Health Score, identifying renal abnormalities at their earliest stages.\n",
+      "image": "https://myriadtechs.com/storage/products/PfB8O5bzkYtCsszdwuhFD1cCFTk6fBpQVlchNtJp.jpg",
       "videoUrl": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
-      "theImpact": "Empowers frontline healthcare workers with infectious disease test technology to improve patient outcomes and deliver better care at the point of need.",
+      "theImpact": "Empowers front line healthcare workers to detect  kidney disease in its silent stages- improving treatment outcomes, reducing reliance on invasive interventions, and easing facility burden by remote monitoring.\n",
       "features": [
-        "Multi-pathogen detection",
-        "Results in 15 minutes",
-        "High sensitivity",
-        "Minimal training required"
+        "Cost-effective alternative to frequent lab testing for monitoring.",
+        "Provides real-time, transparent health data for informed decisions.",
+        "Early detection enables lifestyle or therapeutic interventions to slow Chronic Kidney Disease (CKD) progression."
       ],
       "sectionId": 4,
       "sectionName": "Rapid Diagnostic Tests",
@@ -346,18 +342,19 @@
     },
     {
       "id": "rapid-test-3",
-      "name": "CardioMarker Test",
-      "company": "HeartDx",
-      "type": "Cardiac Biomarker Test",
-      "description": "Rapid testing for cardiac biomarkers to assess heart attack and cardiovascular conditions at point of care.",
-      "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
+      "name": "Trister Multi-Check",
+      "company": "Trister",
+      "type": "Portable 3-in-1 Monitoring Device",
+      "description": "Measures blood glucose, cholesterol and uric acid. Uses auto strip recognition technology to identify the test type and deliver accurate results on a LCD display.",
+      "image": "https://m.media-amazon.com/images/I/41A2sgI26NL._UF1000,1000_QL80_.jpg",
       "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "theImpact": "Empowers frontline healthcare workers with cardiac biomarker test technology to improve patient outcomes and deliver better care at the point of need.",
+      "theImpact": "Reduces the need for multiple devices and frequent lab tests by making chronic disease screening & monitoring simpler and more accessible.\n\n",
       "features": [
-        "Troponin detection",
-        "Quick turnaround time",
-        "Quantitative results",
-        "Point-of-care testing"
+        "3-in-1 functionality for essential health parameters.",
+        "Accurate readings with minimal blood sample.",
+        "Convenient for remote or clinical use.",
+        "Easy-to-read large LCD screen with low battery indicator.",
+        "Saves up to 460 test results."
       ],
       "sectionId": 4,
       "sectionName": "Rapid Diagnostic Tests",
@@ -380,7 +377,7 @@
       ],
       "sectionId": 4,
       "sectionName": "Rapid Diagnostic Tests",
-      "onDisplay": true
+      "onDisplay": false
     },
     {
       "id": "rapid-test-5",
@@ -399,22 +396,22 @@
       ],
       "sectionId": 4,
       "sectionName": "Rapid Diagnostic Tests",
-      "onDisplay": true
+      "onDisplay": false
     },
     {
       "id": "software-solution-2",
-      "name": "AI Radiology Assistant",
-      "company": "ImageAI Solutions",
-      "type": "Medical Imaging Software",
-      "description": "AI-powered radiology software that assists in detecting abnormalities in X-rays, CT scans, and MRI images.",
-      "image": "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
-      "videoUrl": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
-      "theImpact": "Empowers frontline healthcare workers with medical imaging software technology to improve patient outcomes and deliver better care at the point of need.",
+      "name": "Rology AI",
+      "company": "Rology",
+      "type": "AI-assisted Teleradiology Platform",
+      "description": "Medical scans can be uploaded with patient history to Rology’s cloud platform directly using mobile or web app. High quality reports delivered in minutes using a combination of AI and Teleradiology with a network of radiologists.\n",
+      "image": "https://i0.wp.com/rology.health/wp-content/uploads/2024/08/blog-cover.png?w=900&ssl=1",
+      "videoUrl": "https://www.youtube.com/watch?v=zJ6FEX9Wcoo",
+      "theImpact": "FDA-approved and active in over 9 countries across the Middle East and Africa with over 1.3 Million radiology reports completed.",
       "features": [
-        "AI-powered detection",
-        "Multiple imaging modalities",
-        "Second opinion support",
-        "Fast processing"
+        "Upload scans from anywhere, remotely.",
+        "FDA cleared, offers higher reporting accuracy through rigorous quality control.",
+        "Enables health facilities to handle higher scan volumes without hiring more staff.",
+        "Zero setup cost and seamless integration with existing systems"
       ],
       "sectionId": 5,
       "sectionName": "Software Solutions",
@@ -422,18 +419,18 @@
     },
     {
       "id": "software-solution-3",
-      "name": "TeleCare Connect",
-      "company": "RemoteMed",
-      "type": "Telemedicine Platform",
-      "description": "Comprehensive telemedicine platform enabling remote consultations, e-prescriptions, and patient monitoring.",
-      "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "theImpact": "Empowers frontline healthcare workers with telemedicine platform technology to improve patient outcomes and deliver better care at the point of need.",
+      "name": "HealthPulse",
+      "company": "Audere",
+      "type": "AI-powered Digital Health Tool",
+      "description": "HealthPulse uses AI to analyze images of rapid diagnostic tests captured through smartphones. It interprets test lines, verifies image quality and automatically reports results.\n",
+      "image": "https://techxlab.org/wp-content/uploads/2025/05/MobileHealth-AI-Apps-technology.png",
+      "videoUrl": "https://www.youtube.com/watch?v=7DuOKYctTPU",
+      "theImpact": "Being deployed across multiple African countries, including Nigeria, Kenya, Rwanda, Uganda, South Africa, Benin, and Côte d’Ivoire. \nThe platform strengthens diagnostic accuracy and data reporting for diseases like malaria, HIV, and COVID-19.\n",
       "features": [
-        "Video consultations",
-        "E-prescription system",
-        "Appointment scheduling",
-        "Secure messaging"
+        "Achieves 90–95% accuracy using AI-powered interpretation of test results.",
+        "Works on standard smartphones and integrates into EMR or public health systems.",
+        "Enables real-time disease surveillance and program monitoring.",
+        "Scalable and cost-effective for low-resource and remote healthcare settings."
       ],
       "sectionId": 5,
       "sectionName": "Software Solutions",
@@ -456,7 +453,7 @@
       ],
       "sectionId": 5,
       "sectionName": "Software Solutions",
-      "onDisplay": true
+      "onDisplay": false
     },
     {
       "id": "software-solution-5",
@@ -475,7 +472,7 @@
       ],
       "sectionId": 5,
       "sectionName": "Software Solutions",
-      "onDisplay": true
+      "onDisplay": false
     }
   ]
 }
