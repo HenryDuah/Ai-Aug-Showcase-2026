@@ -6,6 +6,7 @@ import AwsS3 from "@uppy/aws-s3";
 import type { UploadResult } from "@uppy/core";
 import { Button } from "@/components/ui/button";
 import type { ButtonProps } from "@/components/ui/button";
+import { CheckCircle, Loader2 } from "lucide-react";
 
 interface ObjectUploaderProps {
   maxNumberOfFiles?: number;
@@ -34,6 +35,10 @@ export function ObjectUploader({
   children,
 }: ObjectUploaderProps) {
   const [showModal, setShowModal] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadComplete, setUploadComplete] = useState(false);
+
   const [uppy] = useState(() =>
     new Uppy({
       restrictions: {
@@ -47,14 +52,39 @@ export function ObjectUploader({
         shouldUseMultipart: false,
         getUploadParameters: onGetUploadParameters,
       })
+      .on("upload", () => {
+        setIsUploading(true);
+        setUploadComplete(false);
+        setUploadProgress(0);
+      })
+      .on("progress", (progress) => {
+        if (progress) {
+          setUploadProgress(Math.round(progress));
+        }
+      })
+      .on("upload-success", () => {
+        setUploadProgress(100);
+      })
       .on("complete", (result) => {
+        setIsUploading(false);
+        setUploadComplete(true);
         onComplete?.(result);
-        setShowModal(false);
+        setTimeout(() => {
+          setShowModal(false);
+          setTimeout(() => setUploadComplete(false), 2000);
+        }, 1500);
+      })
+      .on("cancel-all", () => {
+        setIsUploading(false);
+        setUploadProgress(0);
+      })
+      .on("error", () => {
+        setIsUploading(false);
       })
   );
 
   return (
-    <div>
+    <div className="flex items-center gap-2">
       <Button 
         onClick={() => setShowModal(true)} 
         className={buttonClassName}
@@ -63,6 +93,20 @@ export function ObjectUploader({
       >
         {children}
       </Button>
+
+      {isUploading && (
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Loader2 className="w-4 h-4 animate-spin" />
+          <span>Uploading... {uploadProgress}%</span>
+        </div>
+      )}
+
+      {uploadComplete && !isUploading && (
+        <div className="flex items-center gap-2 text-sm text-green-600">
+          <CheckCircle className="w-4 h-4" />
+          <span>Upload complete!</span>
+        </div>
+      )}
 
       <DashboardModal
         uppy={uppy}

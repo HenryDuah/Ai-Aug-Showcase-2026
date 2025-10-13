@@ -18,13 +18,15 @@ import type { UploadResult } from "@uppy/core";
 import sectionsData from "@/data/products.json";
 import { ObjectUploader } from "@/components/ObjectUploader";
 
-const productFormSchema = z.object({
+const createProductFormSchema = (isEditMode: boolean) => z.object({
   name: z.string().min(1, "Product name is required"),
   company: z.string().min(1, "Company name is required"),
   type: z.string().min(1, "Product type is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().url("Must be a valid URL"),
-  videoUrl: z.string().min(1, "Product video is required"),
+  videoUrl: isEditMode 
+    ? z.string().optional()
+    : z.string().min(1, "Product video is required"),
   brochureUrl: z.string().optional(),
   theImpact: z.string().min(1, "The Impact is required"),
   sectionId: z.number().min(1).max(5),
@@ -33,7 +35,7 @@ const productFormSchema = z.object({
   onDisplay: z.boolean().optional(),
 });
 
-type ProductFormData = z.infer<typeof productFormSchema>;
+type ProductFormData = z.infer<ReturnType<typeof createProductFormSchema>>;
 
 export default function ProductForm() {
   const { productId } = useParams<{ productId?: string }>();
@@ -47,7 +49,7 @@ export default function ProductForm() {
   });
 
   const form = useForm<ProductFormData>({
-    resolver: zodResolver(productFormSchema),
+    resolver: zodResolver(createProductFormSchema(isEditMode)),
     defaultValues: {
       name: "",
       company: "",
@@ -346,7 +348,7 @@ export default function ProductForm() {
                   name="videoUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Product Video</FormLabel>
+                      <FormLabel>Product Video {isEditMode && "(Optional - leave blank to keep existing)"}</FormLabel>
                       <FormControl>
                         <div className="space-y-3">
                           <Input 
@@ -356,7 +358,7 @@ export default function ProductForm() {
                             readOnly
                             className="bg-muted"
                           />
-                          <div className="flex items-center gap-2">
+                          <div>
                             <ObjectUploader
                               maxNumberOfFiles={1}
                               allowedFileTypes={[".mp4", ".mov", ".avi", ".wmv", ".webm", "video/*"]}
@@ -369,7 +371,7 @@ export default function ProductForm() {
                                 Upload Video File (any size)
                               </>
                             </ObjectUploader>
-                            <span className="text-sm text-muted-foreground">Supported formats: MP4, MOV, AVI, WMV, WebM</span>
+                            <p className="text-sm text-muted-foreground mt-2">Supported formats: MP4, MOV, AVI, WMV, WebM</p>
                           </div>
                         </div>
                       </FormControl>
@@ -393,7 +395,7 @@ export default function ProductForm() {
                             readOnly
                             className="bg-muted"
                           />
-                          <div className="flex items-center gap-2">
+                          <div>
                             <ObjectUploader
                               maxNumberOfFiles={1}
                               allowedFileTypes={[".pdf", "application/pdf"]}
@@ -406,7 +408,7 @@ export default function ProductForm() {
                                 Upload PDF Brochure
                               </>
                             </ObjectUploader>
-                            <span className="text-sm text-muted-foreground">Upload a PDF file for product details</span>
+                            <p className="text-sm text-muted-foreground mt-2">Upload a PDF file for product details</p>
                           </div>
                         </div>
                       </FormControl>
