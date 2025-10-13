@@ -160,13 +160,13 @@ export default function Overview() {
                 <CardContent className="pt-6">
                   <h2 className="text-2xl font-bold mb-4 text-foreground" data-testid="title-about-tour">About This Tour</h2>
                   <p className="text-foreground/80 leading-relaxed mb-4" data-testid="description-lab-intro-1">
-                    Welcome to Sand's AI Lab, where cutting-edge medical innovations come together. 
-                    This interactive tour will guide you through five specialized sections, each showcasing 
-                    breakthrough technologies designed to improve healthcare outcomes.
+                    Welcome to Sand's Innovative Healthcare Solutions Showcase, where we explore cutting-edge medical innovations empowering healthcare workers to deliver better patient outcomes.
                   </p>
-                  <p className="text-foreground/80 leading-relaxed" data-testid="description-lab-intro-2">
-                    Take your time exploring each section, view product details, and listen to audio guides 
-                    to learn more about these transformative medical solutions.
+                  <p className="text-foreground/80 leading-relaxed mb-4" data-testid="description-lab-intro-2">
+                    This interactive tour will guide you through five specialized sections, each showcasing breakthrough technologies designed to improve healthcare outcomes at the frontlines.
+                  </p>
+                  <p className="text-foreground/80 leading-relaxed" data-testid="description-lab-intro-3">
+                    Take your time exploring each section, view product details, and watch product demo videos to learn more about these transformative medical solutions.
                   </p>
                 </CardContent>
               </Card>
