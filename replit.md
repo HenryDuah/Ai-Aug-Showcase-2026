@@ -21,7 +21,7 @@ The backend is an Express.js server developed with TypeScript, following a RESTf
 ### Database Design
 
 The application utilizes Drizzle ORM with a PostgreSQL database, specifically Neon serverless PostgreSQL. The schema defines two primary tables:
-- **products**: Stores product details including `name`, `company`, `description`, `image`, `videoUrl` (required), `brochureUrl` (optional), `theImpact` (required), `features`, `sectionId`, `sectionName`, and `onDisplay` status.
+- **products**: Stores product details including `name`, `company`, `description`, `image`, `videoUrl` (optional), `videoType` (optional), `brochureUrl` (optional), `theImpact` (required), `features`, `sectionId`, `sectionName`, and `onDisplay` status.
 - **feedback**: Captures visitor feedback with fields like `visitorName`, `visitorEmail`, `interestingProducts`, `comments`, and `submittedAt`.
 
 ### Application Features
@@ -49,7 +49,19 @@ The application utilizes Drizzle ORM with a PostgreSQL database, specifically Ne
 
 ## Recent Changes
 
-**October 13, 2025 - Database Migration for Production Persistence**
+**October 13, 2025 - Optional Video Field Handling Improvements**
+- **Fixed Product Form Mode Detection**: Corrected edit mode logic to use `!!productId && productId !== "new"` ensuring create route displays "Add New Product" and edit route displays "Edit Product"
+- **Radix UI Select Component Compatibility**: Changed video type clear option from empty string to `"__NONE__"` sentinel value to satisfy Radix UI's requirement that SelectItem values cannot be empty strings
+- **Enhanced Backend Validation**: Added defensive coercion in both POST and PATCH endpoints to handle `"__NONE__"` sentinel value, converting it to null along with empty strings and legacy "none" values
+- **Improved User Experience**: Removed confusing static helper text from video URL field that appeared as validation error; label already indicates field is optional
+- **End-to-End Video Workflow**: Confirmed all video field operations work correctly:
+  - Create products without video (fields stored as null)
+  - Add video URL and type to existing products
+  - Clear video fields (converts to null, not empty string)
+  - Cleared fields remain null on subsequent edits
+- **Data Consistency**: Video fields now flow correctly through entire system: form → cleanup → API → database with proper null handling at each layer
+
+**October 13, 2025 (Earlier) - Database Migration for Production Persistence**
 - **Complete Product Storage Migration**: Migrated from JSON file storage to PostgreSQL database
   - Created DbStorage class replacing MemStorage for production-ready persistence
   - All 25 products successfully migrated from `server/data/products.json` to database

@@ -133,13 +133,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      // Clean up video fields - convert "none" or empty strings to undefined (which becomes null in DB)
+      // Clean up video fields - convert "none", "__NONE__", or empty strings to undefined (which becomes null in DB)
       const cleanedData = {
         ...validatedData,
         videoUrl: validatedData.videoUrl && validatedData.videoUrl.trim() && validatedData.videoUrl.toLowerCase() !== "none" 
           ? validatedData.videoUrl 
           : undefined,
-        videoType: validatedData.videoType && validatedData.videoType.trim() && validatedData.videoType.toLowerCase() !== "none" 
+        videoType: validatedData.videoType && validatedData.videoType.trim() && 
+          validatedData.videoType.toLowerCase() !== "none" &&
+          validatedData.videoType !== "__NONE__"
           ? validatedData.videoType 
           : undefined,
       };
@@ -181,7 +183,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      // Clean up video fields - convert "none" or empty strings to null, treat explicit null as clearing the field
+      // Clean up video fields - convert "none", "__NONE__", or empty strings to null, treat explicit null as clearing the field
       let cleanedVideoUrl: string | null | undefined = undefined;
       if (validatedData.videoUrl !== undefined) {
         cleanedVideoUrl = validatedData.videoUrl === null || !validatedData.videoUrl?.trim() || validatedData.videoUrl.toLowerCase() === "none"
@@ -191,7 +193,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       let cleanedVideoType: string | null | undefined = undefined;
       if (validatedData.videoType !== undefined) {
-        cleanedVideoType = validatedData.videoType === null || !validatedData.videoType?.trim() || validatedData.videoType.toLowerCase() === "none"
+        cleanedVideoType = validatedData.videoType === null || !validatedData.videoType?.trim() || 
+          validatedData.videoType.toLowerCase() === "none" ||
+          validatedData.videoType === "__NONE__"
           ? null
           : validatedData.videoType;
       }

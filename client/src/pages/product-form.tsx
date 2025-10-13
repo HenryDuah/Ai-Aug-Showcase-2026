@@ -40,7 +40,7 @@ export default function ProductForm() {
   const { productId } = useParams<{ productId?: string }>();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  const isEditMode = productId !== "new";
+  const isEditMode = !!productId && productId !== "new"; // Edit mode unless on /admin/products/new route
 
   const { data: product, isLoading } = useQuery<Product>({
     queryKey: ["/api/products", productId],
@@ -131,13 +131,14 @@ export default function ProductForm() {
   });
 
   const onSubmit = (data: ProductFormData) => {
-    // Clean up video fields - convert empty, "none", or falsy values to null (not undefined, so PATCH includes them)
+    // Clean up video fields - convert empty, "none", "__NONE__", or falsy values to null (not undefined, so PATCH includes them)
     const cleanVideoUrl = data.videoUrl?.trim() && data.videoUrl.toLowerCase() !== "none" 
       ? data.videoUrl 
       : null;
     const cleanVideoType = data.videoType?.trim() && 
       data.videoType.toLowerCase() !== "none" && 
-      data.videoType !== "" 
+      data.videoType !== "" &&
+      data.videoType !== "__NONE__"
         ? data.videoType 
         : null;
 
@@ -387,7 +388,6 @@ export default function ProductForm() {
                           data-testid="input-video-url"
                         />
                       </FormControl>
-                      <p className="text-sm text-muted-foreground mt-1">Enter a YouTube or Vimeo video link</p>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -400,7 +400,7 @@ export default function ProductForm() {
                     <FormItem>
                       <FormLabel>Video Type (Optional)</FormLabel>
                       <Select
-                        value={field.value || ""}
+                        value={field.value || "__NONE__"}
                         onValueChange={field.onChange}
                       >
                         <FormControl>
@@ -409,7 +409,7 @@ export default function ProductForm() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="">Clear selection</SelectItem>
+                          <SelectItem value="__NONE__">No video type</SelectItem>
                           <SelectItem value="Overview Video">Overview Video</SelectItem>
                           <SelectItem value="Demo Video">Demo Video</SelectItem>
                         </SelectContent>
