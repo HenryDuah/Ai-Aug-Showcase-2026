@@ -25,6 +25,7 @@ const productFormSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().url("Must be a valid URL"),
   videoUrl: z.string().min(1, "Product video is required"),
+  brochureUrl: z.string().optional(),
   theImpact: z.string().min(1, "The Impact is required"),
   sectionId: z.number().min(1).max(5),
   sectionName: z.string().min(1, "Section name is required"),
@@ -54,6 +55,7 @@ export default function ProductForm() {
       description: "",
       image: "",
       videoUrl: "",
+      brochureUrl: "",
       theImpact: "",
       sectionId: 1,
       sectionName: "",
@@ -71,6 +73,7 @@ export default function ProductForm() {
         description: product.description,
         image: product.image,
         videoUrl: product.videoUrl || "",
+        brochureUrl: product.brochureUrl || "",
         theImpact: product.theImpact || "",
         sectionId: product.sectionId,
         sectionName: product.sectionName,
@@ -158,6 +161,23 @@ export default function ProductForm() {
         toast({
           title: "Success",
           description: "Video file uploaded successfully.",
+        });
+      }
+    }
+  };
+
+  const handleBrochureUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+    if (result.successful && result.successful.length > 0) {
+      const uploadURL = result.successful[0].uploadURL;
+      if (uploadURL) {
+        const objectPath = uploadURL.split("?")[0];
+        const pathParts = objectPath.split("/");
+        const objectId = pathParts[pathParts.length - 1];
+        const brochurePath = `/objects/uploads/${objectId}`;
+        form.setValue("brochureUrl", brochurePath);
+        toast({
+          title: "Success",
+          description: "Brochure uploaded successfully.",
         });
       }
     }
@@ -349,6 +369,42 @@ export default function ProductForm() {
                               </Button>
                             </ObjectUploader>
                             <span className="text-sm text-muted-foreground">Supported formats: MP4, MOV, AVI, WMV, WebM</span>
+                          </div>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="brochureUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Product Brochure (Optional)</FormLabel>
+                      <FormControl>
+                        <div className="space-y-3">
+                          <Input 
+                            {...field} 
+                            placeholder="Brochure URL (auto-filled when you upload)" 
+                            data-testid="input-brochure-url"
+                            readOnly
+                            className="bg-muted"
+                          />
+                          <div className="flex items-center gap-2">
+                            <ObjectUploader
+                              maxNumberOfFiles={1}
+                              allowedFileTypes={[".pdf", "application/pdf"]}
+                              onGetUploadParameters={handleGetUploadParameters}
+                              onComplete={handleBrochureUploadComplete}
+                            >
+                              <Button type="button" variant="outline" data-testid="button-upload-brochure">
+                                <Upload className="w-4 h-4 mr-2" />
+                                Upload PDF Brochure
+                              </Button>
+                            </ObjectUploader>
+                            <span className="text-sm text-muted-foreground">Upload a PDF file for product details</span>
                           </div>
                         </div>
                       </FormControl>

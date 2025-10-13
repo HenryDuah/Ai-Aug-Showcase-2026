@@ -19,6 +19,7 @@ export const products = pgTable("products", {
   description: text("description").notNull(),
   image: text("image").notNull(),
   videoUrl: text("video_url").notNull(),
+  brochureUrl: text("brochure_url"),
   theImpact: text("the_impact").notNull(),
   features: json("features").$type<string[]>().default([]),
   sectionId: integer("section_id").notNull(),
