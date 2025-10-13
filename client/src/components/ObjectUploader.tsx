@@ -5,6 +5,7 @@ import { DashboardModal } from "@uppy/react";
 import AwsS3 from "@uppy/aws-s3";
 import type { UploadResult } from "@uppy/core";
 import { Button } from "@/components/ui/button";
+import type { ButtonProps } from "@/components/ui/button";
 
 interface ObjectUploaderProps {
   maxNumberOfFiles?: number;
@@ -18,6 +19,7 @@ interface ObjectUploaderProps {
     result: UploadResult<Record<string, unknown>, Record<string, unknown>>
   ) => void;
   buttonClassName?: string;
+  buttonVariant?: ButtonProps["variant"];
   children: ReactNode;
 }
 
@@ -28,6 +30,7 @@ export function ObjectUploader({
   onGetUploadParameters,
   onComplete,
   buttonClassName,
+  buttonVariant = "default",
   children,
 }: ObjectUploaderProps) {
   const [showModal, setShowModal] = useState(false);
@@ -55,6 +58,7 @@ export function ObjectUploader({
       <Button 
         onClick={() => setShowModal(true)} 
         className={buttonClassName}
+        variant={buttonVariant}
         type="button"
       >
         {children}

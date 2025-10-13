@@ -362,11 +362,12 @@ export default function ProductForm() {
                               allowedFileTypes={[".mp4", ".mov", ".avi", ".wmv", ".webm", "video/*"]}
                               onGetUploadParameters={handleGetUploadParameters}
                               onComplete={handleUploadComplete}
+                              buttonVariant="outline"
                             >
-                              <Button type="button" variant="outline" data-testid="button-upload-video">
+                              <>
                                 <Upload className="w-4 h-4 mr-2" />
                                 Upload Video File (any size)
-                              </Button>
+                              </>
                             </ObjectUploader>
                             <span className="text-sm text-muted-foreground">Supported formats: MP4, MOV, AVI, WMV, WebM</span>
                           </div>
@@ -398,11 +399,12 @@ export default function ProductForm() {
                               allowedFileTypes={[".pdf", "application/pdf"]}
                               onGetUploadParameters={handleGetUploadParameters}
                               onComplete={handleBrochureUploadComplete}
+                              buttonVariant="outline"
                             >
-                              <Button type="button" variant="outline" data-testid="button-upload-brochure">
+                              <>
                                 <Upload className="w-4 h-4 mr-2" />
                                 Upload PDF Brochure
-                              </Button>
+                              </>
                             </ObjectUploader>
                             <span className="text-sm text-muted-foreground">Upload a PDF file for product details</span>
                           </div>

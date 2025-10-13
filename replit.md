@@ -10,7 +10,7 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
-**October 13, 2025 - UI/UX Improvements**
+**October 13, 2025 - UI/UX Improvements & Product Brochure Feature**
 - Updated text across the application:
   - Welcome page: Capitalized tagline to "Discover Innovative Medical Technologies Transforming Healthcare"
   - Section page: Changed instruction text to "Tap on any product card to view details" (removed audio reference)
@@ -38,6 +38,14 @@ Preferred communication style: Simple, everyday language.
   - Video URL field now read-only and auto-populated on upload
   - Single "Upload Video File (any size)" button for all video uploads
   - Clear format guidance: "Supported formats: MP4, MOV, AVI, WMV, WebM"
+- Added Product Brochure feature:
+  - New optional brochureUrl field in product schema (text, nullable)
+  - PDF upload capability in product form with read-only URL field
+  - Brochure viewer dialog on product detail page with embedded PDF
+  - Upload button styled with outline variant
+  - ObjectUploader enhanced with buttonVariant prop for consistent styling
+  - Brochure section only displays when PDF is available
+- Cleared all product video URLs to provide clean slate for video file uploads
 
 **October 10, 2025 - Product Schema Updates**
 - Removed "How it Works" field completely from the application
@@ -137,6 +145,7 @@ Preferred communication style: Simple, everyday language.
    - `name`, `company`, `type`, `description` (text) - Product metadata
    - `image` (text) - Product image URL
    - `videoUrl` (text, required) - Product video URL (YouTube or direct link)
+   - `brochureUrl` (text, nullable) - Product brochure PDF URL (optional)
    - `theImpact` (text, required) - Impact statement describing the product's effect
    - `features` (json array) - List of product features
    - `sectionId` (integer) - Section assignment (1-5)
@@ -172,6 +181,17 @@ Preferred communication style: Simple, everyday language.
 - YouTube/Vimeo videos displayed via iframe embed
 - Direct video files displayed via HTML5 video player with multiple source formats
 - Required field for all products
+
+**Product Brochure Upload & Display**
+- Optional PDF brochure upload for additional product information
+- Direct PDF file upload using Replit Object Storage
+- Uppy-based file uploader with outline button variant
+- PDF files stored in private object storage directory
+- Served publicly via `/objects/` endpoint
+- Brochure viewer displays PDF in a dialog modal with iframe embed
+- Dialog is max-w-4xl with 70vh height for optimal viewing
+- Brochure section only appears on product detail page when PDF is available
+- Optional field - products can exist without brochures
 
 **Image Viewing**
 - Full-screen image overlay modal
