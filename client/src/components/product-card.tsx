@@ -39,7 +39,7 @@ export default function ProductCard({ product, onTap }: ProductCardProps) {
       </div>
       <CardContent className="p-4 md:p-5 flex-1 flex flex-col">
         <h3 className="text-lg md:text-xl font-bold text-foreground mb-1 md:mb-2 line-clamp-2" data-testid={`product-name-${product.id}`}>
-          {product.name}
+          {product.name} - {product.type}
         </h3>
         <p className="text-xs md:text-sm font-semibold text-primary mb-2 md:mb-3" data-testid={`product-company-${product.id}`}>
           {product.company}
