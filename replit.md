@@ -49,6 +49,15 @@ The application utilizes Drizzle ORM with a PostgreSQL database, specifically Ne
 
 ## Recent Changes
 
+**October 14, 2025 - Hidden Product Management for Admins**
+- **Fixed Admin Panel Product Visibility**: Removed filter that hid products when marked as not visible, preventing admins from making them visible again
+- **Visual Indicators for Hidden Products**: 
+  - Hidden products now display with dimmed background (`bg-muted/50 opacity-75`)
+  - "Hidden" badge appears next to product name for easy identification
+  - Status text clearly shows "Visible" or "Hidden" state
+- **Complete Product Management**: Admins can now view and toggle visibility of all products (both visible and hidden) from the admin panel
+- **Visitor Protection**: Hidden products remain invisible on visitor-facing pages while being fully manageable in admin panel
+
 **October 13, 2025 - Optional Video Field Handling Improvements**
 - **Fixed Product Form Mode Detection**: Corrected edit mode logic to use `!!productId && productId !== "new"` ensuring create route displays "Add New Product" and edit route displays "Edit Product"
 - **Radix UI Select Component Compatibility**: Changed video type clear option from empty string to `"__NONE__"` sentinel value to satisfy Radix UI's requirement that SelectItem values cannot be empty strings

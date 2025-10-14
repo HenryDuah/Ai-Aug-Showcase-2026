@@ -63,7 +63,7 @@ export default function Admin() {
 
   const productsBySection = sectionsData.sections.map((section) => ({
     ...section,
-    products: products?.filter((p) => p.sectionId === section.id && p.onDisplay) || [],
+    products: products?.filter((p) => p.sectionId === section.id) || [],
   }));
 
   return (
@@ -153,12 +153,19 @@ export default function Admin() {
                         {section.products.map((product) => (
                           <div
                             key={product.id}
-                            className="flex items-center justify-between p-4 bg-accent/50 rounded-lg"
+                            className={`flex items-center justify-between p-4 rounded-lg ${
+                              product.onDisplay ? "bg-accent/50" : "bg-muted/50 opacity-75"
+                            }`}
                             data-testid={`admin-product-${product.id}`}
                           >
                             <div className="flex-1">
                               <h3 className="font-semibold text-foreground" data-testid={`admin-product-name-${product.id}`}>
                                 {product.name}
+                                {!product.onDisplay && (
+                                  <span className="ml-2 text-xs bg-muted-foreground/20 text-muted-foreground px-2 py-0.5 rounded">
+                                    Hidden
+                                  </span>
+                                )}
                               </h3>
                               <p className="text-sm text-muted-foreground">
                                 {product.company} - {product.type}
