@@ -14,7 +14,7 @@ export default function Welcome() {
           <img src={sandLogo} alt="Sand Technologies Logo" className="h-24 md:h-32 w-auto" />
         </div>
         
-        <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary font-serif" data-testid="title-welcome">
+        <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary" data-testid="title-welcome">
           Welcome to the Innovative Healthcare Solutions Showcase
         </h1>
         
