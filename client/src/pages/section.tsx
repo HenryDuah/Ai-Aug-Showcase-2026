@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ProductCard from "@/components/product-card";
 import sectionsData from "@/data/products.json";
 import type { Product } from "@shared/schema";
-import sandLogo from "@assets/Sand Tech_ Logo_Dark (1)_1760379109163.png";
+import sandLogo from "@assets/Sand Tech_ Logo_Light_1760649606645.png";
 
 const sectionGradients = [
   "from-primary to-chart-3",

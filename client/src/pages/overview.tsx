@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, ArrowRight, ChevronRight, Search, X } from "lucide-react";
 import sectionsData from "@/data/products.json";
 import type { Product } from "@shared/schema";
-import sandLogo from "@assets/Sand Tech_ Logo_Dark (1)_1760379109163.png";
+import sandLogo from "@assets/Sand Tech_ Logo_Light_1760649606645.png";
 
 const sectionColors = [
   "bg-primary text-primary-foreground",

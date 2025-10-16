@@ -14,7 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { insertFeedbackSchema } from "@shared/schema";
 import type { InsertFeedback } from "@shared/schema";
 import { z } from "zod";
-import sandLogo from "@assets/Sand Tech_ Logo_Dark (1)_1760379109163.png";
+import sandLogo from "@assets/Sand Tech_ Logo_Light_1760649606645.png";
 
 const feedbackFormSchema = insertFeedbackSchema;
 
@@ -128,8 +128,7 @@ export default function Feedback() {
             </Button>
             <img src={sandLogo} alt="Sand Technologies Logo" className="h-12 w-auto" data-testid="sand-logo-feedback" />
           </div>
-          <h1 className="text-3xl font-bold mb-2" data-testid="title-feedback">Share your Thoughts</h1>
-          <p className="text-white/90" data-testid="subtitle-experience">How was your experience today?</p>
+          <h1 className="text-3xl font-bold" data-testid="title-feedback">Share your Thoughts</h1>
         </div>
 
         <div className="px-6 py-6">

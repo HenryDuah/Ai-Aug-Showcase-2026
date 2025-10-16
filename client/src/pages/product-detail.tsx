@@ -176,26 +176,6 @@ export default function ProductDetail() {
               </CardContent>
             </Card>
 
-            {/* Website */}
-            {product.website && (
-              <Card>
-                <CardContent className="pt-4">
-                  <div>
-                    <p className="text-xs text-muted-foreground mb-1">Website</p>
-                    <a 
-                      href={product.website} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="font-semibold text-primary hover:underline" 
-                      data-testid="product-website"
-                    >
-                      Product Website
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
             {/* Description */}
             <Card>
               <CardContent className="pt-5">
@@ -311,6 +291,26 @@ export default function ProductDetail() {
                       </li>
                     ))}
                   </ul>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Website */}
+            {product.website && (
+              <Card>
+                <CardContent className="pt-4">
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">Website</p>
+                    <a 
+                      href={product.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="font-semibold text-primary hover:underline" 
+                      data-testid="product-website"
+                    >
+                      Product Website
+                    </a>
+                  </div>
                 </CardContent>
               </Card>
             )}
