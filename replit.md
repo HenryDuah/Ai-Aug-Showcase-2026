@@ -20,18 +20,23 @@ The backend is an Express.js server developed with TypeScript, following a RESTf
 
 ### Database Design
 
-The application utilizes Drizzle ORM with a PostgreSQL database, specifically Neon serverless PostgreSQL. The schema defines two primary tables:
-- **products**: Stores product details including `name`, `company`, `description`, `image`, `videoUrl` (optional), `videoType` (optional), `brochureUrl` (optional), `theImpact` (required), `features`, `sectionId`, `sectionName`, and `onDisplay` status.
-- **feedback**: Captures visitor feedback with fields like `visitorName`, `visitorEmail`, `interestingProducts`, `comments`, and `submittedAt`.
+The application utilizes Drizzle ORM with a PostgreSQL database, specifically Neon serverless PostgreSQL. The schema defines three primary tables:
+- **products**: Stores product details including `name`, `company`, `description`, `image`, `videoUrl` (optional), `videoType` (optional), `brochureUrl` (optional), `website` (optional), `theImpact` (required), `features`, `sectionId`, `sectionName`, and `onDisplay` status.
+- **feedback**: Captures visitor feedback with fields like `visitorName`, `visitorCompany`, `visitorEmail`, `visitorPhone`, `comments`, and `submittedAt`.
+- **productFeedback**: Captures product-specific feedback with fields like `productId`, `visitorName` (optional), `visitorEmail` (optional), `comments` (optional), and `submittedAt`.
 
 ### Application Features
 
 - **Product Search & Filtering**: Real-time search across product attributes from the overview page.
-- **Product Video Management**: Supports direct video file uploads (any size, various formats) to Replit Object Storage, YouTube, and Vimeo URLs. Videos are displayed via HTML5 player or iframe embeds.
+- **Product Video Management**: Supports direct video file uploads (any size, various formats) to Replit Object Storage, YouTube, and Vimeo URLs. Videos are displayed via HTML5 player or iframe embeds. Video type labels (Overview/Demo) are optional and displayed under "Product Video" heading.
 - **Product Brochure Management**: Optional PDF brochure uploads to Replit Object Storage, displayed in an embedded viewer modal.
+- **Product Website Links**: Optional website URL field for products, displayed as clickable link on product detail page.
 - **Image Viewing**: Full-screen image overlay modal for product images.
-- **Section Navigation**: Linear navigation flow with direct access via overview or QR codes.
-- **Feedback Collection**: Form with validation (React Hook Form, Zod) to capture visitor feedback, stored in PostgreSQL.
+- **Section Navigation**: Simplified navigation with close button to return to current section (replaced previous/next section buttons).
+- **Feedback Collection**: Two-tier feedback system:
+  - General visitor feedback form with validation (React Hook Form, Zod) to capture overall tour feedback
+  - Product-specific feedback form at end of each product detail page for targeted product insights
+  - All feedback stored in PostgreSQL database
 - **Authentication System**: Passport.js with local strategy and Express-session for secure admin login.
 - **Admin Panel**: Provides full CRUD operations for products, product visibility toggling, direct file uploads, and persistence to PostgreSQL database.
 - **Analytics Dashboard**: Displays feedback statistics, most interesting products, and offers CSV export.
@@ -48,6 +53,26 @@ The application utilizes Drizzle ORM with a PostgreSQL database, specifically Ne
 - **QR Code Generation**: `qrcode` library for generating scannable QR codes.
 
 ## Recent Changes
+
+**October 16, 2025 - UI Updates and Product-Specific Feedback**
+- **Landing Page Updates**: Split welcome text into two lines - "Welcome to the" in black above "Innovative Healthcare Solutions Showcase" in gradient colors
+- **Overview Page Branding**: Changed "AI Lab Overview" to "Showcase Overview" to align with rebrand; removed "Explore five innovative sections" subheading
+- **About Tour Section**: Updated paragraph with new copy emphasizing visitor experience and Sand's innovation leadership; bold "Innovative Healthcare Solutions Showcase" text
+- **Sand Logo Addition**: Added Sand logo to overview page, section pages, and feedback page (positioned on right side of headers) - note: NOT on product detail pages to avoid brand confusion with featured company solutions
+- **Feedback Page Updates**: Changed question text to "How was your experience today?" and removed placeholder description and "AI in Healthcare" heading
+- **Product Website Field**: 
+  - Added optional website field to product schema (text, nullable)
+  - Added website input to admin product form (labeled "Website (Optional)")
+  - Display website as clickable link on product detail page when populated
+  - Proper null handling throughout form → API → database pipeline
+- **Product Detail Navigation**: Replaced previous/next section buttons with single close button that returns to current section for cleaner UX
+- **Product-Specific Feedback System**:
+  - Created productFeedback table with fields: productId, visitorName (optional), visitorEmail (optional), comments (optional), submittedAt
+  - Added POST /api/product-feedback endpoint with Zod validation
+  - Implemented feedback form at end of product detail page with heading "Share your views on this product (Optional)"
+  - Form includes optional name, email, and comments fields
+  - Success toast on submission, form clears after successful save
+  - All data persists to PostgreSQL database
 
 **October 14, 2025 - Hidden Product Management for Admins**
 - **Fixed Admin Panel Product Visibility**: Removed filter that hid products when marked as not visible, preventing admins from making them visible again
