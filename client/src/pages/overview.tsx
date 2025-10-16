@@ -222,14 +222,25 @@ export default function Overview() {
               </CardContent>
             </Card>
 
-              <Button 
-                onClick={() => setLocation("/section/1")} 
-                className="w-full bg-primary text-primary-foreground px-6 py-4 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all"
-                data-testid="button-start-section-1"
-              >
-                Start with Section 1: Maternal
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
+              <div className="flex flex-col gap-3">
+                <Button 
+                  onClick={() => setLocation("/section/1")} 
+                  className="w-full bg-primary text-primary-foreground px-6 py-4 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all"
+                  data-testid="button-start-section-1"
+                >
+                  Start with Section 1: Maternal
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+                <Button 
+                  onClick={() => setLocation("/feedback")} 
+                  variant="outline"
+                  className="w-full px-6 py-4 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all"
+                  data-testid="button-skip-to-feedback"
+                >
+                  Skip Tour - Share Your Thoughts
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </div>
             </div>
           </div>
         )}

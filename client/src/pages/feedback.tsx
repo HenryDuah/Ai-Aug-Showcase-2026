@@ -129,7 +129,7 @@ export default function Feedback() {
             <img src={sandLogo} alt="Sand Technologies Logo" className="h-12 w-auto" data-testid="sand-logo-feedback" />
           </div>
           <h1 className="text-3xl font-bold mb-2" data-testid="title-feedback">Share your Thoughts</h1>
-          <p className="text-white/90" data-testid="subtitle-ai-healthcare">Share your thoughts on the use of AI devices and solutions for frontline healthcare</p>
+          <p className="text-white/90" data-testid="subtitle-experience">How was your experience today?</p>
         </div>
 
         <div className="px-6 py-6">
