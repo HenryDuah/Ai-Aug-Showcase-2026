@@ -1,21 +1,73 @@
 import { useLocation, useParams } from "wouter";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { X, ArrowLeft, ArrowRight, Tag, CheckCircle, FileText } from "lucide-react";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { X, ArrowLeft, ArrowRight, Tag, CheckCircle, FileText, MessageSquare } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import ImageOverlay from "@/components/image-overlay";
 import { useState } from "react";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import type { Product } from "@shared/schema";
+
+const productFeedbackFormSchema = z.object({
+  visitorName: z.string().optional(),
+  visitorEmail: z.string().email("Invalid email").optional().or(z.literal("")),
+  comments: z.string().optional(),
+});
+
+type ProductFeedbackFormData = z.infer<typeof productFeedbackFormSchema>;
 
 export default function ProductDetail() {
   const params = useParams();
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
   const [showImageOverlay, setShowImageOverlay] = useState(false);
   const [showBrochure, setShowBrochure] = useState(false);
   
   const productId = params.productId;
+
+  const feedbackForm = useForm<ProductFeedbackFormData>({
+    resolver: zodResolver(productFeedbackFormSchema),
+    defaultValues: {
+      visitorName: "",
+      visitorEmail: "",
+      comments: "",
+    },
+  });
+
+  const feedbackMutation = useMutation({
+    mutationFn: async (data: ProductFeedbackFormData) => {
+      const response = await apiRequest("POST", "/api/product-feedback", {
+        productId,
+        visitorName: data.visitorName || null,
+        visitorEmail: data.visitorEmail || null,
+        comments: data.comments || null,
+      });
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Thank you!",
+        description: "Your feedback has been submitted successfully.",
+      });
+      feedbackForm.reset();
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to submit feedback. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
   
   const { data: product, isLoading } = useQuery<Product>({
     queryKey: ["/api/products", productId],
@@ -124,6 +176,26 @@ export default function ProductDetail() {
               </CardContent>
             </Card>
 
+            {/* Website */}
+            {product.website && (
+              <Card>
+                <CardContent className="pt-4">
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">Website</p>
+                    <a 
+                      href={product.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="font-semibold text-primary hover:underline" 
+                      data-testid="product-website"
+                    >
+                      {product.website}
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Description */}
             <Card>
               <CardContent className="pt-5">
@@ -138,7 +210,13 @@ export default function ProductDetail() {
             {product.videoUrl && (
               <Card>
                 <CardContent className="pt-5">
-                  <h3 className="text-lg font-bold text-foreground mb-3">Product Video</h3>
+                  <h3 className="text-lg font-bold text-foreground mb-1">Product Video</h3>
+                  {product.videoType && (
+                    <p className="text-sm text-muted-foreground mb-3" data-testid="product-video-type">
+                      {product.videoType}
+                    </p>
+                  )}
+                  {!product.videoType && <div className="mb-3"></div>}
                   {product.videoUrl.includes('youtube.com') || product.videoUrl.includes('youtu.be') ? (
                     <div className="aspect-video">
                       <iframe
@@ -236,30 +314,88 @@ export default function ProductDetail() {
                 </CardContent>
               </Card>
             )}
+
+            {/* Product Feedback */}
+            <Card className="mb-20">
+              <CardContent className="pt-5">
+                <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+                  <MessageSquare className="text-primary" size={20} />
+                  Share your views on this product (Optional)
+                </h3>
+                <Form {...feedbackForm}>
+                  <form onSubmit={feedbackForm.handleSubmit((data) => feedbackMutation.mutate(data))} className="space-y-4">
+                    <FormField
+                      control={feedbackForm.control}
+                      name="visitorName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Name (Optional)</FormLabel>
+                          <FormControl>
+                            <Input {...field} placeholder="Your name" data-testid="input-product-feedback-name" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={feedbackForm.control}
+                      name="visitorEmail"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email (Optional)</FormLabel>
+                          <FormControl>
+                            <Input {...field} type="email" placeholder="your.email@example.com" data-testid="input-product-feedback-email" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={feedbackForm.control}
+                      name="comments"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Your Feedback (Optional)</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              {...field}
+                              placeholder="Share your thoughts about this product..."
+                              rows={4}
+                              data-testid="textarea-product-feedback-comments"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <Button 
+                      type="submit" 
+                      className="w-full" 
+                      disabled={feedbackMutation.isPending}
+                      data-testid="button-submit-product-feedback"
+                    >
+                      {feedbackMutation.isPending ? "Submitting..." : "Submit Feedback"}
+                    </Button>
+                  </form>
+                </Form>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
         {/* Navigation */}
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-border p-4 shadow-lg">
-          <div className="flex gap-3">
-            <Button 
-              variant="secondary"
-              onClick={handlePreviousSection}
-              className="flex-1"
-              data-testid="button-previous-section"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous Section
-            </Button>
-            <Button 
-              onClick={handleNextSection}
-              className="flex-1"
-              data-testid="button-next-section"
-            >
-              Next Section
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
+          <Button 
+            onClick={handleClose}
+            className="w-full"
+            data-testid="button-close-return-section"
+          >
+            <X className="w-4 h-4 mr-2" />
+            Close
+          </Button>
         </div>
 
         {/* Image Overlay */}

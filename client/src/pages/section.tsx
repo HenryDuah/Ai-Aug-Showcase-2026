@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ProductCard from "@/components/product-card";
 import sectionsData from "@/data/products.json";
 import type { Product } from "@shared/schema";
+import sandLogo from "@assets/Sand Tech_ Logo_Dark (1)_1760379109163.png";
 
 const sectionGradients = [
   "from-primary to-chart-3",
@@ -66,15 +67,18 @@ export default function Section() {
       <div className="fade-in">
         {/* Section Header */}
         <div className={`bg-gradient-to-r ${sectionGradients[sectionId - 1]} text-white px-6 py-8`}>
-          <Button
-            variant="ghost"
-            onClick={handleBackToOverview}
-            className="text-white mb-4 p-0 h-auto font-normal"
-            data-testid={`button-back-section-${sectionId}`}
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Overview
-          </Button>
+          <div className="flex items-start justify-between mb-4">
+            <Button
+              variant="ghost"
+              onClick={handleBackToOverview}
+              className="text-white p-0 h-auto font-normal"
+              data-testid={`button-back-section-${sectionId}`}
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Overview
+            </Button>
+            <img src={sandLogo} alt="Sand Technologies Logo" className="h-12 w-auto" data-testid={`sand-logo-section-${sectionId}`} />
+          </div>
           
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center font-bold text-2xl" data-testid={`section-number-${sectionId}`}>

@@ -1,0 +1,29 @@
+
+On the landing page make the “Welcome to the” in black and in another line above the “Innovative Healthcare Solutions Showcase”
+At the overview page,  change “AI Lab Overview” to “Showcase Overview”
+Remove 'Explore five innovative sections' 
+
+At the  about tour use the paragraph below
+“Welcome to Sand's Innovative Healthcare Solutions Showcase, where we explore cutting-edge medical innovations empowering frontline healthcare workers to deliver better patient outcomes.
+
+This interactive tour will guide you through five specialized sections, each showcasing breakthrough technologies designed to improve healthcare outcomes at the frontlines.
+
+Take your time exploring each section, view product details, and watch product demo videos to learn more about these transformative medical solutions.”
+
+Make the statement  'Innovative Healthcare Solutions Showcase' in the paragraph bold.
+
+At the bottom over the over page at a button below the button with the ins
+Use the sand logo only on tour intro pages, section page and feedback pages etc. Not on pages where any product details are showing. Companies were concerned about their solutions coming accross as sand solutions.
+We can use the same links as on product if cards? Or simply the company website- both work- what do you think?
+
+Add the Sand logo to the overview page, section pages, and the share your thoughts page on the right side.
+
+At the Share your thoughts pag,e make these corrections
+	 Replace the feedback question  'Share your thoughts on AI in Health for frontline workers' with ' Share your thoughts on the use of AI devices and solutions for frontline healthcare' 
+ Remove the additional description below the feedback  question 'How do you think.....' It's repeating the same thing. Make the space they will type empty with any prompt again.
+Remove ' AI in Healthcare' under 'Share your thoughts' at the top of the page
+
+At the product view page and form for adding new product, add a space for website of product and the website must appear on the product view page, Product video type does not show-make it appear on the product view even do it is option but when it is choosena nd a video link is added the product video type some show.
+Again, at the product view page, when the product product details are showing - instead of the previous section and next section show only one button with that functions as the close button on the top when it is clicked it will show the current section. 
+
+Also at the end of the product details for each product we want people to show what they think or their view on the product, that can be “Share your views on this produtc (Optional)” and these feedback should be collected for per each product when it is submitted.

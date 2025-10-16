@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, ArrowRight, ChevronRight, Search, X } from "lucide-react";
 import sectionsData from "@/data/products.json";
 import type { Product } from "@shared/schema";
+import sandLogo from "@assets/Sand Tech_ Logo_Dark (1)_1760379109163.png";
 
 const sectionColors = [
   "bg-primary text-primary-foreground",
@@ -40,17 +41,19 @@ export default function Overview() {
       <div className="fade-in">
         {/* Header */}
         <div className="bg-gradient-to-r from-primary to-secondary text-white px-6 py-8">
-          <Button
-            variant="ghost"
-            onClick={() => setLocation("/")}
-            className="text-white mb-4 p-0 h-auto font-normal"
-            data-testid="button-back-welcome"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-          <h1 className="text-3xl font-bold mb-2" data-testid="title-lab-overview">AI Lab Overview</h1>
-          <p className="text-white/90" data-testid="subtitle-explore-sections">Explore five innovative sections</p>
+          <div className="flex items-start justify-between mb-4">
+            <Button
+              variant="ghost"
+              onClick={() => setLocation("/")}
+              className="text-white p-0 h-auto font-normal"
+              data-testid="button-back-welcome"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            <img src={sandLogo} alt="Sand Technologies Logo" className="h-12 w-auto" data-testid="sand-logo-overview" />
+          </div>
+          <h1 className="text-3xl font-bold mb-2" data-testid="title-lab-overview">Showcase Overview</h1>
         </div>
 
         {/* Search Bar */}
@@ -160,7 +163,7 @@ export default function Overview() {
                 <CardContent className="pt-6">
                   <h2 className="text-2xl font-bold mb-4 text-foreground" data-testid="title-about-tour">About This Tour</h2>
                   <p className="text-foreground/80 leading-relaxed mb-4" data-testid="description-lab-intro-1">
-                    Welcome to Sand's Innovative Healthcare Solutions Showcase, where we explore cutting-edge medical innovations empowering healthcare workers to deliver better patient outcomes.
+                    Welcome to Sand's <span className="font-bold">Innovative Healthcare Solutions Showcase</span>, where we explore cutting-edge medical innovations empowering frontline healthcare workers to deliver better patient outcomes.
                   </p>
                   <p className="text-foreground/80 leading-relaxed mb-4" data-testid="description-lab-intro-2">
                     This interactive tour will guide you through five specialized sections, each showcasing breakthrough technologies designed to improve healthcare outcomes at the frontlines.

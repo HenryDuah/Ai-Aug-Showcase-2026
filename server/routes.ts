@@ -120,6 +120,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Product Feedback endpoints
+  app.post("/api/product-feedback", async (req, res) => {
+    try {
+      const { insertProductFeedbackSchema } = await import("@shared/schema");
+      const validatedData = insertProductFeedbackSchema.parse(req.body);
+      
+      const productFeedback = await storage.createProductFeedback(validatedData);
+      res.status(201).json({ 
+        message: "Product feedback submitted successfully", 
+        id: productFeedback.id 
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid product feedback data", 
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Failed to submit product feedback" });
+    }
+  });
+
   // Create product (admin endpoint)
   app.post("/api/products", requireAuth, async (req, res) => {
     try {

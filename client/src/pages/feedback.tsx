@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { insertFeedbackSchema } from "@shared/schema";
 import type { InsertFeedback } from "@shared/schema";
 import { z } from "zod";
+import sandLogo from "@assets/Sand Tech_ Logo_Dark (1)_1760379109163.png";
 
 const feedbackFormSchema = insertFeedbackSchema;
 
@@ -115,17 +116,20 @@ export default function Feedback() {
     <div className="min-h-screen bg-background pb-20">
       <div className="fade-in">
         <div className="bg-gradient-to-r from-primary to-secondary text-white px-6 py-8">
-          <Button
-            variant="ghost"
-            onClick={() => setLocation("/overview")}
-            className="text-white mb-4 p-0 h-auto font-normal"
-            data-testid="button-back-overview"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Overview
-          </Button>
+          <div className="flex items-start justify-between mb-4">
+            <Button
+              variant="ghost"
+              onClick={() => setLocation("/overview")}
+              className="text-white p-0 h-auto font-normal"
+              data-testid="button-back-overview"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Overview
+            </Button>
+            <img src={sandLogo} alt="Sand Technologies Logo" className="h-12 w-auto" data-testid="sand-logo-feedback" />
+          </div>
           <h1 className="text-3xl font-bold mb-2" data-testid="title-feedback">Share your Thoughts</h1>
-          <p className="text-white/90" data-testid="subtitle-ai-healthcare">AI in Healthcare</p>
+          <p className="text-white/90" data-testid="subtitle-ai-healthcare">Share your thoughts on the use of AI devices and solutions for frontline healthcare</p>
         </div>
 
         <div className="px-6 py-6">
@@ -231,13 +235,13 @@ export default function Feedback() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-lg font-bold text-foreground">
-                          Share your thoughts on AI in Health for frontline workers
+                          Share your thoughts on the use of AI devices and solutions for frontline healthcare
                         </FormLabel>
                         <FormControl>
                           <Textarea
                             {...field}
                             rows={5}
-                            placeholder="How do you think AI can help frontline healthcare workers? Share your thoughts and ideas..."
+                            placeholder=""
                             className="resize-none"
                             data-testid="textarea-comments"
                             value={field.value || ""}

@@ -1,4 +1,4 @@
-import { type Product, type InsertProduct, type Feedback, type InsertFeedback, type User, type InsertUser, products, feedback, users } from "@shared/schema";
+import { type Product, type InsertProduct, type Feedback, type InsertFeedback, type ProductFeedback, type InsertProductFeedback, type User, type InsertUser, products, feedback, productFeedback, users } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
@@ -30,6 +30,10 @@ export interface IStorage {
   // Feedback methods
   createFeedback(feedback: InsertFeedback): Promise<Feedback>;
   getAllFeedback(): Promise<Feedback[]>;
+
+  // Product Feedback methods
+  createProductFeedback(feedback: InsertProductFeedback): Promise<ProductFeedback>;
+  getProductFeedbackByProductId(productId: string): Promise<ProductFeedback[]>;
 
   // User methods
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -107,6 +111,7 @@ export class MemStorage implements IStorage {
       videoUrl: insertProduct.videoUrl ?? null,
       videoType: insertProduct.videoType ?? null,
       brochureUrl: insertProduct.brochureUrl ?? null,
+      website: insertProduct.website ?? null,
       onDisplay: insertProduct.onDisplay ?? true,
     };
     this.products.set(id, product);
@@ -151,6 +156,20 @@ export class MemStorage implements IStorage {
 
   async getAllFeedback(): Promise<Feedback[]> {
     return await db.select().from(feedback);
+  }
+
+  async createProductFeedback(insertProductFeedback: InsertProductFeedback): Promise<ProductFeedback> {
+    const [newProductFeedback] = await db.insert(productFeedback).values({
+      productId: insertProductFeedback.productId,
+      visitorName: insertProductFeedback.visitorName ?? null,
+      visitorEmail: insertProductFeedback.visitorEmail ?? null,
+      comments: insertProductFeedback.comments ?? null,
+    }).returning();
+    return newProductFeedback;
+  }
+
+  async getProductFeedbackByProductId(productId: string): Promise<ProductFeedback[]> {
+    return await db.select().from(productFeedback).where(eq(productFeedback.productId, productId));
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
@@ -213,6 +232,7 @@ export class DbStorage implements IStorage {
       videoUrl: insertProduct.videoUrl ?? null,
       videoType: insertProduct.videoType ?? null,
       brochureUrl: insertProduct.brochureUrl ?? null,
+      website: insertProduct.website ?? null,
       theImpact: insertProduct.theImpact,
       features: insertProduct.features ? [...insertProduct.features] : [],
       sectionId: insertProduct.sectionId,
@@ -251,6 +271,20 @@ export class DbStorage implements IStorage {
 
   async getAllFeedback(): Promise<Feedback[]> {
     return await db.select().from(feedback);
+  }
+
+  async createProductFeedback(insertProductFeedback: InsertProductFeedback): Promise<ProductFeedback> {
+    const [newProductFeedback] = await db.insert(productFeedback).values({
+      productId: insertProductFeedback.productId,
+      visitorName: insertProductFeedback.visitorName ?? null,
+      visitorEmail: insertProductFeedback.visitorEmail ?? null,
+      comments: insertProductFeedback.comments ?? null,
+    }).returning();
+    return newProductFeedback;
+  }
+
+  async getProductFeedbackByProductId(productId: string): Promise<ProductFeedback[]> {
+    return await db.select().from(productFeedback).where(eq(productFeedback.productId, productId));
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {

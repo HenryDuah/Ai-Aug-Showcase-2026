@@ -27,6 +27,7 @@ const createProductFormSchema = (isEditMode: boolean) => z.object({
   videoUrl: z.string().optional(),
   videoType: z.string().optional(),
   brochureUrl: z.string().optional(),
+  website: z.string().optional(),
   theImpact: z.string().min(1, "The Impact is required"),
   sectionId: z.number().min(1).max(5),
   sectionName: z.string().min(1, "Section name is required"),
@@ -58,6 +59,7 @@ export default function ProductForm() {
       videoUrl: "",
       videoType: "",
       brochureUrl: "",
+      website: "",
       theImpact: "",
       sectionId: 1,
       sectionName: "",
@@ -77,6 +79,7 @@ export default function ProductForm() {
         videoUrl: product.videoUrl || "",
         videoType: product.videoType || "",
         brochureUrl: product.brochureUrl || "",
+        website: product.website || "",
         theImpact: product.theImpact || "",
         sectionId: product.sectionId,
         sectionName: product.sectionName,
@@ -275,6 +278,20 @@ export default function ProductForm() {
                       <FormLabel>Company</FormLabel>
                       <FormControl>
                         <Input {...field} placeholder="Enter company name" data-testid="input-company" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="website"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Website (Optional)</FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder="Enter product website URL" data-testid="input-website" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
