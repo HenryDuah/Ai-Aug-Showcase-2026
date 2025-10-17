@@ -21,7 +21,7 @@ The backend is an Express.js server developed with TypeScript, following a RESTf
 ### Database Design
 
 The application utilizes Drizzle ORM with a PostgreSQL database, specifically Neon serverless PostgreSQL. The schema defines three primary tables:
-- **products**: Stores product details including `name`, `company`, `description`, `image`, `videoUrl` (optional), `videoType` (optional), `brochureUrl` (optional), `website` (optional), `theImpact` (required), `features`, `sectionId`, `sectionName`, and `onDisplay` status.
+- **products**: Stores product details including `name`, `company`, `description`, `image`, `videoUrl` (optional), `videoType` (optional), `brochureUrl` (optional), `website` (optional), `theImpact` (required), `features`, `sectionId`, `sectionName`, `onDisplay` status, and analytics tracking fields (`viewCount`, `videoClickCount`, `websiteClickCount`).
 - **feedback**: Captures visitor feedback with fields like `visitorName`, `visitorCompany`, `visitorEmail`, `visitorPhone`, `comments`, and `submittedAt`.
 - **productFeedback**: Captures product-specific feedback with fields like `productId`, `visitorName` (optional), `visitorEmail` (optional), `comments` (optional), and `submittedAt`.
 
@@ -39,8 +39,18 @@ The application utilizes Drizzle ORM with a PostgreSQL database, specifically Ne
   - All feedback stored in PostgreSQL database
 - **Authentication System**: Passport.js with local strategy and Express-session for secure admin login.
 - **Admin Panel**: Provides full CRUD operations for products, product visibility toggling, direct file uploads, and persistence to PostgreSQL database.
-- **Analytics Dashboard**: Displays feedback statistics, most interesting products, and offers CSV export.
-- **QR Code Generation**: Generates QR codes for each section, with download options for physical deployment.
+- **Analytics Tracking System**: Automatic and transparent tracking of visitor engagement:
+  - Product view count (tracked automatically when product detail page loads)
+  - Video play click count (tracked when visitor clicks video play button)
+  - Website link click count (tracked when visitor clicks website link)
+  - All tracking endpoints are public (unauthenticated) to capture visitor interactions
+- **Analytics Dashboard**: Comprehensive admin dashboard showing:
+  - Total engagement metrics (product views, video clicks, website clicks)
+  - Most viewed products (top 5)
+  - General and product-specific feedback counts
+  - Products with most feedback
+  - CSV export functionality for both general and product-specific feedback
+- **QR Code Generation**: Generates QR codes for each section and feedback page, with download options for physical deployment.
 
 ## External Dependencies
 
@@ -53,6 +63,24 @@ The application utilizes Drizzle ORM with a PostgreSQL database, specifically Ne
 - **QR Code Generation**: `qrcode` library for generating scannable QR codes.
 
 ## Recent Changes
+
+**October 17, 2025 - Analytics Tracking and QR Code Enhancements**
+- **Analytics Tracking Implementation**: Added comprehensive visitor engagement tracking system
+  - Database columns added: `viewCount`, `videoClickCount`, `websiteClickCount` to products table
+  - Created public API endpoints for tracking: `/api/products/:id/track-view`, `/api/products/:id/track-video-click`, `/api/products/:id/track-website-click`
+  - Frontend integration: Product detail page automatically tracks views on mount, tracks clicks on video play and website links
+  - All tracking is transparent and non-blocking to visitor experience
+- **Analytics Dashboard Redesign**: Completely rebuilt `/analytics` page with comprehensive metrics
+  - Total engagement metrics: product views, video clicks, website clicks displayed in card format
+  - Most viewed products section showing top 5 products with view counts
+  - Feedback summary section showing both general and product-specific feedback counts
+  - Products with most feedback section highlighting engagement leaders
+  - CSV download buttons for both general feedback and product-specific feedback
+  - All sections include proper data visualization and empty state handling
+- **Product Feedback CSV Export**: Added `/api/product-feedback/export` endpoint for downloading product-specific feedback as CSV
+- **Feedback Page QR Code**: Added QR code generation for "Share your Thoughts" feedback page in admin QR codes section
+- **Storage Layer Updates**: Added `getAllProductFeedback()` method to both MemStorage and DbStorage classes for analytics aggregation
+- **End-to-End Testing**: Verified all tracking, analytics dashboard, and CSV export functionality working correctly
 
 **October 16, 2025 (Later) - Final UI Polish and Logo Updates**
 - **White Logo Implementation**: Replaced dark/black logo with white logo on all tour pages (overview, section, and feedback) while keeping dark logo on main landing page for better visibility against different backgrounds
