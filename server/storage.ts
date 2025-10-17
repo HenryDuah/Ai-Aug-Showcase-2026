@@ -27,6 +27,11 @@ export interface IStorage {
   updateProduct(id: string, product: Partial<Product>): Promise<Product>;
   deleteProduct(id: string): Promise<boolean>;
 
+  // Analytics tracking methods
+  incrementViewCount(productId: string): Promise<Product | undefined>;
+  incrementVideoClickCount(productId: string): Promise<Product | undefined>;
+  incrementWebsiteClickCount(productId: string): Promise<Product | undefined>;
+
   // Feedback methods
   createFeedback(feedback: InsertFeedback): Promise<Feedback>;
   getAllFeedback(): Promise<Feedback[]>;
@@ -34,6 +39,7 @@ export interface IStorage {
   // Product Feedback methods
   createProductFeedback(feedback: InsertProductFeedback): Promise<ProductFeedback>;
   getProductFeedbackByProductId(productId: string): Promise<ProductFeedback[]>;
+  getAllProductFeedback(): Promise<ProductFeedback[]>;
 
   // User methods
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -113,6 +119,9 @@ export class MemStorage implements IStorage {
       brochureUrl: insertProduct.brochureUrl ?? null,
       website: insertProduct.website ?? null,
       onDisplay: insertProduct.onDisplay ?? true,
+      viewCount: 0,
+      videoClickCount: 0,
+      websiteClickCount: 0,
     };
     this.products.set(id, product);
     this.saveProducts();
@@ -143,6 +152,36 @@ export class MemStorage implements IStorage {
     return deleted;
   }
 
+  async incrementViewCount(productId: string): Promise<Product | undefined> {
+    const product = this.products.get(productId);
+    if (!product) return undefined;
+    
+    const updated = { ...product, viewCount: (product.viewCount ?? 0) + 1 };
+    this.products.set(productId, updated);
+    this.saveProducts();
+    return updated;
+  }
+
+  async incrementVideoClickCount(productId: string): Promise<Product | undefined> {
+    const product = this.products.get(productId);
+    if (!product) return undefined;
+    
+    const updated = { ...product, videoClickCount: (product.videoClickCount ?? 0) + 1 };
+    this.products.set(productId, updated);
+    this.saveProducts();
+    return updated;
+  }
+
+  async incrementWebsiteClickCount(productId: string): Promise<Product | undefined> {
+    const product = this.products.get(productId);
+    if (!product) return undefined;
+    
+    const updated = { ...product, websiteClickCount: (product.websiteClickCount ?? 0) + 1 };
+    this.products.set(productId, updated);
+    this.saveProducts();
+    return updated;
+  }
+
   async createFeedback(insertFeedback: InsertFeedback): Promise<Feedback> {
     const [newFeedback] = await db.insert(feedback).values({
       visitorName: insertFeedback.visitorName,
@@ -170,6 +209,10 @@ export class MemStorage implements IStorage {
 
   async getProductFeedbackByProductId(productId: string): Promise<ProductFeedback[]> {
     return await db.select().from(productFeedback).where(eq(productFeedback.productId, productId));
+  }
+
+  async getAllProductFeedback(): Promise<ProductFeedback[]> {
+    return await db.select().from(productFeedback);
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
@@ -258,6 +301,39 @@ export class DbStorage implements IStorage {
     return result.length > 0;
   }
 
+  async incrementViewCount(productId: string): Promise<Product | undefined> {
+    const product = await this.getProductById(productId);
+    if (!product) return undefined;
+    
+    const [updated] = await db.update(products)
+      .set({ viewCount: (product.viewCount ?? 0) + 1 })
+      .where(eq(products.id, productId))
+      .returning();
+    return updated;
+  }
+
+  async incrementVideoClickCount(productId: string): Promise<Product | undefined> {
+    const product = await this.getProductById(productId);
+    if (!product) return undefined;
+    
+    const [updated] = await db.update(products)
+      .set({ videoClickCount: (product.videoClickCount ?? 0) + 1 })
+      .where(eq(products.id, productId))
+      .returning();
+    return updated;
+  }
+
+  async incrementWebsiteClickCount(productId: string): Promise<Product | undefined> {
+    const product = await this.getProductById(productId);
+    if (!product) return undefined;
+    
+    const [updated] = await db.update(products)
+      .set({ websiteClickCount: (product.websiteClickCount ?? 0) + 1 })
+      .where(eq(products.id, productId))
+      .returning();
+    return updated;
+  }
+
   async createFeedback(insertFeedback: InsertFeedback): Promise<Feedback> {
     const [newFeedback] = await db.insert(feedback).values({
       visitorName: insertFeedback.visitorName,
@@ -285,6 +361,10 @@ export class DbStorage implements IStorage {
 
   async getProductFeedbackByProductId(productId: string): Promise<ProductFeedback[]> {
     return await db.select().from(productFeedback).where(eq(productFeedback.productId, productId));
+  }
+
+  async getAllProductFeedback(): Promise<ProductFeedback[]> {
+    return await db.select().from(productFeedback);
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {

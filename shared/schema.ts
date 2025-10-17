@@ -27,6 +27,9 @@ export const products = pgTable("products", {
   sectionId: integer("section_id").notNull(),
   sectionName: text("section_name").notNull(),
   onDisplay: boolean("on_display").default(true),
+  viewCount: integer("view_count").default(0),
+  videoClickCount: integer("video_click_count").default(0),
+  websiteClickCount: integer("website_click_count").default(0),
 });
 
 // Feedback schema

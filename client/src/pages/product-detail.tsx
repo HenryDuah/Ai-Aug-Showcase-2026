@@ -12,7 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { X, ArrowLeft, ArrowRight, Tag, CheckCircle, FileText, MessageSquare } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import ImageOverlay from "@/components/image-overlay";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Product } from "@shared/schema";
@@ -68,10 +68,49 @@ export default function ProductDetail() {
       });
     },
   });
+
+  // Analytics tracking
+  const trackView = async () => {
+    if (productId) {
+      try {
+        await apiRequest("POST", `/api/products/${productId}/track-view`, {});
+      } catch (error) {
+        // Silent fail - don't disrupt user experience
+        console.error("Failed to track view:", error);
+      }
+    }
+  };
+
+  const trackVideoClick = async () => {
+    if (productId) {
+      try {
+        await apiRequest("POST", `/api/products/${productId}/track-video-click`, {});
+      } catch (error) {
+        console.error("Failed to track video click:", error);
+      }
+    }
+  };
+
+  const trackWebsiteClick = async () => {
+    if (productId) {
+      try {
+        await apiRequest("POST", `/api/products/${productId}/track-website-click`, {});
+      } catch (error) {
+        console.error("Failed to track website click:", error);
+      }
+    }
+  };
   
   const { data: product, isLoading } = useQuery<Product>({
     queryKey: ["/api/products", productId],
   });
+
+  // Track product view when component mounts and product is loaded
+  useEffect(() => {
+    if (product) {
+      trackView();
+    }
+  }, [product?.id]);
 
   const handleClose = () => {
     if (product) {
@@ -198,7 +237,7 @@ export default function ProductDetail() {
                   )}
                   {!product.videoType && <div className="mb-3"></div>}
                   {product.videoUrl.includes('youtube.com') || product.videoUrl.includes('youtu.be') ? (
-                    <div className="aspect-video">
+                    <div className="aspect-video" onClick={trackVideoClick}>
                       <iframe
                         width="100%"
                         height="100%"
@@ -211,7 +250,7 @@ export default function ProductDetail() {
                       />
                     </div>
                   ) : product.videoUrl.includes('vimeo.com') ? (
-                    <div className="aspect-video">
+                    <div className="aspect-video" onClick={trackVideoClick}>
                       <iframe
                         width="100%"
                         height="100%"
@@ -229,6 +268,7 @@ export default function ProductDetail() {
                         controls
                         preload="metadata"
                         className="w-full h-full rounded-lg object-contain bg-black"
+                        onPlay={trackVideoClick}
                         data-testid="product-video"
                       >
                         <source src={product.videoUrl} type="video/mp4" />
@@ -305,6 +345,7 @@ export default function ProductDetail() {
                       href={product.website} 
                       target="_blank" 
                       rel="noopener noreferrer" 
+                      onClick={trackWebsiteClick}
                       className="font-semibold text-primary hover:underline" 
                       data-testid="product-website"
                     >

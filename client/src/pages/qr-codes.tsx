@@ -7,12 +7,13 @@ import QRCode from "qrcode";
 import sectionsData from "@/data/products.json";
 
 export default function QRCodes() {
-  const [qrCodes, setQrCodes] = useState<Record<number, string>>({});
+  const [qrCodes, setQrCodes] = useState<Record<string, string>>({});
   const canvasRefs = useRef<Record<number, HTMLCanvasElement>>({});
 
   useEffect(() => {
     const baseUrl = window.location.origin;
     
+    // Generate QR codes for sections
     sectionsData.sections.forEach((section) => {
       const sectionUrl = `${baseUrl}/section/${section.id}`;
       
@@ -24,34 +25,56 @@ export default function QRCodes() {
           light: '#FFFFFF',
         },
       }).then((url) => {
-        setQrCodes((prev) => ({ ...prev, [section.id]: url }));
+        setQrCodes((prev) => ({ ...prev, [`section-${section.id}`]: url }));
       });
+    });
+
+    // Generate QR code for feedback page
+    const feedbackUrl = `${baseUrl}/feedback`;
+    QRCode.toDataURL(feedbackUrl, {
+      width: 400,
+      margin: 2,
+      color: {
+        dark: '#000000',
+        light: '#FFFFFF',
+      },
+    }).then((url) => {
+      setQrCodes((prev) => ({ ...prev, 'feedback': url }));
     });
   }, []);
 
-  const downloadQR = (sectionId: number, sectionName: string, qrDataUrl: string) => {
+  const downloadQR = (id: string, name: string, qrDataUrl: string) => {
     const link = document.createElement('a');
     link.href = qrDataUrl;
-    link.download = `qr-section-${sectionId}-${sectionName.toLowerCase().replace(/\s+/g, '-')}.png`;
+    link.download = `qr-${id}-${name.toLowerCase().replace(/\s+/g, '-')}.png`;
     link.click();
   };
 
   const downloadAllQRs = () => {
-    const availableQRs = sectionsData.sections.filter(
-      (section) => qrCodes[section.id]
-    );
+    let index = 0;
     
-    if (availableQRs.length === 0) return;
-    
-    availableQRs.forEach((section, index) => {
-      const qrDataUrl = qrCodes[section.id];
-      setTimeout(() => {
-        downloadQR(section.id, section.name, qrDataUrl);
-      }, index * 150);
+    // Download section QR codes
+    sectionsData.sections.forEach((section) => {
+      const key = `section-${section.id}`;
+      if (qrCodes[key]) {
+        setTimeout(() => {
+          downloadQR(key, section.name, qrCodes[key]);
+        }, index * 150);
+        index++;
+      }
     });
+
+    // Download feedback QR code
+    if (qrCodes['feedback']) {
+      setTimeout(() => {
+        downloadQR('feedback', 'Share Your Thoughts', qrCodes['feedback']);
+      }, index * 150);
+    }
   };
 
-  const allQRsReady = sectionsData.sections.every((section) => qrCodes[section.id]);
+  const allQRsReady = 
+    sectionsData.sections.every((section) => qrCodes[`section-${section.id}`]) &&
+    qrCodes['feedback'];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4">
@@ -69,7 +92,7 @@ export default function QRCodes() {
                 QR Codes
               </h1>
               <p className="text-gray-600 dark:text-gray-400 mt-1">
-                Download QR codes for direct section access
+                Download QR codes for direct section access and feedback
               </p>
             </div>
           </div>
@@ -85,41 +108,79 @@ export default function QRCodes() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sectionsData.sections.map((section) => (
-            <Card key={section.id} data-testid={`card-qr-${section.id}`}>
-              <CardHeader>
-                <CardTitle className="text-lg">
-                  Section {section.id}: {section.name}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-white p-4 rounded-lg flex items-center justify-center">
-                  {qrCodes[section.id] ? (
-                    <img 
-                      src={qrCodes[section.id]} 
-                      alt={`QR Code for ${section.name}`}
-                      className="w-full max-w-[200px]"
-                      data-testid={`img-qr-${section.id}`}
-                    />
-                  ) : (
-                    <div className="w-[200px] h-[200px] bg-gray-100 animate-pulse rounded" />
-                  )}
-                </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400 text-center break-all" data-testid={`text-url-${section.id}`}>
-                  {window.location.origin}/section/{section.id}
-                </div>
-                <Button
-                  onClick={() => downloadQR(section.id, section.name, qrCodes[section.id])}
-                  disabled={!qrCodes[section.id]}
-                  className="w-full gap-2"
-                  data-testid={`button-download-${section.id}`}
-                >
-                  <Download className="h-4 w-4" />
-                  Download QR Code
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+          {sectionsData.sections.map((section) => {
+            const qrKey = `section-${section.id}`;
+            return (
+              <Card key={section.id} data-testid={`card-qr-${section.id}`}>
+                <CardHeader>
+                  <CardTitle className="text-lg">
+                    Section {section.id}: {section.name}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="bg-white p-4 rounded-lg flex items-center justify-center">
+                    {qrCodes[qrKey] ? (
+                      <img 
+                        src={qrCodes[qrKey]} 
+                        alt={`QR Code for ${section.name}`}
+                        className="w-full max-w-[200px]"
+                        data-testid={`img-qr-${section.id}`}
+                      />
+                    ) : (
+                      <div className="w-[200px] h-[200px] bg-gray-100 animate-pulse rounded" />
+                    )}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 text-center break-all" data-testid={`text-url-${section.id}`}>
+                    {window.location.origin}/section/{section.id}
+                  </div>
+                  <Button
+                    onClick={() => downloadQR(qrKey, section.name, qrCodes[qrKey])}
+                    disabled={!qrCodes[qrKey]}
+                    className="w-full gap-2"
+                    data-testid={`button-download-${section.id}`}
+                  >
+                    <Download className="h-4 w-4" />
+                    Download QR Code
+                  </Button>
+                </CardContent>
+              </Card>
+            );
+          })}
+
+          {/* Feedback QR Code */}
+          <Card data-testid="card-qr-feedback">
+            <CardHeader>
+              <CardTitle className="text-lg">
+                Share Your Thoughts (Feedback)
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-white p-4 rounded-lg flex items-center justify-center">
+                {qrCodes['feedback'] ? (
+                  <img 
+                    src={qrCodes['feedback']} 
+                    alt="QR Code for Feedback Page"
+                    className="w-full max-w-[200px]"
+                    data-testid="img-qr-feedback"
+                  />
+                ) : (
+                  <div className="w-[200px] h-[200px] bg-gray-100 animate-pulse rounded" />
+                )}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400 text-center break-all" data-testid="text-url-feedback">
+                {window.location.origin}/feedback
+              </div>
+              <Button
+                onClick={() => downloadQR('feedback', 'Share Your Thoughts', qrCodes['feedback'])}
+                disabled={!qrCodes['feedback']}
+                className="w-full gap-2"
+                data-testid="button-download-feedback"
+              >
+                <Download className="h-4 w-4" />
+                Download QR Code
+              </Button>
+            </CardContent>
+          </Card>
         </div>
 
         <Card className="mt-8">

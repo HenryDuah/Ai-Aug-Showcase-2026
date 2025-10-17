@@ -142,6 +142,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get all product feedback (admin endpoint)
+  app.get("/api/product-feedback", requireAuth, async (req, res) => {
+    try {
+      const allProductFeedback = await storage.getAllProductFeedback();
+      res.json(allProductFeedback);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch product feedback" });
+    }
+  });
+
+  // Export product feedback as CSV (admin endpoint)
+  app.get("/api/product-feedback/export", requireAuth, async (req, res) => {
+    try {
+      const allProductFeedback = await storage.getAllProductFeedback();
+      
+      // Helper function to escape CSV values
+      const escapeCSV = (value: string) => {
+        const escaped = value.replace(/"/g, '""');
+        return `"${escaped}"`;
+      };
+      
+      // Create CSV headers
+      const headers = [
+        'Submission Date',
+        'Product ID',
+        'Product Name',
+        'Visitor Name',
+        'Email',
+        'Comments'
+      ];
+      
+      // Create CSV rows
+      const rows = await Promise.all(allProductFeedback.map(async (f) => {
+        const product = await storage.getProductById(f.productId);
+        return [
+          escapeCSV(f.submittedAt || ''),
+          escapeCSV(f.productId || ''),
+          escapeCSV(product?.name || 'Unknown'),
+          escapeCSV(f.visitorName || ''),
+          escapeCSV(f.visitorEmail || ''),
+          escapeCSV(f.comments || '')
+        ].join(',');
+      }));
+      
+      const csv = [headers.join(','), ...rows].join('\n');
+      
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', `attachment; filename="product-feedback-export-${new Date().toISOString().split('T')[0]}.csv"`);
+      res.send(csv);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to export product feedback" });
+    }
+  });
+
   // Create product (admin endpoint)
   app.post("/api/products", requireAuth, async (req, res) => {
     try {
@@ -268,6 +322,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(product);
     } catch (error) {
       res.status(500).json({ message: "Failed to update product display status" });
+    }
+  });
+
+  // Track product view
+  app.post("/api/products/:id/track-view", async (req, res) => {
+    try {
+      const product = await storage.incrementViewCount(req.params.id);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      res.json({ success: true, viewCount: product.viewCount });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to track view" });
+    }
+  });
+
+  // Track video click
+  app.post("/api/products/:id/track-video-click", async (req, res) => {
+    try {
+      const product = await storage.incrementVideoClickCount(req.params.id);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      res.json({ success: true, videoClickCount: product.videoClickCount });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to track video click" });
+    }
+  });
+
+  // Track website click
+  app.post("/api/products/:id/track-website-click", async (req, res) => {
+    try {
+      const product = await storage.incrementWebsiteClickCount(req.params.id);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      res.json({ success: true, websiteClickCount: product.websiteClickCount });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to track website click" });
     }
   });
 
