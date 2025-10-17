@@ -57,6 +57,7 @@ The application utilizes Drizzle ORM with a PostgreSQL database, specifically Ne
 **October 16, 2025 (Later) - Final UI Polish and Logo Updates**
 - **White Logo Implementation**: Replaced dark/black logo with white logo on all tour pages (overview, section, and feedback) while keeping dark logo on main landing page for better visibility against different backgrounds
 - **Feedback Page Simplification**: Removed subtitle "How was your experience today?" from feedback page - now shows only "Share your Thoughts" heading with no subtitle for cleaner design
+- **Feedback Page Layout**: Added centered container with max-width (max-w-4xl mx-auto) to feedback page for consistent layout with other pages
 - **Product Detail Layout**: Moved website section to appear just before the product feedback section (after Key Features) for better information flow and visibility
 - **Skip Tour Feature**: Added "Skip Tour - Share Your Thoughts" button on overview page allowing visitors to provide feedback directly without taking the full tour
 - **Product Website Display**: Changed website link text from displaying the full URL to showing "Product Website" for cleaner, more professional presentation

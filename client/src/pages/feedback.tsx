@@ -78,35 +78,37 @@ export default function Feedback() {
         </div>
 
         <div className="px-6 py-6">
-          <Card className="border-2 border-primary">
-            <CardContent className="pt-8 text-center">
-              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="text-primary" size={40} />
-              </div>
-              <h2 className="text-2xl font-bold text-foreground mb-3" data-testid="thank-you-title">Thank You!</h2>
-              <p className="text-foreground/80 mb-6" data-testid="thank-you-message">
-                Your feedback has been submitted successfully. We appreciate you taking the time 
-                to share your thoughts about the AI Lab tour.
-              </p>
-              <div className="flex gap-3">
-                <Button 
-                  variant="secondary"
-                  onClick={resetForm}
-                  className="flex-1"
-                  data-testid="button-more-feedback"
-                >
-                  Submit More Feedback
-                </Button>
-                <Button 
-                  onClick={() => setLocation("/")}
-                  className="flex-1"
-                  data-testid="button-return-start"
-                >
-                  Return to Start
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-2 border-primary">
+              <CardContent className="pt-8 text-center">
+                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="text-primary" size={40} />
+                </div>
+                <h2 className="text-2xl font-bold text-foreground mb-3" data-testid="thank-you-title">Thank You!</h2>
+                <p className="text-foreground/80 mb-6" data-testid="thank-you-message">
+                  Your feedback has been submitted successfully. We appreciate you taking the time 
+                  to share your thoughts about the AI Lab tour.
+                </p>
+                <div className="flex gap-3">
+                  <Button 
+                    variant="secondary"
+                    onClick={resetForm}
+                    className="flex-1"
+                    data-testid="button-more-feedback"
+                  >
+                    Submit More Feedback
+                  </Button>
+                  <Button 
+                    onClick={() => setLocation("/")}
+                    className="flex-1"
+                    data-testid="button-return-start"
+                  >
+                    Return to Start
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     );
@@ -132,8 +134,9 @@ export default function Feedback() {
         </div>
 
         <div className="px-6 py-6">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <div className="max-w-4xl mx-auto">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {/* Personal Information */}
               <Card>
                 <CardContent className="pt-5">
@@ -269,8 +272,9 @@ export default function Feedback() {
                   </>
                 )}
               </Button>
-            </form>
-          </Form>
+              </form>
+            </Form>
+          </div>
         </div>
       </div>
     </div>
