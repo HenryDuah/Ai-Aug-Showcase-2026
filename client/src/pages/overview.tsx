@@ -59,7 +59,7 @@ export default function Overview() {
         {/* Search Bar */}
         <div className="px-6 py-6 bg-card">
           <div className="max-w-4xl mx-auto">
-            <div className="relative">
+            <div className="relative mb-4">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input 
                 type="text"
@@ -82,6 +82,15 @@ export default function Overview() {
                 </Button>
               )}
             </div>
+            <Button 
+              onClick={() => setLocation("/feedback")} 
+              variant="outline"
+              className="w-full px-6 py-3 rounded-lg font-semibold"
+              data-testid="button-skip-to-feedback"
+            >
+              Skip Tour - Share Your Thoughts
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
           </div>
         </div>
 
@@ -222,25 +231,14 @@ export default function Overview() {
               </CardContent>
             </Card>
 
-              <div className="flex flex-col gap-3">
-                <Button 
-                  onClick={() => setLocation("/section/1")} 
-                  className="w-full bg-primary text-primary-foreground px-6 py-4 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all"
-                  data-testid="button-start-section-1"
-                >
-                  Start with Section 1: Maternal
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-                <Button 
-                  onClick={() => setLocation("/feedback")} 
-                  variant="outline"
-                  className="w-full px-6 py-4 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all"
-                  data-testid="button-skip-to-feedback"
-                >
-                  Skip Tour - Share Your Thoughts
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </div>
+              <Button 
+                onClick={() => setLocation("/section/1")} 
+                className="w-full bg-primary text-primary-foreground px-6 py-4 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all"
+                data-testid="button-start-section-1"
+              >
+                Start with Section 1: Maternal
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
             </div>
           </div>
         )}

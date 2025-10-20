@@ -47,11 +47,7 @@ export default function ProductCard({ product, onTap }: ProductCardProps) {
         <p className="text-foreground/80 text-xs md:text-sm leading-relaxed mb-3 md:mb-4 line-clamp-3 flex-1" data-testid={`product-description-${product.id}`}>
           {product.description}
         </p>
-        <div className="flex items-center justify-between mt-auto">
-          <span className="text-xs text-muted-foreground flex items-center gap-1 line-clamp-1" data-testid={`product-type-${product.id}`}>
-            <span className="w-1 h-1 bg-muted-foreground rounded-full flex-shrink-0"></span>
-            {product.type}
-          </span>
+        <div className="flex items-center justify-end mt-auto">
           <ChevronRight className="text-primary w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
         </div>
       </CardContent>

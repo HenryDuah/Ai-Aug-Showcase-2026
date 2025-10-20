@@ -349,7 +349,7 @@ export default function ProductDetail() {
                       className="font-semibold text-primary hover:underline" 
                       data-testid="product-website"
                     >
-                      Product Website
+                      Link
                     </a>
                   </div>
                 </CardContent>
