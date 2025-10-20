@@ -84,8 +84,7 @@ export default function Overview() {
             </div>
             <Button 
               onClick={() => setLocation("/feedback")} 
-              variant="outline"
-              className="w-full px-6 py-3 rounded-lg font-semibold"
+              className="w-full px-6 py-3 rounded-lg font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/90"
               data-testid="button-skip-to-feedback"
             >
               Skip Tour - Share Your Thoughts
