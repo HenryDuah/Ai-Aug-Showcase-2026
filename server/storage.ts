@@ -122,6 +122,25 @@ export class MemStorage implements IStorage {
       viewCount: 0,
       videoClickCount: 0,
       websiteClickCount: 0,
+      useCase: insertProduct.useCase ?? null,
+      healthcareTags: insertProduct.healthcareTags ? [...insertProduct.healthcareTags] : null,
+      stageOfDevelopment: insertProduct.stageOfDevelopment ? [...insertProduct.stageOfDevelopment] : null,
+      geography: insertProduct.geography ?? null,
+      reportedOutcomes: insertProduct.reportedOutcomes ?? null,
+      dataCollected: insertProduct.dataCollected ? [...insertProduct.dataCollected] : null,
+      offlineCapability: insertProduct.offlineCapability ?? null,
+      integration: insertProduct.integration ? [...insertProduct.integration] : null,
+      regulatoryApprovals: insertProduct.regulatoryApprovals ? [...insertProduct.regulatoryApprovals] : null,
+      complianceCertifications: insertProduct.complianceCertifications ? [...insertProduct.complianceCertifications] : null,
+      whatsInTheBox: insertProduct.whatsInTheBox ?? null,
+      componentWeight: insertProduct.componentWeight ?? null,
+      powerBattery: insertProduct.powerBattery ?? null,
+      connectivity: insertProduct.connectivity ?? null,
+      environmentalConditions: insertProduct.environmentalConditions ?? null,
+      userTypes: insertProduct.userTypes ? [...insertProduct.userTypes] : null,
+      cost: insertProduct.cost ?? null,
+      strengths: insertProduct.strengths ?? null,
+      considerations: insertProduct.considerations ?? null,
     };
     this.products.set(id, product);
     this.saveProducts();
@@ -202,6 +221,8 @@ export class MemStorage implements IStorage {
       productId: insertProductFeedback.productId,
       visitorName: insertProductFeedback.visitorName ?? null,
       visitorEmail: insertProductFeedback.visitorEmail ?? null,
+      visitorRole: insertProductFeedback.visitorRole ?? null,
+      visitorRoleOther: insertProductFeedback.visitorRoleOther ?? null,
       comments: insertProductFeedback.comments ?? null,
     }).returning();
     return newProductFeedback;
@@ -354,6 +375,8 @@ export class DbStorage implements IStorage {
       productId: insertProductFeedback.productId,
       visitorName: insertProductFeedback.visitorName ?? null,
       visitorEmail: insertProductFeedback.visitorEmail ?? null,
+      visitorRole: insertProductFeedback.visitorRole ?? null,
+      visitorRoleOther: insertProductFeedback.visitorRoleOther ?? null,
       comments: insertProductFeedback.comments ?? null,
     }).returning();
     return newProductFeedback;
