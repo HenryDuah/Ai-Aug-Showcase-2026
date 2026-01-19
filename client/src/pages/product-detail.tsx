@@ -258,15 +258,37 @@ export default function ProductDetail() {
             </Card>
 
             {/* Expandable Sections */}
-            <Accordion type="multiple" className="space-y-3">
+            <Accordion type="multiple" defaultValue={["features", "video", "users"]} className="space-y-3">
 
-              {/* Product Video */}
+              {/* Key Features - appears first, expanded by default */}
+              {product.features && product.features.length > 0 && (
+                <AccordionItem value="features" className="border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="text-primary" size={20} />
+                      <span className="font-bold">Key Features</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    <ul className="space-y-2" data-testid="product-features">
+                      {product.features.map((feature: string, index: number) => (
+                        <li key={index} className="flex items-start gap-2">
+                          <CheckCircle className="text-primary mt-1 flex-shrink-0" size={16} />
+                          <span className="text-foreground/80" data-testid={`feature-${index}`}>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+
+              {/* Product Video - expanded by default */}
               {product.videoUrl && (
                 <AccordionItem value="video" className="border rounded-lg px-4">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Video className="text-primary" size={20} />
-                      <span className="font-semibold">Product Video</span>
+                      <span className="font-bold">Product Video</span>
                       {product.videoType && (
                         <Badge variant="outline" className="ml-2 text-xs">{product.videoType}</Badge>
                       )}
@@ -318,35 +340,54 @@ export default function ProductDetail() {
                 </AccordionItem>
               )}
 
+              {/* Best For - appears after video, expanded by default */}
+              {product.userTypes && product.userTypes.length > 0 && (
+                <AccordionItem value="users" className="border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Users className="text-primary" size={20} />
+                      <span className="font-bold">Best For</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    <div className="flex flex-wrap gap-2" data-testid="product-user-types">
+                      {product.userTypes.map((user: string) => (
+                        <Badge key={user} variant="secondary" className="rounded-full">{user}</Badge>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+
               {/* Demonstrated Impact */}
               {hasEvidenceData && (
                 <AccordionItem value="evidence" className="border rounded-lg px-4">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <MapPin className="text-primary" size={20} />
-                      <span className="font-semibold">Demonstrated Impact</span>
+                      <span className="font-bold">Demonstrated Impact</span>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4 space-y-4">
                     {product.stageOfDevelopment && product.stageOfDevelopment.length > 0 && (
                       <div>
-                        <h4 className="text-sm font-semibold text-muted-foreground mb-2">Stage of Development</h4>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-2">Stage of Development</h4>
                         <div className="flex flex-wrap gap-2" data-testid="product-stage">
                           {product.stageOfDevelopment.map((stage: string) => (
-                            <Badge key={stage} variant="outline" className="rounded-full">{stage}</Badge>
+                            <Badge key={stage} variant="secondary" className="rounded-full">{stage}</Badge>
                           ))}
                         </div>
                       </div>
                     )}
                     {product.geography && (
                       <div>
-                        <h4 className="text-sm font-semibold text-muted-foreground mb-1">Geography</h4>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-1">Geography</h4>
                         <p className="text-foreground/80" data-testid="product-geography">{product.geography}</p>
                       </div>
                     )}
                     {product.reportedOutcomes && (
                       <div>
-                        <h4 className="text-sm font-semibold text-muted-foreground mb-1">Reported Outcomes</h4>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-1">Reported Outcomes</h4>
                         <p className="text-foreground/80 leading-relaxed" data-testid="product-outcomes">{product.reportedOutcomes}</p>
                       </div>
                     )}
@@ -360,13 +401,13 @@ export default function ProductDetail() {
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Cpu className="text-primary" size={20} />
-                      <span className="font-semibold">Data & Integration</span>
+                      <span className="font-bold">Data & Integration</span>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4 space-y-4">
                     {product.dataCollected && product.dataCollected.length > 0 && (
                       <div>
-                        <h4 className="text-sm font-semibold text-muted-foreground mb-2">Data Collected</h4>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-2">Data Collected</h4>
                         <div className="flex flex-wrap gap-2" data-testid="product-data-collected">
                           {product.dataCollected.map((data: string, idx: number) => (
                             <Badge key={idx} variant="secondary" className="rounded-full">{data}</Badge>
@@ -377,7 +418,7 @@ export default function ProductDetail() {
                     {product.offlineCapability && (
                       <div className="flex items-center gap-2">
                         <Wifi className="text-muted-foreground" size={16} />
-                        <span className="text-sm text-muted-foreground">Offline Capability:</span>
+                        <span className="text-sm font-bold text-muted-foreground">Offline Capability:</span>
                         <Badge variant={product.offlineCapability === 'Yes' ? 'default' : 'outline'} data-testid="product-offline">
                           {product.offlineCapability}
                         </Badge>
@@ -385,10 +426,10 @@ export default function ProductDetail() {
                     )}
                     {product.integration && product.integration.length > 0 && (
                       <div>
-                        <h4 className="text-sm font-semibold text-muted-foreground mb-2">Integration</h4>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-2">Integration</h4>
                         <div className="flex flex-wrap gap-2" data-testid="product-integration">
                           {product.integration.map((item: string, idx: number) => (
-                            <Badge key={idx} variant="outline" className="rounded-full">{item}</Badge>
+                            <Badge key={idx} variant="secondary" className="rounded-full">{item}</Badge>
                           ))}
                         </div>
                       </div>
@@ -403,19 +444,19 @@ export default function ProductDetail() {
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Package className="text-primary" size={20} />
-                      <span className="font-semibold">Hardware & Deployment Profile</span>
+                      <span className="font-bold">Hardware & Deployment Profile</span>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4 space-y-3">
                     {product.whatsInTheBox && (
                       <div>
-                        <h4 className="text-sm font-semibold text-muted-foreground mb-1">What's in the Box</h4>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-1">What's in the Box</h4>
                         <p className="text-foreground/80" data-testid="product-box-contents">{product.whatsInTheBox}</p>
                       </div>
                     )}
                     {product.componentWeight && (
                       <div className="flex items-center gap-2">
-                        <span className="text-sm text-muted-foreground">Weight:</span>
+                        <span className="text-sm font-bold text-muted-foreground">Weight:</span>
                         <span className="text-foreground" data-testid="product-weight">{product.componentWeight}</span>
                       </div>
                     )}
@@ -423,7 +464,7 @@ export default function ProductDetail() {
                       <div className="flex items-start gap-2">
                         <Battery className="text-muted-foreground flex-shrink-0 mt-0.5" size={16} />
                         <div>
-                          <span className="text-sm text-muted-foreground block">Power/Battery</span>
+                          <span className="text-sm font-bold text-muted-foreground block">Power/Battery</span>
                           <span className="text-foreground" data-testid="product-power">{product.powerBattery}</span>
                         </div>
                       </div>
@@ -432,7 +473,7 @@ export default function ProductDetail() {
                       <div className="flex items-start gap-2">
                         <Signal className="text-muted-foreground flex-shrink-0 mt-0.5" size={16} />
                         <div>
-                          <span className="text-sm text-muted-foreground block">Connectivity</span>
+                          <span className="text-sm font-bold text-muted-foreground block">Connectivity</span>
                           <span className="text-foreground" data-testid="product-connectivity">{product.connectivity}</span>
                         </div>
                       </div>
@@ -441,7 +482,7 @@ export default function ProductDetail() {
                       <div className="flex items-start gap-2">
                         <Thermometer className="text-muted-foreground flex-shrink-0 mt-0.5" size={16} />
                         <div>
-                          <span className="text-sm text-muted-foreground block">Environmental Conditions</span>
+                          <span className="text-sm font-bold text-muted-foreground block">Environmental Conditions</span>
                           <span className="text-foreground" data-testid="product-environment">{product.environmentalConditions}</span>
                         </div>
                       </div>
@@ -455,12 +496,12 @@ export default function ProductDetail() {
                 <AccordionTrigger className="hover:no-underline py-4">
                   <div className="flex items-center gap-3">
                     <Shield className="text-primary" size={20} />
-                    <span className="font-semibold">Regulatory & Compliance</span>
+                    <span className="font-bold">Regulatory & Compliance</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="pb-4 space-y-4">
                   <div>
-                    <h4 className="text-sm font-semibold text-muted-foreground mb-3">Regulations</h4>
+                    <h4 className="text-sm font-bold text-muted-foreground mb-3">Regulations</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2" data-testid="product-regulatory">
                       {REGULATORY_APPROVALS.map((approval) => {
                         const isSelected = product.regulatoryApprovals?.includes(approval);
@@ -482,7 +523,7 @@ export default function ProductDetail() {
                     </div>
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-muted-foreground mb-3">Compliance</h4>
+                    <h4 className="text-sm font-bold text-muted-foreground mb-3">Compliance</h4>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2" data-testid="product-compliance">
                       {COMPLIANCE_CERTIFICATIONS.map((cert) => {
                         const isSelected = product.complianceCertifications?.includes(cert);
@@ -506,32 +547,13 @@ export default function ProductDetail() {
                 </AccordionContent>
               </AccordionItem>
 
-              {/* Best For */}
-              {product.userTypes && product.userTypes.length > 0 && (
-                <AccordionItem value="users" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Users className="text-primary" size={20} />
-                      <span className="font-semibold">Best For</span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    <div className="flex flex-wrap gap-2" data-testid="product-user-types">
-                      {product.userTypes.map((user: string) => (
-                        <Badge key={user} variant="secondary" className="rounded-full">{user}</Badge>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              )}
-
               {/* Strengths & Considerations */}
               {hasStrengthsData && (
                 <AccordionItem value="strengths" className="border rounded-lg px-4">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <ThumbsUp className="text-primary" size={20} />
-                      <span className="font-semibold">Strengths & Considerations</span>
+                      <span className="font-bold">Strengths & Considerations</span>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4 space-y-4">
@@ -539,14 +561,14 @@ export default function ProductDetail() {
                       <div className="flex items-start gap-2">
                         <DollarSign className="text-muted-foreground flex-shrink-0 mt-0.5" size={16} />
                         <div>
-                          <h4 className="text-sm font-semibold text-muted-foreground mb-1">Cost</h4>
+                          <h4 className="text-sm font-bold text-muted-foreground mb-1">Cost</h4>
                           <p className="text-foreground/80" data-testid="product-cost">{product.cost}</p>
                         </div>
                       </div>
                     )}
                     {product.strengths && (
                       <div>
-                        <h4 className="text-sm font-semibold text-green-600 mb-1 flex items-center gap-1">
+                        <h4 className="text-sm font-bold text-green-600 mb-1 flex items-center gap-1">
                           <ThumbsUp size={14} /> Strengths
                         </h4>
                         <p className="text-foreground/80 leading-relaxed" data-testid="product-strengths">{product.strengths}</p>
@@ -554,34 +576,12 @@ export default function ProductDetail() {
                     )}
                     {product.considerations && (
                       <div>
-                        <h4 className="text-sm font-semibold text-amber-600 mb-1 flex items-center gap-1">
+                        <h4 className="text-sm font-bold text-amber-600 mb-1 flex items-center gap-1">
                           <AlertCircle size={14} /> Considerations
                         </h4>
                         <p className="text-foreground/80 leading-relaxed" data-testid="product-considerations">{product.considerations}</p>
                       </div>
                     )}
-                  </AccordionContent>
-                </AccordionItem>
-              )}
-
-              {/* Key Features */}
-              {product.features && product.features.length > 0 && (
-                <AccordionItem value="features" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="text-primary" size={20} />
-                      <span className="font-semibold">Key Features</span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    <ul className="space-y-2" data-testid="product-features">
-                      {product.features.map((feature: string, index: number) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <CheckCircle className="text-primary mt-1 flex-shrink-0" size={16} />
-                          <span className="text-foreground/80" data-testid={`feature-${index}`}>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
                   </AccordionContent>
                 </AccordionItem>
               )}
