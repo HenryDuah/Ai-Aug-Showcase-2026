@@ -17,7 +17,6 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Product, InsertProduct } from "@shared/schema";
 import { 
-  USE_CASES, 
   HEALTHCARE_TAGS, 
   STAGE_OF_DEVELOPMENT, 
   VIDEO_TYPES,
@@ -32,15 +31,13 @@ import { ObjectUploader } from "@/components/ObjectUploader";
 
 const createProductFormSchema = (isEditMode: boolean) => z.object({
   name: z.string().min(1, "Product name is required"),
+  oneLineDescription: z.string().optional(),
   company: z.string().min(1, "Company name is required"),
-  type: z.string().min(1, "Product type is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().url("Must be a valid URL"),
   videoUrl: z.string().optional(),
   videoType: z.string().optional(),
-  brochureUrl: z.string().optional(),
   website: z.string().optional(),
-  theImpact: z.string().min(1, "The Impact is required"),
   sectionId: z.number().min(1).max(5),
   sectionName: z.string().min(1, "Section name is required"),
   features: z.string(),
@@ -99,15 +96,13 @@ export default function ProductForm() {
     resolver: zodResolver(createProductFormSchema(isEditMode)),
     defaultValues: {
       name: "",
+      oneLineDescription: "",
       company: "",
-      type: "",
       description: "",
       image: "",
       videoUrl: "",
       videoType: "",
-      brochureUrl: "",
       website: "",
-      theImpact: "",
       sectionId: 1,
       sectionName: "",
       features: "",
@@ -138,15 +133,13 @@ export default function ProductForm() {
     if (product) {
       form.reset({
         name: product.name,
+        oneLineDescription: product.oneLineDescription || "",
         company: product.company,
-        type: product.type,
         description: product.description,
         image: product.image,
         videoUrl: product.videoUrl || "",
         videoType: product.videoType || "",
-        brochureUrl: product.brochureUrl || "",
         website: product.website || "",
-        theImpact: product.theImpact || "",
         sectionId: product.sectionId,
         sectionName: product.sectionName,
         features: product.features?.join("\n") || "",
@@ -234,6 +227,7 @@ export default function ProductForm() {
       features: data.features.split("\n").filter(f => f.trim()),
       videoUrl: cleanVideoUrl,
       videoType: cleanVideoType,
+      oneLineDescription: data.oneLineDescription || null,
       useCase: data.useCase || null,
       healthcareTags: data.healthcareTags?.length ? data.healthcareTags : null,
       stageOfDevelopment: data.stageOfDevelopment?.length ? data.stageOfDevelopment : null,
@@ -289,31 +283,6 @@ export default function ProductForm() {
           toast({
             title: "Error",
             description: "Failed to process uploaded video.",
-            variant: "destructive",
-          });
-        }
-      }
-    }
-  };
-
-  const handleBrochureUploadComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-    if (result.successful && result.successful.length > 0) {
-      const uploadURL = result.successful[0].uploadURL;
-      if (uploadURL) {
-        try {
-          const response = await apiRequest("POST", "/api/objects/normalize", { 
-            uploadURL: uploadURL.split("?")[0] 
-          });
-          const data = await response.json();
-          form.setValue("brochureUrl", data.normalizedPath);
-          toast({
-            title: "Success",
-            description: "Brochure uploaded successfully.",
-          });
-        } catch (error) {
-          toast({
-            title: "Error",
-            description: "Failed to process uploaded brochure.",
             variant: "destructive",
           });
         }
@@ -422,12 +391,13 @@ export default function ProductForm() {
 
                       <FormField
                         control={form.control}
-                        name="type"
+                        name="oneLineDescription"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Product Type *</FormLabel>
+                            <FormLabel>One-Line Description</FormLabel>
+                            <FormDescription>Brief description shown on product cards next to the product name</FormDescription>
                             <FormControl>
-                              <Input {...field} placeholder="e.g., Medical Device, Software, etc." data-testid="input-type" />
+                              <Input {...field} placeholder="e.g., Portable ultrasound for maternal care" data-testid="input-one-line-description" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -489,20 +459,6 @@ export default function ProductForm() {
 
                       <FormField
                         control={form.control}
-                        name="theImpact"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>The Impact *</FormLabel>
-                            <FormControl>
-                              <Textarea {...field} placeholder="Describe the impact of this product" rows={3} data-testid="textarea-the-impact" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
                         name="features"
                         render={({ field }) => (
                           <FormItem>
@@ -531,18 +487,9 @@ export default function ProductForm() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Use Case</FormLabel>
-                            <Select value={field.value || ""} onValueChange={field.onChange}>
-                              <FormControl>
-                                <SelectTrigger data-testid="select-usecase">
-                                  <SelectValue placeholder="Select use case" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {USE_CASES.map((useCase) => (
-                                  <SelectItem key={useCase} value={useCase}>{useCase}</SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                            <FormControl>
+                              <Input {...field} placeholder="e.g., Prenatal care monitoring, Disease screening" data-testid="input-usecase" />
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -961,7 +908,7 @@ export default function ProductForm() {
 
                 {/* Media */}
                 <div>
-                  <SectionHeader title="Media" section="media" description="Video and brochure uploads" />
+                  <SectionHeader title="Media" section="media" description="Video uploads" />
                   {expandedSections.media && (
                     <div className="space-y-4 pl-2">
                       <FormField
@@ -1002,41 +949,6 @@ export default function ProductForm() {
                         )}
                       />
 
-                      <FormField
-                        control={form.control}
-                        name="brochureUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Product Brochure</FormLabel>
-                            <FormControl>
-                              <div className="space-y-3">
-                                <Input 
-                                  {...field} 
-                                  placeholder="Brochure URL (auto-filled when you upload)" 
-                                  data-testid="input-brochure-url"
-                                  readOnly
-                                  className="bg-muted"
-                                />
-                                <div>
-                                  <ObjectUploader
-                                    maxNumberOfFiles={1}
-                                    allowedFileTypes={[".pdf", "application/pdf"]}
-                                    onGetUploadParameters={handleGetUploadParameters}
-                                    onComplete={handleBrochureUploadComplete}
-                                    buttonVariant="outline"
-                                  >
-                                    <>
-                                      <Upload className="w-4 h-4 mr-2" />
-                                      Upload PDF Brochure
-                                    </>
-                                  </ObjectUploader>
-                                </div>
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
                     </div>
                   )}
                 </div>

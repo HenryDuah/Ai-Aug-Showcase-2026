@@ -40,7 +40,6 @@ export default function ProductDetail() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [showImageOverlay, setShowImageOverlay] = useState(false);
-  const [showBrochure, setShowBrochure] = useState(false);
   
   const productId = params.productId;
 
@@ -166,7 +165,7 @@ export default function ProductDetail() {
     );
   }
 
-  const hasEvidenceData = product.theImpact || product.stageOfDevelopment?.length || product.geography || product.reportedOutcomes;
+  const hasEvidenceData = product.stageOfDevelopment?.length || product.geography || product.reportedOutcomes;
   const hasTechnicalData = product.dataCollected?.length || product.offlineCapability || product.integration?.length;
   const hasHardwareData = product.whatsInTheBox || product.componentWeight || product.powerBattery || product.connectivity || product.environmentalConditions;
   const hasRegulatoryData = product.regulatoryApprovals?.length || product.complianceCertifications?.length;
@@ -209,13 +208,6 @@ export default function ProductDetail() {
                 />
               </div>
               <CardContent className="pt-5 space-y-4">
-                {/* Product Type */}
-                <div className="flex items-center gap-2">
-                  <Tag className="text-primary flex-shrink-0" size={18} />
-                  <span className="text-sm text-muted-foreground">Product Type:</span>
-                  <span className="font-semibold text-foreground" data-testid="product-type">{product.type}</span>
-                </div>
-
                 {/* Description */}
                 <div>
                   <h3 className="text-lg font-bold text-foreground mb-2">Description</h3>
@@ -356,12 +348,6 @@ export default function ProductDetail() {
                       <div>
                         <h4 className="text-sm font-semibold text-muted-foreground mb-1">Reported Outcomes</h4>
                         <p className="text-foreground/80 leading-relaxed" data-testid="product-outcomes">{product.reportedOutcomes}</p>
-                      </div>
-                    )}
-                    {product.theImpact && (
-                      <div>
-                        <h4 className="text-sm font-semibold text-muted-foreground mb-1">Impact Summary</h4>
-                        <p className="text-foreground/80 leading-relaxed" data-testid="product-impact">{product.theImpact}</p>
                       </div>
                     )}
                   </AccordionContent>
@@ -600,29 +586,6 @@ export default function ProductDetail() {
                 </AccordionItem>
               )}
 
-              {/* Product Brochure */}
-              {product.brochureUrl && (
-                <AccordionItem value="brochure" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <FileText className="text-primary" size={20} />
-                      <span className="font-semibold">Product Brochure</span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    <Button 
-                      variant="outline"
-                      onClick={() => setShowBrochure(true)}
-                      className="w-full sm:w-auto"
-                      data-testid="button-view-brochure"
-                    >
-                      <FileText className="w-4 h-4 mr-2" />
-                      View Brochure (PDF)
-                    </Button>
-                  </AccordionContent>
-                </AccordionItem>
-              )}
-
             </Accordion>
 
             {/* Product Feedback */}
@@ -759,25 +722,6 @@ export default function ProductDetail() {
           onClose={() => setShowImageOverlay(false)}
         />
 
-        {/* Brochure Dialog */}
-        <Dialog open={showBrochure} onOpenChange={setShowBrochure}>
-          <DialogContent className="max-w-4xl max-h-[90vh] p-0">
-            <DialogHeader className="p-6 pb-4">
-              <DialogTitle className="flex items-center gap-2">
-                <FileText className="text-primary" size={24} />
-                Product Brochure
-              </DialogTitle>
-            </DialogHeader>
-            <div className="px-6 pb-6 h-[70vh]">
-              <iframe
-                src={product.brochureUrl || ""}
-                className="w-full h-full rounded-lg border"
-                title="Product Brochure"
-                data-testid="brochure-viewer"
-              />
-            </div>
-          </DialogContent>
-        </Dialog>
       </div>
     </div>
   );

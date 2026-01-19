@@ -4,7 +4,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Predefined lists for product fields
-export const USE_CASES = [
+export const HEALTHCARE_TAGS = [
   "Maternal Health",
   "Neonatal & Child Health",
   "Non-Communicable Diseases (NCDs)",
@@ -12,19 +12,6 @@ export const USE_CASES = [
   "General Screening",
   "Health Workforce Support",
   "Health System Operations"
-] as const;
-
-export const HEALTHCARE_TAGS = [
-  "Diagnostics",
-  "Monitoring",
-  "Treatment",
-  "Prevention",
-  "Education",
-  "Data Management",
-  "Telemedicine",
-  "Point of Care",
-  "Wearable",
-  "Mobile Health"
 ] as const;
 
 export const STAGE_OF_DEVELOPMENT = [
@@ -90,15 +77,13 @@ export const users = pgTable("users", {
 export const products = pgTable("products", {
   id: varchar("id").primaryKey(),
   name: text("name").notNull(),
+  oneLineDescription: text("one_line_description"),
   company: text("company").notNull(),
-  type: text("type").notNull(),
   description: text("description").notNull(),
   image: text("image").notNull(),
   videoUrl: text("video_url"),
   videoType: text("video_type"),
-  brochureUrl: text("brochure_url"),
   website: text("website"),
-  theImpact: text("the_impact").notNull(),
   features: json("features").$type<string[]>().default([]),
   sectionId: integer("section_id").notNull(),
   sectionName: text("section_name").notNull(),

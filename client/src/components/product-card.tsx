@@ -39,7 +39,7 @@ export default function ProductCard({ product, onTap }: ProductCardProps) {
       </div>
       <CardContent className="p-4 md:p-5 flex-1 flex flex-col gap-2">
         <h3 className="text-base md:text-lg font-bold text-foreground line-clamp-2" data-testid={`product-name-${product.id}`}>
-          {product.name} <span className="font-normal text-muted-foreground">- {product.description?.split('.')[0] || product.description}</span>
+          {product.name}{product.oneLineDescription && <span className="font-normal text-muted-foreground"> - {product.oneLineDescription}</span>}
         </h3>
         
         {product.useCase && (
