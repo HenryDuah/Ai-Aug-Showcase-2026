@@ -14,8 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { 
   X, Tag, CheckCircle, FileText, MessageSquare, Globe, MapPin, 
-  BarChart3, Wifi, Cpu, Shield, Users, DollarSign, ThumbsUp, 
-  AlertCircle, Video, Package, Battery, Signal, Thermometer, Play
+  BarChart3, Cpu, Shield, Users, ThumbsUp, Video, Package, Play
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import ImageOverlay from "@/components/image-overlay";
@@ -218,12 +217,9 @@ export default function ProductDetail() {
 
                 {/* Use Case */}
                 {product.useCase && (
-                  <div className="flex items-start gap-2">
-                    <Globe className="text-primary flex-shrink-0 mt-0.5" size={18} />
-                    <div>
-                      <span className="text-sm text-muted-foreground block">Use Case</span>
-                      <span className="font-medium text-foreground" data-testid="product-usecase">{product.useCase}</span>
-                    </div>
+                  <div>
+                    <span className="text-sm text-muted-foreground block">Use Case</span>
+                    <span className="font-medium text-foreground" data-testid="product-usecase">{product.useCase}</span>
                   </div>
                 )}
 
@@ -417,7 +413,6 @@ export default function ProductDetail() {
                     )}
                     {product.offlineCapability && (
                       <div className="flex items-center gap-2">
-                        <Wifi className="text-muted-foreground" size={16} />
                         <span className="text-sm font-bold text-muted-foreground">Offline Capability:</span>
                         <Badge variant={product.offlineCapability === 'Yes' ? 'default' : 'outline'} data-testid="product-offline">
                           {product.offlineCapability}
@@ -461,30 +456,21 @@ export default function ProductDetail() {
                       </div>
                     )}
                     {product.powerBattery && (
-                      <div className="flex items-start gap-2">
-                        <Battery className="text-muted-foreground flex-shrink-0 mt-0.5" size={16} />
-                        <div>
-                          <span className="text-sm font-bold text-muted-foreground block">Power/Battery</span>
-                          <span className="text-foreground" data-testid="product-power">{product.powerBattery}</span>
-                        </div>
+                      <div>
+                        <span className="text-sm font-bold text-muted-foreground block">Power/Battery</span>
+                        <span className="text-foreground" data-testid="product-power">{product.powerBattery}</span>
                       </div>
                     )}
                     {product.connectivity && (
-                      <div className="flex items-start gap-2">
-                        <Signal className="text-muted-foreground flex-shrink-0 mt-0.5" size={16} />
-                        <div>
-                          <span className="text-sm font-bold text-muted-foreground block">Connectivity</span>
-                          <span className="text-foreground" data-testid="product-connectivity">{product.connectivity}</span>
-                        </div>
+                      <div>
+                        <span className="text-sm font-bold text-muted-foreground block">Connectivity</span>
+                        <span className="text-foreground" data-testid="product-connectivity">{product.connectivity}</span>
                       </div>
                     )}
                     {product.environmentalConditions && (
-                      <div className="flex items-start gap-2">
-                        <Thermometer className="text-muted-foreground flex-shrink-0 mt-0.5" size={16} />
-                        <div>
-                          <span className="text-sm font-bold text-muted-foreground block">Environmental Conditions</span>
-                          <span className="text-foreground" data-testid="product-environment">{product.environmentalConditions}</span>
-                        </div>
+                      <div>
+                        <span className="text-sm font-bold text-muted-foreground block">Environmental Conditions</span>
+                        <span className="text-foreground" data-testid="product-environment">{product.environmentalConditions}</span>
                       </div>
                     )}
                   </AccordionContent>
@@ -558,27 +544,20 @@ export default function ProductDetail() {
                   </AccordionTrigger>
                   <AccordionContent className="pb-4 space-y-4">
                     {product.cost && (
-                      <div className="flex items-start gap-2">
-                        <DollarSign className="text-muted-foreground flex-shrink-0 mt-0.5" size={16} />
-                        <div>
-                          <h4 className="text-sm font-bold text-muted-foreground mb-1">Cost</h4>
-                          <p className="text-foreground/80" data-testid="product-cost">{product.cost}</p>
-                        </div>
+                      <div>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-1">Cost</h4>
+                        <p className="text-foreground/80" data-testid="product-cost">{product.cost}</p>
                       </div>
                     )}
                     {product.strengths && (
                       <div>
-                        <h4 className="text-sm font-bold text-green-600 mb-1 flex items-center gap-1">
-                          <ThumbsUp size={14} /> Strengths
-                        </h4>
+                        <h4 className="text-sm font-bold text-green-600 mb-1">Strengths</h4>
                         <p className="text-foreground/80 leading-relaxed" data-testid="product-strengths">{product.strengths}</p>
                       </div>
                     )}
                     {product.considerations && (
                       <div>
-                        <h4 className="text-sm font-bold text-amber-600 mb-1 flex items-center gap-1">
-                          <AlertCircle size={14} /> Considerations
-                        </h4>
+                        <h4 className="text-sm font-bold text-amber-600 mb-1">Considerations</h4>
                         <p className="text-foreground/80 leading-relaxed" data-testid="product-considerations">{product.considerations}</p>
                       </div>
                     )}
