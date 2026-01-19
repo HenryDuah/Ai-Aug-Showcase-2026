@@ -38,17 +38,9 @@ export default function ProductCard({ product, onTap }: ProductCardProps) {
         )}
       </div>
       <CardContent className="p-4 md:p-5 flex-1 flex flex-col gap-2">
-        <h3 className="text-lg md:text-xl font-bold text-foreground line-clamp-2" data-testid={`product-name-${product.id}`}>
-          {product.name}
+        <h3 className="text-base md:text-lg font-bold text-foreground line-clamp-2" data-testid={`product-name-${product.id}`}>
+          {product.name} <span className="font-normal text-muted-foreground">- {product.description?.split('.')[0] || product.description}</span>
         </h3>
-        
-        <p className="text-xs md:text-sm font-semibold text-primary" data-testid={`product-company-${product.id}`}>
-          {product.company}
-        </p>
-        
-        <p className="text-foreground/80 text-xs md:text-sm leading-relaxed line-clamp-2 flex-shrink-0" data-testid={`product-description-${product.id}`}>
-          {product.description}
-        </p>
         
         {product.useCase && (
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground" data-testid={`product-usecase-${product.id}`}>
@@ -58,7 +50,7 @@ export default function ProductCard({ product, onTap }: ProductCardProps) {
         )}
         
         {product.healthcareTags && product.healthcareTags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-1" data-testid={`product-tags-${product.id}`}>
+          <div className="flex flex-wrap gap-1.5" data-testid={`product-tags-${product.id}`}>
             {product.healthcareTags.slice(0, 3).map((tag: string) => (
               <Badge 
                 key={tag} 
@@ -76,7 +68,11 @@ export default function ProductCard({ product, onTap }: ProductCardProps) {
           </div>
         )}
         
-        <div className="flex items-center justify-end mt-auto pt-2">
+        <p className="text-xs md:text-sm font-semibold text-primary mt-auto" data-testid={`product-company-${product.id}`}>
+          {product.company}
+        </p>
+        
+        <div className="flex items-center justify-end">
           <ChevronRight className="text-primary w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
         </div>
       </CardContent>

@@ -23,7 +23,7 @@ import { useState, useEffect } from "react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Product } from "@shared/schema";
-import { VISITOR_ROLES } from "@shared/schema";
+import { VISITOR_ROLES, REGULATORY_APPROVALS, COMPLIANCE_CERTIFICATIONS } from "@shared/schema";
 
 const productFeedbackFormSchema = z.object({
   visitorName: z.string().optional(),
@@ -166,12 +166,12 @@ export default function ProductDetail() {
     );
   }
 
-  const hasEvidenceData = product.stageOfDevelopment?.length || product.geography || product.reportedOutcomes;
+  const hasEvidenceData = product.theImpact || product.stageOfDevelopment?.length || product.geography || product.reportedOutcomes;
   const hasTechnicalData = product.dataCollected?.length || product.offlineCapability || product.integration?.length;
   const hasHardwareData = product.whatsInTheBox || product.componentWeight || product.powerBattery || product.connectivity || product.environmentalConditions;
   const hasRegulatoryData = product.regulatoryApprovals?.length || product.complianceCertifications?.length;
-  const hasUserData = product.userTypes?.length || product.cost;
-  const hasStrengthsData = product.strengths || product.considerations;
+  const hasUserData = product.userTypes?.length;
+  const hasStrengthsData = product.strengths || product.considerations || product.cost;
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -245,28 +245,28 @@ export default function ProductDetail() {
                     ))}
                   </div>
                 )}
+
+                {/* Website Link - Always visible */}
+                {product.website && (
+                  <div className="pt-2 border-t">
+                    <a 
+                      href={product.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      onClick={trackWebsiteClick}
+                      className="text-primary hover:underline flex items-center gap-2 font-medium" 
+                      data-testid="product-website"
+                    >
+                      <Globe size={18} />
+                      Visit Website
+                    </a>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
             {/* Expandable Sections */}
             <Accordion type="multiple" className="space-y-3">
-              
-              {/* The Impact */}
-              {product.theImpact && (
-                <AccordionItem value="impact" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <BarChart3 className="text-primary" size={20} />
-                      <span className="font-semibold">The Impact</span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    <p className="text-foreground/80 leading-relaxed" data-testid="product-impact">
-                      {product.theImpact}
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-              )}
 
               {/* Product Video */}
               {product.videoUrl && (
@@ -326,13 +326,13 @@ export default function ProductDetail() {
                 </AccordionItem>
               )}
 
-              {/* Evidence & Deployment */}
+              {/* Demonstrated Impact */}
               {hasEvidenceData && (
                 <AccordionItem value="evidence" className="border rounded-lg px-4">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <MapPin className="text-primary" size={20} />
-                      <span className="font-semibold">Evidence & Deployment</span>
+                      <span className="font-semibold">Demonstrated Impact</span>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4 space-y-4">
@@ -358,17 +358,23 @@ export default function ProductDetail() {
                         <p className="text-foreground/80 leading-relaxed" data-testid="product-outcomes">{product.reportedOutcomes}</p>
                       </div>
                     )}
+                    {product.theImpact && (
+                      <div>
+                        <h4 className="text-sm font-semibold text-muted-foreground mb-1">Impact Summary</h4>
+                        <p className="text-foreground/80 leading-relaxed" data-testid="product-impact">{product.theImpact}</p>
+                      </div>
+                    )}
                   </AccordionContent>
                 </AccordionItem>
               )}
 
-              {/* Technical Specifications */}
+              {/* Data & Integration */}
               {hasTechnicalData && (
                 <AccordionItem value="technical" className="border rounded-lg px-4">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Cpu className="text-primary" size={20} />
-                      <span className="font-semibold">Technical Specifications</span>
+                      <span className="font-semibold">Data & Integration</span>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4 space-y-4">
@@ -405,13 +411,13 @@ export default function ProductDetail() {
                 </AccordionItem>
               )}
 
-              {/* Hardware Specifications */}
+              {/* Hardware & Deployment Profile */}
               {hasHardwareData && (
                 <AccordionItem value="hardware" className="border rounded-lg px-4">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Package className="text-primary" size={20} />
-                      <span className="font-semibold">Hardware Specifications</span>
+                      <span className="font-semibold">Hardware & Deployment Profile</span>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4 space-y-3">
@@ -459,68 +465,76 @@ export default function ProductDetail() {
               )}
 
               {/* Regulatory & Compliance */}
-              {hasRegulatoryData && (
-                <AccordionItem value="regulatory" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Shield className="text-primary" size={20} />
-                      <span className="font-semibold">Regulatory & Compliance</span>
+              <AccordionItem value="regulatory" className="border rounded-lg px-4">
+                <AccordionTrigger className="hover:no-underline py-4">
+                  <div className="flex items-center gap-3">
+                    <Shield className="text-primary" size={20} />
+                    <span className="font-semibold">Regulatory & Compliance</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="pb-4 space-y-4">
+                  <div>
+                    <h4 className="text-sm font-semibold text-muted-foreground mb-3">Regulations</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2" data-testid="product-regulatory">
+                      {REGULATORY_APPROVALS.map((approval) => {
+                        const isSelected = product.regulatoryApprovals?.includes(approval);
+                        return (
+                          <div 
+                            key={approval} 
+                            className={`flex items-center gap-2 p-2 rounded-lg ${isSelected ? 'bg-green-50 dark:bg-green-900/20' : 'bg-muted/30'}`}
+                          >
+                            <CheckCircle 
+                              size={18} 
+                              className={isSelected ? 'text-green-600' : 'text-muted-foreground/30'} 
+                            />
+                            <span className={isSelected ? 'text-foreground font-medium' : 'text-muted-foreground/60'}>
+                              {approval}
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4 space-y-4">
-                    {product.regulatoryApprovals && product.regulatoryApprovals.length > 0 && (
-                      <div>
-                        <h4 className="text-sm font-semibold text-muted-foreground mb-2">Regulatory Approvals</h4>
-                        <div className="flex flex-wrap gap-2" data-testid="product-regulatory">
-                          {product.regulatoryApprovals.map((approval: string) => (
-                            <Badge key={approval} variant="default" className="rounded-full">{approval}</Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {product.complianceCertifications && product.complianceCertifications.length > 0 && (
-                      <div>
-                        <h4 className="text-sm font-semibold text-muted-foreground mb-2">Compliance Certifications</h4>
-                        <div className="flex flex-wrap gap-2" data-testid="product-compliance">
-                          {product.complianceCertifications.map((cert: string) => (
-                            <Badge key={cert} variant="outline" className="rounded-full">{cert}</Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </AccordionContent>
-                </AccordionItem>
-              )}
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-muted-foreground mb-3">Compliance</h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2" data-testid="product-compliance">
+                      {COMPLIANCE_CERTIFICATIONS.map((cert) => {
+                        const isSelected = product.complianceCertifications?.includes(cert);
+                        return (
+                          <div 
+                            key={cert} 
+                            className={`flex items-center gap-2 p-2 rounded-lg ${isSelected ? 'bg-green-50 dark:bg-green-900/20' : 'bg-muted/30'}`}
+                          >
+                            <CheckCircle 
+                              size={18} 
+                              className={isSelected ? 'text-green-600' : 'text-muted-foreground/30'} 
+                            />
+                            <span className={isSelected ? 'text-foreground font-medium' : 'text-muted-foreground/60'}>
+                              {cert}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
 
-              {/* User Information */}
-              {hasUserData && (
+              {/* Best For */}
+              {product.userTypes && product.userTypes.length > 0 && (
                 <AccordionItem value="users" className="border rounded-lg px-4">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Users className="text-primary" size={20} />
-                      <span className="font-semibold">User Information</span>
+                      <span className="font-semibold">Best For</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 space-y-4">
-                    {product.userTypes && product.userTypes.length > 0 && (
-                      <div>
-                        <h4 className="text-sm font-semibold text-muted-foreground mb-2">Intended Users</h4>
-                        <div className="flex flex-wrap gap-2" data-testid="product-user-types">
-                          {product.userTypes.map((user: string) => (
-                            <Badge key={user} variant="secondary" className="rounded-full">{user}</Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {product.cost && (
-                      <div className="flex items-start gap-2">
-                        <DollarSign className="text-muted-foreground flex-shrink-0 mt-0.5" size={16} />
-                        <div>
-                          <span className="text-sm text-muted-foreground block">Cost Information</span>
-                          <span className="text-foreground" data-testid="product-cost">{product.cost}</span>
-                        </div>
-                      </div>
-                    )}
+                  <AccordionContent className="pb-4">
+                    <div className="flex flex-wrap gap-2" data-testid="product-user-types">
+                      {product.userTypes.map((user: string) => (
+                        <Badge key={user} variant="secondary" className="rounded-full">{user}</Badge>
+                      ))}
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               )}
@@ -535,6 +549,15 @@ export default function ProductDetail() {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4 space-y-4">
+                    {product.cost && (
+                      <div className="flex items-start gap-2">
+                        <DollarSign className="text-muted-foreground flex-shrink-0 mt-0.5" size={16} />
+                        <div>
+                          <h4 className="text-sm font-semibold text-muted-foreground mb-1">Cost</h4>
+                          <p className="text-foreground/80" data-testid="product-cost">{product.cost}</p>
+                        </div>
+                      </div>
+                    )}
                     {product.strengths && (
                       <div>
                         <h4 className="text-sm font-semibold text-green-600 mb-1 flex items-center gap-1">
@@ -600,30 +623,6 @@ export default function ProductDetail() {
                 </AccordionItem>
               )}
 
-              {/* Website */}
-              {product.website && (
-                <AccordionItem value="website" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Globe className="text-primary" size={20} />
-                      <span className="font-semibold">Website</span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    <a 
-                      href={product.website} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      onClick={trackWebsiteClick}
-                      className="text-primary hover:underline flex items-center gap-2" 
-                      data-testid="product-website"
-                    >
-                      <Globe size={16} />
-                      Visit Product Website
-                    </a>
-                  </AccordionContent>
-                </AccordionItem>
-              )}
             </Accordion>
 
             {/* Product Feedback */}
