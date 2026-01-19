@@ -538,7 +538,6 @@ export default function ProductForm() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="">None</SelectItem>
                                 {USE_CASES.map((useCase) => (
                                   <SelectItem key={useCase} value={useCase}>{useCase}</SelectItem>
                                 ))}
@@ -686,7 +685,6 @@ export default function ProductForm() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="">Not specified</SelectItem>
                                 {OFFLINE_CAPABILITY_OPTIONS.map((option) => (
                                   <SelectItem key={option} value={option}>{option}</SelectItem>
                                 ))}
