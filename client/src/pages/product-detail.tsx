@@ -276,7 +276,7 @@ export default function ProductDetail() {
                     <ul className="space-y-2" data-testid="product-features">
                       {product.features.map((feature: string, index: number) => (
                         <li key={index} className="flex items-start gap-3">
-                          <span className="w-3 h-3 rounded-full bg-purple-500 mt-1.5 flex-shrink-0"></span>
+                          <span className="w-2 h-2 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
                           <span className="text-foreground/80" data-testid={`feature-${index}`}>{feature}</span>
                         </li>
                       ))}
@@ -406,7 +406,7 @@ export default function ProductDetail() {
                         <ul className="space-y-1" data-testid="product-customer-adoption">
                           {product.customerAdoption.split('\n').filter((line: string) => line.trim()).map((line: string, idx: number) => (
                             <li key={idx} className="flex items-start gap-3">
-                              <span className="w-3 h-3 rounded-full bg-purple-500 mt-1.5 flex-shrink-0"></span>
+                              <span className="w-2 h-2 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
                               <span className="text-foreground/80">{line.trim()}</span>
                             </li>
                           ))}
@@ -419,7 +419,7 @@ export default function ProductDetail() {
                         <ul className="space-y-1" data-testid="product-outcomes">
                           {product.reportedOutcomes.split('\n').filter((line: string) => line.trim()).map((line: string, idx: number) => (
                             <li key={idx} className="flex items-start gap-3">
-                              <span className="w-3 h-3 rounded-full bg-purple-500 mt-1.5 flex-shrink-0"></span>
+                              <span className="w-2 h-2 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
                               <span className="text-foreground/80">{line.trim()}</span>
                             </li>
                           ))}
@@ -488,7 +488,7 @@ export default function ProductDetail() {
                         <ul className="space-y-1" data-testid="product-box-contents">
                           {product.whatsInTheBox.split('\n').filter((line: string) => line.trim()).map((line: string, idx: number) => (
                             <li key={idx} className="flex items-start gap-3">
-                              <span className="w-3 h-3 rounded-full bg-purple-500 mt-1.5 flex-shrink-0"></span>
+                              <span className="w-2 h-2 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
                               <span className="text-foreground/80">{line.trim()}</span>
                             </li>
                           ))}
