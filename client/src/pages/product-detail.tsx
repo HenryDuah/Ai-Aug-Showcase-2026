@@ -265,14 +265,14 @@ export default function ProductDetail() {
 
               {/* Key Features - appears first, expanded by default */}
               {product.features && product.features.length > 0 && (
-                <AccordionItem value="features" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
+                <AccordionItem value="features" className="border rounded-lg overflow-hidden">
+                  <AccordionTrigger className="hover:no-underline py-4 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
                     <div className="flex items-center gap-3">
                       <CheckCircle className="text-primary" size={20} />
                       <span className="font-bold">Key Features</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4">
+                  <AccordionContent className="pb-4 px-4 bg-white dark:bg-background">
                     <ul className="space-y-2" data-testid="product-features">
                       {product.features.map((feature: string, index: number) => (
                         <li key={index} className="flex items-start gap-3">
@@ -287,14 +287,14 @@ export default function ProductDetail() {
 
               {/* Product Video - expanded by default */}
               {product.videoUrl && (
-                <AccordionItem value="video" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
+                <AccordionItem value="video" className="border rounded-lg overflow-hidden">
+                  <AccordionTrigger className="hover:no-underline py-4 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
                     <div className="flex items-center gap-3">
                       <Video className="text-primary" size={20} />
                       <span className="font-bold">Product Video</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4">
+                  <AccordionContent className="pb-4 px-4 bg-white dark:bg-background">
                     {product.videoUrl.includes('youtube.com') || product.videoUrl.includes('youtu.be') ? (
                       <div className="aspect-video rounded-lg overflow-hidden" onClick={trackVideoClick}>
                         <iframe
@@ -342,14 +342,14 @@ export default function ProductDetail() {
 
               {/* Best For - appears after video, expanded by default */}
               {((product.userTypes?.length ?? 0) > 0 || (product.settings?.length ?? 0) > 0) && (
-                <AccordionItem value="users" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
+                <AccordionItem value="users" className="border rounded-lg overflow-hidden">
+                  <AccordionTrigger className="hover:no-underline py-4 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
                     <div className="flex items-center gap-3">
                       <Users className="text-primary" size={20} />
                       <span className="font-bold">Best For</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 space-y-4">
+                  <AccordionContent className="pb-4 px-4 space-y-4 bg-white dark:bg-background">
                     {product.userTypes && product.userTypes.length > 0 && (
                       <div>
                         <h4 className="text-sm font-bold text-muted-foreground mb-2">Users</h4>
@@ -376,14 +376,14 @@ export default function ProductDetail() {
 
               {/* Demonstrated Impact */}
               {hasEvidenceData && (
-                <AccordionItem value="evidence" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
+                <AccordionItem value="evidence" className="border rounded-lg overflow-hidden">
+                  <AccordionTrigger className="hover:no-underline py-4 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
                     <div className="flex items-center gap-3">
                       <MapPin className="text-primary" size={20} />
                       <span className="font-bold">Demonstrated Impact</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 space-y-4">
+                  <AccordionContent className="pb-4 px-4 space-y-4 bg-white dark:bg-background">
                     {product.stageOfDevelopment && product.stageOfDevelopment.length > 0 && (
                       <div>
                         <h4 className="text-sm font-bold text-muted-foreground mb-2">Stage of Development</h4>
@@ -432,14 +432,14 @@ export default function ProductDetail() {
 
               {/* Data & Integration */}
               {hasTechnicalData && (
-                <AccordionItem value="technical" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
+                <AccordionItem value="technical" className="border rounded-lg overflow-hidden">
+                  <AccordionTrigger className="hover:no-underline py-4 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
                     <div className="flex items-center gap-3">
                       <Cpu className="text-primary" size={20} />
                       <span className="font-bold">Data & Integration</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 space-y-4">
+                  <AccordionContent className="pb-4 px-4 space-y-4 bg-white dark:bg-background">
                     {product.dataCollected && product.dataCollected.length > 0 && (
                       <div>
                         <h4 className="text-sm font-bold text-muted-foreground mb-2">Data Collected</h4>
@@ -474,14 +474,14 @@ export default function ProductDetail() {
 
               {/* Hardware & Deployment Profile */}
               {hasHardwareData && (
-                <AccordionItem value="hardware" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
+                <AccordionItem value="hardware" className="border rounded-lg overflow-hidden">
+                  <AccordionTrigger className="hover:no-underline py-4 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
                     <div className="flex items-center gap-3">
                       <Package className="text-primary" size={20} />
                       <span className="font-bold">Hardware & Deployment Profile</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 space-y-3">
+                  <AccordionContent className="pb-4 px-4 space-y-3 bg-white dark:bg-background">
                     {product.whatsInTheBox && (
                       <div>
                         <h4 className="text-sm font-bold text-muted-foreground mb-2">What's in the Box</h4>
@@ -524,14 +524,14 @@ export default function ProductDetail() {
               )}
 
               {/* Regulatory & Compliance */}
-              <AccordionItem value="regulatory" className="border rounded-lg px-4">
-                <AccordionTrigger className="hover:no-underline py-4">
+              <AccordionItem value="regulatory" className="border rounded-lg overflow-hidden">
+                <AccordionTrigger className="hover:no-underline py-4 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
                   <div className="flex items-center gap-3">
                     <Shield className="text-primary" size={20} />
                     <span className="font-bold">Regulatory & Compliance</span>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="pb-4 space-y-4">
+                <AccordionContent className="pb-4 px-4 space-y-4 bg-white dark:bg-background">
                   <div>
                     <h4 className="text-sm font-bold text-muted-foreground mb-3">Regulations</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2" data-testid="product-regulatory">
@@ -581,14 +581,14 @@ export default function ProductDetail() {
 
               {/* Strengths & Considerations */}
               {hasStrengthsData && (
-                <AccordionItem value="strengths" className="border rounded-lg px-4">
-                  <AccordionTrigger className="hover:no-underline py-4">
+                <AccordionItem value="strengths" className="border rounded-lg overflow-hidden">
+                  <AccordionTrigger className="hover:no-underline py-4 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
                     <div className="flex items-center gap-3">
                       <ThumbsUp className="text-primary" size={20} />
                       <span className="font-bold">Strengths & Considerations</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 space-y-4">
+                  <AccordionContent className="pb-4 px-4 space-y-4 bg-white dark:bg-background">
                     {product.cost && (
                       <div>
                         <h4 className="text-sm font-bold text-muted-foreground mb-1">Cost</h4>
