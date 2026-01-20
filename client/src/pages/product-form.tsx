@@ -615,8 +615,9 @@ export default function ProductForm() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Customer Adoption</FormLabel>
+                            <FormDescription>Enter each point on a new line</FormDescription>
                             <FormControl>
-                              <Input {...field} placeholder="e.g., Over 1,000 clinics using the product" data-testid="input-customer-adoption" />
+                              <Textarea {...field} placeholder="Over 1,000 clinics using the product&#10;Deployed in 5 countries&#10;Used by 50,000+ healthcare workers" rows={4} data-testid="input-customer-adoption" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
