@@ -15,7 +15,6 @@ export const HEALTHCARE_TAGS = [
 ] as const;
 
 export const STAGE_OF_DEVELOPMENT = [
-  "Launched",
   "Pilot deployments in Africa",
   "Pilot deployments outside of Africa",
   "Implemented in Africa",
@@ -78,6 +77,7 @@ export const products = pgTable("products", {
   id: varchar("id").primaryKey(),
   name: text("name").notNull(),
   oneLineDescription: text("one_line_description"),
+  type: text("type"),
   company: text("company").notNull(),
   description: text("description").notNull(),
   image: text("image").notNull(),
@@ -97,6 +97,7 @@ export const products = pgTable("products", {
   healthcareTags: json("healthcare_tags").$type<string[]>().default([]),
   stageOfDevelopment: json("stage_of_development").$type<string[]>().default([]),
   geography: text("geography"),
+  customerAdoption: text("customer_adoption"),
   reportedOutcomes: text("reported_outcomes"),
   dataCollected: json("data_collected").$type<string[]>().default([]),
   offlineCapability: text("offline_capability"),

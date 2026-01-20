@@ -164,7 +164,7 @@ export default function ProductDetail() {
     );
   }
 
-  const hasEvidenceData = product.stageOfDevelopment?.length || product.geography || product.reportedOutcomes;
+  const hasEvidenceData = product.stageOfDevelopment?.length || product.geography || product.customerAdoption || product.reportedOutcomes;
   const hasTechnicalData = product.dataCollected?.length || product.offlineCapability || product.integration?.length;
   const hasHardwareData = product.whatsInTheBox || product.componentWeight || product.powerBattery || product.connectivity || product.environmentalConditions;
   const hasRegulatoryData = product.regulatoryApprovals?.length || product.complianceCertifications?.length;
@@ -207,6 +207,13 @@ export default function ProductDetail() {
                 />
               </div>
               <CardContent className="pt-5 space-y-4">
+                {/* Product Type */}
+                {product.type && (
+                  <Badge className="bg-purple-600 hover:bg-purple-700 text-white rounded-full" data-testid="product-type">
+                    {product.type}
+                  </Badge>
+                )}
+
                 {/* Description */}
                 <div>
                   <h3 className="text-lg font-bold text-foreground mb-2">Description</h3>
@@ -215,11 +222,11 @@ export default function ProductDetail() {
                   </p>
                 </div>
 
-                {/* Use Case */}
+                {/* Usecase */}
                 {product.useCase && (
                   <div>
-                    <span className="text-sm text-muted-foreground block">Use Case</span>
-                    <span className="font-medium text-foreground" data-testid="product-usecase">{product.useCase}</span>
+                    <span className="text-sm font-bold text-muted-foreground">Usecase: </span>
+                    <span className="text-sm text-foreground" data-testid="product-usecase">{product.useCase}</span>
                   </div>
                 )}
 
@@ -285,9 +292,6 @@ export default function ProductDetail() {
                     <div className="flex items-center gap-3">
                       <Video className="text-primary" size={20} />
                       <span className="font-bold">Product Video</span>
-                      {product.videoType && (
-                        <Badge variant="outline" className="ml-2 text-xs">{product.videoType}</Badge>
-                      )}
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
@@ -379,6 +383,12 @@ export default function ProductDetail() {
                       <div>
                         <h4 className="text-sm font-bold text-muted-foreground mb-1">Geography</h4>
                         <p className="text-foreground/80" data-testid="product-geography">{product.geography}</p>
+                      </div>
+                    )}
+                    {product.customerAdoption && (
+                      <div>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-1">Customer Adoption</h4>
+                        <p className="text-foreground/80" data-testid="product-customer-adoption">{product.customerAdoption}</p>
                       </div>
                     )}
                     {product.reportedOutcomes && (

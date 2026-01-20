@@ -32,6 +32,7 @@ import { ObjectUploader } from "@/components/ObjectUploader";
 const createProductFormSchema = (isEditMode: boolean) => z.object({
   name: z.string().min(1, "Product name is required"),
   oneLineDescription: z.string().optional(),
+  type: z.string().optional(),
   company: z.string().min(1, "Company name is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().url("Must be a valid URL"),
@@ -46,6 +47,7 @@ const createProductFormSchema = (isEditMode: boolean) => z.object({
   healthcareTags: z.array(z.string()).optional(),
   stageOfDevelopment: z.array(z.string()).optional(),
   geography: z.string().optional(),
+  customerAdoption: z.string().optional(),
   reportedOutcomes: z.string().optional(),
   dataCollected: z.string().optional(),
   offlineCapability: z.string().optional(),
@@ -97,6 +99,7 @@ export default function ProductForm() {
     defaultValues: {
       name: "",
       oneLineDescription: "",
+      type: "",
       company: "",
       description: "",
       image: "",
@@ -111,6 +114,7 @@ export default function ProductForm() {
       healthcareTags: [],
       stageOfDevelopment: [],
       geography: "",
+      customerAdoption: "",
       reportedOutcomes: "",
       dataCollected: "",
       offlineCapability: "",
@@ -134,6 +138,7 @@ export default function ProductForm() {
       form.reset({
         name: product.name,
         oneLineDescription: product.oneLineDescription || "",
+        type: product.type || "",
         company: product.company,
         description: product.description,
         image: product.image,
@@ -148,6 +153,7 @@ export default function ProductForm() {
         healthcareTags: product.healthcareTags || [],
         stageOfDevelopment: product.stageOfDevelopment || [],
         geography: product.geography || "",
+        customerAdoption: product.customerAdoption || "",
         reportedOutcomes: product.reportedOutcomes || "",
         dataCollected: product.dataCollected?.join("\n") || "",
         offlineCapability: product.offlineCapability || "",
@@ -228,10 +234,12 @@ export default function ProductForm() {
       videoUrl: cleanVideoUrl,
       videoType: cleanVideoType,
       oneLineDescription: data.oneLineDescription || null,
+      type: data.type || null,
       useCase: data.useCase || null,
       healthcareTags: data.healthcareTags?.length ? data.healthcareTags : null,
       stageOfDevelopment: data.stageOfDevelopment?.length ? data.stageOfDevelopment : null,
       geography: data.geography || null,
+      customerAdoption: data.customerAdoption || null,
       reportedOutcomes: data.reportedOutcomes || null,
       dataCollected: data.dataCollected?.split("\n").filter(d => d.trim()) || null,
       offlineCapability: data.offlineCapability || null,
@@ -398,6 +406,21 @@ export default function ProductForm() {
                             <FormDescription>Brief description shown on product cards next to the product name</FormDescription>
                             <FormControl>
                               <Input {...field} placeholder="e.g., Portable ultrasound for maternal care" data-testid="input-one-line-description" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="type"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Product Type</FormLabel>
+                            <FormDescription>Displayed as a purple tag before the description</FormDescription>
+                            <FormControl>
+                              <Input {...field} placeholder="e.g., Portable Ultrasound, Smart Wearable, Diagnostic Device" data-testid="input-type" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -575,6 +598,20 @@ export default function ProductForm() {
                             <FormLabel>Geography</FormLabel>
                             <FormControl>
                               <Input {...field} placeholder="e.g., Kenya, Nigeria, Ghana" data-testid="input-geography" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="customerAdoption"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Customer Adoption</FormLabel>
+                            <FormControl>
+                              <Input {...field} placeholder="e.g., Over 1,000 clinics using the product" data-testid="input-customer-adoption" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>

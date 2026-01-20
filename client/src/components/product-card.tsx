@@ -44,7 +44,7 @@ export default function ProductCard({ product, onTap }: ProductCardProps) {
         
         {product.useCase && (
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground" data-testid={`product-usecase-${product.id}`}>
-            <span className="font-medium">Use Case:</span>
+            <span className="font-bold">Usecase:</span>
             <span>{product.useCase}</span>
           </div>
         )}
