@@ -57,6 +57,15 @@ export const USER_TYPES = [
   "Physician Assistants"
 ] as const;
 
+export const SETTINGS = [
+  "Home visits",
+  "Antenatal Care (ANC)",
+  "Community-based Health Planning and Services (CHPS)",
+  "Health Outreach",
+  "Health Facility",
+  "Health Post"
+] as const;
+
 export const VISITOR_ROLES = [
   "CHW",
   "Nurse",
@@ -110,6 +119,7 @@ export const products = pgTable("products", {
   connectivity: text("connectivity"),
   environmentalConditions: text("environmental_conditions"),
   userTypes: json("user_types").$type<string[]>().default([]),
+  settings: json("settings").$type<string[]>().default([]),
   cost: text("cost"),
   strengths: text("strengths"),
   considerations: text("considerations"),

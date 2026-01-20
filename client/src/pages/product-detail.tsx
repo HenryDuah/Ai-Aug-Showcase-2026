@@ -168,7 +168,7 @@ export default function ProductDetail() {
   const hasTechnicalData = product.dataCollected?.length || product.offlineCapability || product.integration?.length;
   const hasHardwareData = product.whatsInTheBox || product.componentWeight || product.powerBattery || product.connectivity || product.environmentalConditions;
   const hasRegulatoryData = product.regulatoryApprovals?.length || product.complianceCertifications?.length;
-  const hasUserData = product.userTypes?.length;
+  const hasUserData = product.userTypes?.length || product.settings?.length;
   const hasStrengthsData = product.strengths || product.considerations || product.cost;
 
   return (
@@ -275,8 +275,8 @@ export default function ProductDetail() {
                   <AccordionContent className="pb-4">
                     <ul className="space-y-2" data-testid="product-features">
                       {product.features.map((feature: string, index: number) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <CheckCircle className="text-primary mt-1 flex-shrink-0" size={16} />
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="w-3 h-3 rounded-full bg-purple-500 mt-1.5 flex-shrink-0"></span>
                           <span className="text-foreground/80" data-testid={`feature-${index}`}>{feature}</span>
                         </li>
                       ))}
@@ -341,7 +341,7 @@ export default function ProductDetail() {
               )}
 
               {/* Best For - appears after video, expanded by default */}
-              {product.userTypes && product.userTypes.length > 0 && (
+              {((product.userTypes?.length ?? 0) > 0 || (product.settings?.length ?? 0) > 0) && (
                 <AccordionItem value="users" className="border rounded-lg px-4">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
@@ -349,12 +349,27 @@ export default function ProductDetail() {
                       <span className="font-bold">Best For</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    <div className="flex flex-wrap gap-2" data-testid="product-user-types">
-                      {product.userTypes.map((user: string) => (
-                        <Badge key={user} variant="secondary" className="rounded-full">{user}</Badge>
-                      ))}
-                    </div>
+                  <AccordionContent className="pb-4 space-y-4">
+                    {product.userTypes && product.userTypes.length > 0 && (
+                      <div>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-2">Users</h4>
+                        <div className="flex flex-wrap gap-2" data-testid="product-user-types">
+                          {product.userTypes.map((user: string) => (
+                            <Badge key={user} variant="secondary" className="rounded-full">{user}</Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {product.settings && product.settings.length > 0 && (
+                      <div>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-2">Setting</h4>
+                        <div className="flex flex-wrap gap-2" data-testid="product-settings">
+                          {product.settings.map((setting: string) => (
+                            <Badge key={setting} variant="secondary" className="rounded-full">{setting}</Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </AccordionContent>
                 </AccordionItem>
               )}
@@ -387,14 +402,28 @@ export default function ProductDetail() {
                     )}
                     {product.customerAdoption && (
                       <div>
-                        <h4 className="text-sm font-bold text-muted-foreground mb-1">Customer Adoption</h4>
-                        <p className="text-foreground/80" data-testid="product-customer-adoption">{product.customerAdoption}</p>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-2">Customer Adoption</h4>
+                        <ul className="space-y-1" data-testid="product-customer-adoption">
+                          {product.customerAdoption.split('\n').filter((line: string) => line.trim()).map((line: string, idx: number) => (
+                            <li key={idx} className="flex items-start gap-3">
+                              <span className="w-3 h-3 rounded-full bg-purple-500 mt-1.5 flex-shrink-0"></span>
+                              <span className="text-foreground/80">{line.trim()}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     )}
                     {product.reportedOutcomes && (
                       <div>
-                        <h4 className="text-sm font-bold text-muted-foreground mb-1">Reported Outcomes</h4>
-                        <p className="text-foreground/80 leading-relaxed" data-testid="product-outcomes">{product.reportedOutcomes}</p>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-2">Reported Outcomes</h4>
+                        <ul className="space-y-1" data-testid="product-outcomes">
+                          {product.reportedOutcomes.split('\n').filter((line: string) => line.trim()).map((line: string, idx: number) => (
+                            <li key={idx} className="flex items-start gap-3">
+                              <span className="w-3 h-3 rounded-full bg-purple-500 mt-1.5 flex-shrink-0"></span>
+                              <span className="text-foreground/80">{line.trim()}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     )}
                   </AccordionContent>
@@ -455,8 +484,15 @@ export default function ProductDetail() {
                   <AccordionContent className="pb-4 space-y-3">
                     {product.whatsInTheBox && (
                       <div>
-                        <h4 className="text-sm font-bold text-muted-foreground mb-1">What's in the Box</h4>
-                        <p className="text-foreground/80" data-testid="product-box-contents">{product.whatsInTheBox}</p>
+                        <h4 className="text-sm font-bold text-muted-foreground mb-2">What's in the Box</h4>
+                        <ul className="space-y-1" data-testid="product-box-contents">
+                          {product.whatsInTheBox.split('\n').filter((line: string) => line.trim()).map((line: string, idx: number) => (
+                            <li key={idx} className="flex items-start gap-3">
+                              <span className="w-3 h-3 rounded-full bg-purple-500 mt-1.5 flex-shrink-0"></span>
+                              <span className="text-foreground/80">{line.trim()}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     )}
                     {product.componentWeight && (

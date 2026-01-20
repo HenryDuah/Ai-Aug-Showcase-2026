@@ -23,7 +23,8 @@ import {
   OFFLINE_CAPABILITY_OPTIONS,
   REGULATORY_APPROVALS,
   COMPLIANCE_CERTIFICATIONS,
-  USER_TYPES
+  USER_TYPES,
+  SETTINGS
 } from "@shared/schema";
 import type { UploadResult } from "@uppy/core";
 import sectionsData from "@/data/products.json";
@@ -60,6 +61,7 @@ const createProductFormSchema = (isEditMode: boolean) => z.object({
   connectivity: z.string().optional(),
   environmentalConditions: z.string().optional(),
   userTypes: z.array(z.string()).optional(),
+  settings: z.array(z.string()).optional(),
   cost: z.string().optional(),
   strengths: z.string().optional(),
   considerations: z.string().optional(),
@@ -127,6 +129,7 @@ export default function ProductForm() {
       connectivity: "",
       environmentalConditions: "",
       userTypes: [],
+      settings: [],
       cost: "",
       strengths: "",
       considerations: "",
@@ -166,6 +169,7 @@ export default function ProductForm() {
         connectivity: product.connectivity || "",
         environmentalConditions: product.environmentalConditions || "",
         userTypes: product.userTypes || [],
+        settings: product.settings || [],
         cost: product.cost || "",
         strengths: product.strengths || "",
         considerations: product.considerations || "",
@@ -252,6 +256,7 @@ export default function ProductForm() {
       connectivity: data.connectivity || null,
       environmentalConditions: data.environmentalConditions || null,
       userTypes: data.userTypes?.length ? data.userTypes : null,
+      settings: data.settings?.length ? data.settings : null,
       cost: data.cost || null,
       strengths: data.strengths || null,
       considerations: data.considerations || null,
@@ -878,6 +883,37 @@ export default function ProductForm() {
                                     }}
                                   />
                                   <label htmlFor={`user-${user}`} className="text-sm cursor-pointer">{user}</label>
+                                </div>
+                              ))}
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="settings"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Settings</FormLabel>
+                            <FormDescription>Select applicable healthcare settings</FormDescription>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
+                              {SETTINGS.map((setting) => (
+                                <div key={setting} className="flex items-center space-x-2">
+                                  <Checkbox
+                                    id={`setting-${setting}`}
+                                    checked={field.value?.includes(setting)}
+                                    onCheckedChange={(checked) => {
+                                      const current = field.value || [];
+                                      if (checked) {
+                                        field.onChange([...current, setting]);
+                                      } else {
+                                        field.onChange(current.filter((s: string) => s !== setting));
+                                      }
+                                    }}
+                                  />
+                                  <label htmlFor={`setting-${setting}`} className="text-sm cursor-pointer">{setting}</label>
                                 </div>
                               ))}
                             </div>
