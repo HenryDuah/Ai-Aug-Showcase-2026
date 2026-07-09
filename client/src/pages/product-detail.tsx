@@ -252,7 +252,7 @@ export default function ProductDetail() {
               {product.theImpact && (
                 <div>
                   <h3 className="text-small font-mono text-muted-foreground mb-6">THE IMPACT</h3>
-                  <p className="text-body text-foreground leading-relaxed" data-testid="product-impact">
+                  <p className="text-[17px] leading-[26px] text-foreground" data-testid="product-impact">
                     {product.theImpact}
                   </p>
                 </div>
@@ -265,7 +265,7 @@ export default function ProductDetail() {
                     {product.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-4">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                        <span className="text-body text-foreground" data-testid={`feature-${index}`}>{feature}</span>
+                        <span className="text-[17px] leading-[26px] text-foreground" data-testid={`feature-${index}`}>{feature}</span>
                       </li>
                     ))}
                   </ul>
