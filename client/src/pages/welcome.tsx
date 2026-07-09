@@ -8,7 +8,8 @@ export default function Welcome() {
   const [, setLocation] = useLocation();
 
   return (
-    <div className="min-h-[100dvh] flex items-center justify-between gap-12 px-8 md:px-16 bg-background relative overflow-hidden">
+    <div className="min-h-[100dvh] flex items-center px-8 bg-background relative overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full flex items-center justify-between gap-12">
       <div className="fade-in flex flex-col items-start w-full max-w-3xl">
         {/* Sand Logo */}
         <div className="mb-16" data-testid="sand-logo">
@@ -52,6 +53,7 @@ export default function Welcome() {
           aria-hidden="true"
           className="w-[440px] xl:w-[540px] h-auto opacity-80 select-none pointer-events-none"
         />
+      </div>
       </div>
     </div>
   );

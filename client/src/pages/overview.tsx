@@ -165,7 +165,7 @@ export default function Overview() {
               
               <div className="lg:col-span-5">
                 <h2 className="text-h2 mb-6 text-foreground" data-testid="title-about-tour">About This Tour</h2>
-                <div className="text-body text-muted-foreground space-y-6">
+                <div className="text-[17px] leading-[26px] text-muted-foreground space-y-6">
                   <p data-testid="description-lab-intro-1">
                     Welcome to Sand's Innovative Healthcare Solutions Showcase, where we explore cutting-edge medical innovations empowering frontline healthcare workers to deliver better patient outcomes.
                   </p>
