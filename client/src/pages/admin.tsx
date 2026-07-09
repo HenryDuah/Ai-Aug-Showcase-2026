@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { ArrowLeft, Settings, BarChart, QrCode, LogOut, Plus, Pencil, Trash2 } from "lucide-react";
 import { useLocation, Link } from "wouter";
@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/use-auth";
 import type { Product } from "@shared/schema";
 import sectionsData from "@/data/products.json";
+import sandLogo from "@assets/Sand_Monochrome_Primary_Logo-03_1783596847037.png";
 
 export default function Admin() {
   const [, setLocation] = useLocation();
@@ -67,160 +68,159 @@ export default function Admin() {
   }));
 
   return (
-    <div className="min-h-[100dvh] bg-background pb-20">
+    <div className="min-h-[100dvh] bg-background pb-32">
       <div className="fade-in">
-        <div className="bg-muted px-6 py-6 border-b border-border">
+        <div className="bg-secondary px-8 py-8 border-b border-border">
           <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-12">
               <Button
                 variant="ghost"
                 onClick={() => setLocation("/")}
-                className="text-muted-foreground hover:text-foreground p-0 h-auto font-normal text-body"
+                className="text-foreground hover:bg-white/5 p-0 h-auto font-normal text-body"
                 data-testid="button-back-home"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to tour
               </Button>
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  logoutMutation.mutate();
-                  setLocation("/login");
-                }}
-                className="text-muted-foreground hover:text-foreground p-0 h-auto font-normal text-body"
-                data-testid="button-logout"
-              >
-                <LogOut className="w-4 h-4 mr-2" />
-                Log out
-              </Button>
-            </div>
-            <div className="flex items-center gap-4">
-              <Settings className="w-8 h-8 text-foreground" />
-              <div>
-                <h1 className="text-h1 text-foreground" data-testid="title-admin">Admin panel</h1>
+              <div className="flex items-center gap-6">
+                <img src={sandLogo} alt="Sand Tech Logo" className="h-6 w-auto opacity-90 hidden sm:block" />
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    logoutMutation.mutate();
+                    setLocation("/login");
+                  }}
+                  className="text-muted-foreground hover:text-foreground p-0 h-auto font-normal text-body"
+                  data-testid="button-logout"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Log out
+                </Button>
               </div>
+            </div>
+            <div className="flex items-center gap-6">
+              <Settings className="w-10 h-10 text-muted-foreground" />
+              <h1 className="text-display text-foreground" data-testid="title-admin">Admin panel</h1>
             </div>
           </div>
         </div>
 
-        <div className="px-6 py-8 max-w-6xl mx-auto">
-          <Card className="mb-8 shadow-1 rounded-lg border-border">
-            <CardContent className="p-6">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <p className="text-body text-muted-foreground">
-                  Manage products, view analytics, and download resources.
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <Link href="/admin/products/new">
-                    <Button className="h-10 text-body shadow-1" data-testid="button-new-product">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add product
-                    </Button>
-                  </Link>
-                  <Link href="/analytics">
-                    <Button variant="outline" className="h-10 text-body" data-testid="button-analytics">
-                      <BarChart className="w-4 h-4 mr-2" />
-                      Analytics
-                    </Button>
-                  </Link>
-                  <Link href="/qr-codes">
-                    <Button variant="outline" className="h-10 text-body" data-testid="button-qr-codes">
-                      <QrCode className="w-4 h-4 mr-2" />
-                      QR codes
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="px-8 py-12 max-w-6xl mx-auto">
+          <div className="mb-16 border border-border bg-card p-8 rounded-sm flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            <p className="text-body text-muted-foreground max-w-xl">
+              Manage products across tour sections, view visitor analytics, and generate QR codes for physical lab displays.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/admin/products/new">
+                <Button className="h-12 px-6 text-body rounded-sm" data-testid="button-new-product">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add product
+                </Button>
+              </Link>
+              <Link href="/analytics">
+                <Button variant="outline" className="h-12 px-6 text-body rounded-sm border-border hover:bg-white/5" data-testid="button-analytics">
+                  <BarChart className="w-4 h-4 mr-2" />
+                  Analytics
+                </Button>
+              </Link>
+              <Link href="/qr-codes">
+                <Button variant="outline" className="h-12 px-6 text-body rounded-sm border-border hover:bg-white/5" data-testid="button-qr-codes">
+                  <QrCode className="w-4 h-4 mr-2" />
+                  QR codes
+                </Button>
+              </Link>
+            </div>
+          </div>
 
           {isLoading ? (
-            <div className="text-center py-12">
-              <p className="text-body text-muted-foreground">Loading products...</p>
+            <div className="py-24 border border-border border-dashed rounded-sm flex justify-center">
+              <p className="text-small font-mono text-muted-foreground">LOADING PRODUCTS...</p>
             </div>
           ) : (
-            <div className="space-y-8">
+            <div className="space-y-16">
               {productsBySection.map((section) => (
                 <div key={section.id}>
-                  <h2 className="text-h2 mb-4 text-foreground" data-testid={`admin-section-${section.id}`}>
-                    Section {section.id}: {section.name}
-                  </h2>
-                  <Card className="shadow-1 rounded-lg border-border">
-                    <CardContent className="p-0">
-                      {section.products.length === 0 ? (
-                        <div className="p-6 text-body text-muted-foreground text-center">
-                          No products configured for this section.
-                        </div>
-                      ) : (
-                        <div className="divide-y divide-border">
-                          {section.products.map((product) => (
-                            <div
-                              key={product.id}
-                              className={`flex items-center justify-between p-4 ${
-                                product.onDisplay ? "bg-card" : "bg-muted"
-                              }`}
-                              data-testid={`admin-product-${product.id}`}
-                            >
-                              <div className="flex-1 pr-4">
-                                <h3 className="text-body font-semibold text-foreground flex items-center gap-2" data-testid={`admin-product-name-${product.id}`}>
-                                  {product.name}
-                                  {!product.onDisplay && (
-                                    <span className="text-small bg-neutral-200 text-neutral-600 px-2 py-0.5 rounded-sm font-normal">
-                                      Hidden
-                                    </span>
-                                  )}
-                                </h3>
-                                <p className="text-small text-muted-foreground">
-                                  {product.company} &middot; {product.type}
-                                </p>
-                              </div>
-                              <div className="flex items-center gap-2 md:gap-4">
-                                <div className="flex items-center gap-2">
-                                  <span className="text-small text-muted-foreground" data-testid={`admin-status-${product.id}`}>
-                                    {product.onDisplay ? "Visible" : "Hidden"}
-                                  </span>
-                                  <Switch
-                                    checked={product.onDisplay || false}
-                                    onCheckedChange={(checked) =>
-                                      toggleDisplay.mutate({ id: product.id, onDisplay: checked })
-                                    }
-                                    disabled={toggleDisplay.isPending}
-                                    data-testid={`admin-toggle-${product.id}`}
-                                  />
-                                </div>
-                                <div className="flex items-center">
-                                  <Button
-                                    size="icon"
-                                    variant="ghost"
-                                    onClick={() => setLocation(`/admin/products/${product.id}/edit`)}
-                                    aria-label="Edit product"
-                                    data-testid={`button-edit-${product.id}`}
-                                  >
-                                    <Pencil className="w-4 h-4" />
-                                  </Button>
-                                  <Button
-                                    size="icon"
-                                    variant="ghost"
-                                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                                    onClick={() => {
-                                      if (confirm(`Delete "${product.name}" permanently?`)) {
-                                        deleteProduct.mutate(product.id);
-                                      }
-                                    }}
-                                    disabled={deleteProduct.isPending}
-                                    aria-label="Delete product"
-                                    data-testid={`button-delete-${product.id}`}
-                                  >
-                                    <Trash2 className="w-4 h-4" />
-                                  </Button>
-                                </div>
-                              </div>
+                  <div className="border-b border-border pb-4 mb-6 flex items-center gap-4">
+                    <span className="text-small font-mono text-muted-foreground">SEC 0{section.id}</span>
+                    <h2 className="text-h2 text-foreground" data-testid={`admin-section-${section.id}`}>
+                      {section.name}
+                    </h2>
+                  </div>
+                  
+                  {section.products.length === 0 ? (
+                    <div className="p-8 border border-border border-dashed rounded-sm text-body text-muted-foreground text-center bg-card/50">
+                      No products configured for this section.
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {section.products.map((product) => (
+                        <div
+                          key={product.id}
+                          className={`flex items-center justify-between p-6 border border-border rounded-sm transition-colors ${
+                            product.onDisplay ? "bg-card hover:border-primary/50" : "bg-background opacity-75"
+                          }`}
+                          data-testid={`admin-product-${product.id}`}
+                        >
+                          <div className="flex-1 pr-6 border-r border-border mr-6">
+                            <h3 className="text-h3 text-foreground flex items-center gap-4 mb-2" data-testid={`admin-product-name-${product.id}`}>
+                              {product.name}
+                              {!product.onDisplay && (
+                                <span className="text-small font-mono bg-neutral-900 border border-border text-muted-foreground px-2 py-1 rounded-sm">
+                                  HIDDEN
+                                </span>
+                              )}
+                            </h3>
+                            <p className="text-body text-muted-foreground">
+                              {product.company} <span className="mx-2 opacity-50">/</span> {product.type}
+                            </p>
+                          </div>
+                          
+                          <div className="flex items-center gap-8">
+                            <div className="flex flex-col items-end gap-2">
+                              <span className="text-small font-mono text-muted-foreground uppercase" data-testid={`admin-status-${product.id}`}>
+                                {product.onDisplay ? "Visible" : "Hidden"}
+                              </span>
+                              <Switch
+                                checked={product.onDisplay || false}
+                                onCheckedChange={(checked) =>
+                                  toggleDisplay.mutate({ id: product.id, onDisplay: checked })
+                                }
+                                disabled={toggleDisplay.isPending}
+                                data-testid={`admin-toggle-${product.id}`}
+                              />
                             </div>
-                          ))}
+                            <div className="flex items-center gap-2 pl-6 border-l border-border">
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-10 w-10 text-foreground hover:bg-white/5 rounded-sm"
+                                onClick={() => setLocation(`/admin/products/${product.id}/edit`)}
+                                aria-label="Edit product"
+                                data-testid={`button-edit-${product.id}`}
+                              >
+                                <Pencil className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-10 w-10 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-sm"
+                                onClick={() => {
+                                  if (confirm(`Delete "${product.name}" permanently?`)) {
+                                    deleteProduct.mutate(product.id);
+                                  }
+                                }}
+                                disabled={deleteProduct.isPending}
+                                aria-label="Delete product"
+                                data-testid={`button-delete-${product.id}`}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </div>
                         </div>
-                      )}
-                    </CardContent>
-                  </Card>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

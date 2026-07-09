@@ -14,7 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { insertFeedbackSchema } from "@shared/schema";
 import type { InsertFeedback } from "@shared/schema";
 import { z } from "zod";
-import sandLogo from "@assets/Sand Tech_ Logo_Light_1760649606645.png";
+import sandLogo from "@assets/Sand_Monochrome_Primary_Logo-03_1783596847037.png";
 
 const feedbackFormSchema = insertFeedbackSchema;
 
@@ -71,44 +71,31 @@ export default function Feedback() {
 
   if (showThankYou) {
     return (
-      <div className="min-h-[100dvh] bg-background">
-        <div className="bg-primary text-primary-foreground px-6 py-8">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-h1 mb-2" data-testid="title-thank-you">Thank you</h1>
-            <p className="text-body opacity-90">Your feedback has been recorded</p>
+      <div className="min-h-[100dvh] bg-background flex items-center justify-center p-8">
+        <div className="max-w-2xl w-full text-center">
+          <div className="w-16 h-16 border border-border rounded-full flex items-center justify-center mx-auto mb-12">
+            <CheckCircle className="text-foreground" size={24} />
           </div>
-        </div>
-
-        <div className="px-6 py-8">
-          <div className="max-w-4xl mx-auto">
-            <Card className="border border-border shadow-1 rounded-lg">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle className="text-success" size={32} />
-                </div>
-                <h2 className="text-h2 text-foreground mb-4" data-testid="thank-you-title">Submission complete</h2>
-                <p className="text-body text-muted-foreground mb-8 max-w-md mx-auto" data-testid="thank-you-message">
-                  We appreciate you taking the time to share your thoughts about the lab tour. Your input helps us improve the experience.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button 
-                    variant="outline"
-                    onClick={resetForm}
-                    className="h-12 px-6 text-body"
-                    data-testid="button-more-feedback"
-                  >
-                    Submit more feedback
-                  </Button>
-                  <Button 
-                    onClick={() => setLocation("/")}
-                    className="h-12 px-6 text-body"
-                    data-testid="button-return-start"
-                  >
-                    Return to start
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+          <h1 className="text-display mb-6" data-testid="thank-you-title">Submission complete</h1>
+          <p className="text-h3 text-muted-foreground mb-12 max-w-md mx-auto" data-testid="thank-you-message">
+            We appreciate you taking the time to share your thoughts about the lab tour. Your input helps us improve the experience.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Button 
+              variant="outline"
+              onClick={resetForm}
+              className="h-14 px-8 text-body rounded-sm border-border hover:bg-white/5"
+              data-testid="button-more-feedback"
+            >
+              Submit more feedback
+            </Button>
+            <Button 
+              onClick={() => setLocation("/")}
+              className="h-14 px-8 text-body rounded-sm"
+              data-testid="button-return-start"
+            >
+              Return to start
+            </Button>
           </div>
         </div>
       </div>
@@ -116,145 +103,94 @@ export default function Feedback() {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-background pb-20">
+    <div className="min-h-[100dvh] bg-background pb-32">
       <div className="fade-in">
-        <div className="bg-primary text-primary-foreground px-6 py-8">
+        <div className="bg-secondary border-b border-border px-8 py-8 md:py-12">
           <div className="max-w-4xl mx-auto">
-            <div className="flex items-start justify-between mb-8">
+            <div className="flex items-start justify-between mb-16">
               <Button
                 variant="ghost"
                 onClick={() => setLocation("/overview")}
-                className="text-primary-foreground hover:text-primary-foreground hover:bg-white/10 p-0 h-auto font-normal text-body"
+                className="text-foreground hover:bg-white/5 p-0 h-auto font-normal text-body"
                 data-testid="button-back-overview"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to overview
               </Button>
-              <img src={sandLogo} alt="Sand Technologies Logo" className="h-8 w-auto" data-testid="sand-logo-feedback" />
+              <img src={sandLogo} alt="Sand Technologies Logo" className="h-6 w-auto opacity-90" data-testid="sand-logo-feedback" />
             </div>
-            <h1 className="text-h1" data-testid="title-feedback">Share your thoughts</h1>
+            <h1 className="text-display" data-testid="title-feedback">Share your thoughts</h1>
           </div>
         </div>
 
-        <div className="px-6 py-8">
+        <div className="px-8 py-16">
           <div className="max-w-4xl mx-auto">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12">
               
-              <Card className="shadow-1 rounded-lg border-border">
-                <CardContent className="p-6">
-                  <h2 className="text-h2 text-foreground mb-6" data-testid="title-your-info">
+              <div className="space-y-8">
+                <div className="border-b border-border pb-4">
+                  <h2 className="text-h2 text-foreground" data-testid="title-your-info">
                     Your information
                   </h2>
-                  
-                  <div className="space-y-5">
-                    <FormField
-                      control={form.control}
-                      name="visitorName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-body font-semibold">
-                            Name <span className="text-destructive">*</span>
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Enter your name"
-                              className="h-12 text-body"
-                              data-testid="input-name"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="visitorCompany"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-body font-semibold">
-                            Company <span className="text-destructive">*</span>
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Your organization"
-                              className="h-12 text-body"
-                              data-testid="input-company"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="visitorEmail"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-body font-semibold">Email (Optional)</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              type="email"
-                              placeholder="your.email@example.com"
-                              className="h-12 text-body"
-                              data-testid="input-email"
-                              value={field.value || ""}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="visitorPhone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-body font-semibold">Phone number (Optional)</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              type="tel"
-                              placeholder="Enter your phone number"
-                              className="h-12 text-body"
-                              data-testid="input-phone"
-                              value={field.value || ""}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="shadow-1 rounded-lg border-border">
-                <CardContent className="p-6">
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <FormField
                     control={form.control}
-                    name="comments"
+                    name="visitorName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-h3 text-foreground mb-2 block">
-                          Feedback
+                        <FormLabel className="text-small text-muted-foreground">
+                          Name <span className="text-destructive">*</span>
                         </FormLabel>
-                        <p className="text-body text-muted-foreground mb-4">
-                          Share your thoughts on the use of AI devices and solutions for frontline healthcare.
-                        </p>
                         <FormControl>
-                          <Textarea
+                          <Input
                             {...field}
-                            rows={6}
-                            placeholder=""
-                            className="resize-y text-body"
-                            data-testid="textarea-comments"
+                            placeholder="Enter your name"
+                            className="h-14 text-body bg-card border-border rounded-sm"
+                            data-testid="input-name"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="visitorCompany"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-small text-muted-foreground">
+                          Company <span className="text-destructive">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="Your organization"
+                            className="h-14 text-body bg-card border-border rounded-sm"
+                            data-testid="input-company"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="visitorEmail"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-small text-muted-foreground">Email (Optional)</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="email"
+                            placeholder="your.email@example.com"
+                            className="h-14 text-body bg-card border-border rounded-sm"
+                            data-testid="input-email"
                             value={field.value || ""}
                           />
                         </FormControl>
@@ -262,12 +198,63 @@ export default function Feedback() {
                       </FormItem>
                     )}
                   />
-                </CardContent>
-              </Card>
+
+                  <FormField
+                    control={form.control}
+                    name="visitorPhone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-small text-muted-foreground">Phone number (Optional)</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="tel"
+                            placeholder="Enter your phone number"
+                            className="h-14 text-body bg-card border-border rounded-sm"
+                            data-testid="input-phone"
+                            value={field.value || ""}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-8">
+                <div className="border-b border-border pb-4">
+                  <h2 className="text-h2 text-foreground block">
+                    Feedback
+                  </h2>
+                  <p className="text-body text-muted-foreground mt-2">
+                    Share your thoughts on the use of AI devices and solutions for frontline healthcare.
+                  </p>
+                </div>
+                <FormField
+                  control={form.control}
+                  name="comments"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Textarea
+                          {...field}
+                          rows={8}
+                          placeholder="Your comments..."
+                          className="resize-y text-body bg-card border-border rounded-sm p-4"
+                          data-testid="textarea-comments"
+                          value={field.value || ""}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <Button 
                 type="submit" 
-                className="w-full h-14 text-body font-semibold shadow-1"
+                className="w-full md:w-auto min-w-[240px] h-14 text-body rounded-sm"
                 disabled={submitFeedback.isPending}
                 data-testid="button-submit-feedback"
               >
@@ -275,7 +262,7 @@ export default function Feedback() {
                   "Submitting..."
                 ) : (
                   <>
-                    <NotebookPen className="w-5 h-5 mr-2" />
+                    <NotebookPen className="w-5 h-5 mr-3" />
                     Submit feedback
                   </>
                 )}

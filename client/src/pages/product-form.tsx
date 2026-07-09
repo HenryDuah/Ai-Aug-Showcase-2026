@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { ArrowLeft, Upload } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -220,44 +219,46 @@ export default function ProductForm() {
   if (isLoading && isEditMode) {
     return (
       <div className="min-h-[100dvh] flex items-center justify-center bg-background">
-        <p className="text-muted-foreground text-body">Loading...</p>
+        <p className="text-small font-mono text-muted-foreground uppercase tracking-widest">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-[100dvh] bg-background pb-20">
-      <div className="bg-muted px-6 py-6 border-b border-border mb-8">
-        <div className="max-w-3xl mx-auto">
+    <div className="min-h-[100dvh] bg-background pb-32">
+      <div className="bg-secondary px-8 py-8 border-b border-border mb-12">
+        <div className="max-w-4xl mx-auto">
           <Button
             variant="ghost"
             onClick={() => setLocation("/admin")}
-            className="text-muted-foreground hover:text-foreground p-0 h-auto font-normal text-body mb-4"
+            className="text-foreground hover:bg-white/5 p-0 h-auto font-normal text-body mb-8"
             data-testid="button-back"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to admin
           </Button>
-          <h1 className="text-h1 text-foreground">
+          <h1 className="text-display text-foreground">
             {isEditMode ? "Edit product" : "Add product"}
           </h1>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-6">
-        <Card className="shadow-1 rounded-lg border-border">
-          <CardContent className="p-6 md:p-8">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="max-w-4xl mx-auto px-8">
+        <div className="border border-border bg-card p-8 md:p-12 rounded-sm">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+              
+              <div className="space-y-8 pb-8 border-b border-border">
+                <h2 className="text-h3 text-foreground">Core details</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <FormField
                     control={form.control}
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-body font-semibold">Product name</FormLabel>
+                        <FormLabel className="text-small text-muted-foreground">Product name</FormLabel>
                         <FormControl>
-                          <Input {...field} className="h-10 text-body" data-testid="input-name" />
+                          <Input {...field} className="h-12 text-body bg-background border-border rounded-sm" data-testid="input-name" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -269,9 +270,9 @@ export default function ProductForm() {
                     name="company"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-body font-semibold">Company</FormLabel>
+                        <FormLabel className="text-small text-muted-foreground">Company</FormLabel>
                         <FormControl>
-                          <Input {...field} className="h-10 text-body" data-testid="input-company" />
+                          <Input {...field} className="h-12 text-body bg-background border-border rounded-sm" data-testid="input-company" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -283,9 +284,9 @@ export default function ProductForm() {
                     name="type"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-body font-semibold">Product type</FormLabel>
+                        <FormLabel className="text-small text-muted-foreground">Product type</FormLabel>
                         <FormControl>
-                          <Input {...field} className="h-10 text-body" data-testid="input-type" />
+                          <Input {...field} className="h-12 text-body bg-background border-border rounded-sm" data-testid="input-type" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -297,20 +298,20 @@ export default function ProductForm() {
                     name="sectionId"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-body font-semibold">Section</FormLabel>
+                        <FormLabel className="text-small text-muted-foreground">Section</FormLabel>
                         <Select
                           value={field.value.toString()}
                           onValueChange={handleSectionChange}
                         >
                           <FormControl>
-                            <SelectTrigger className="h-10 text-body" data-testid="select-section">
+                            <SelectTrigger className="h-12 text-body bg-background border-border rounded-sm" data-testid="select-section">
                               <SelectValue />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
                             {sectionsData.sections.map((section) => (
                               <SelectItem key={section.id} value={section.id.toString()}>
-                                Section {section.id}: {section.name}
+                                SEC 0{section.id}: {section.name}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -320,18 +321,22 @@ export default function ProductForm() {
                     )}
                   />
                 </div>
+              </div>
 
+              <div className="space-y-8 pb-8 border-b border-border">
+                <h2 className="text-h3 text-foreground">Content</h2>
+                
                 <FormField
                   control={form.control}
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-body font-semibold">Description</FormLabel>
+                      <FormLabel className="text-small text-muted-foreground">Description</FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
-                          rows={4}
-                          className="resize-y text-body"
+                          rows={6}
+                          className="resize-y text-body bg-background border-border rounded-sm p-4"
                           data-testid="textarea-description"
                         />
                       </FormControl>
@@ -345,12 +350,12 @@ export default function ProductForm() {
                   name="theImpact"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-body font-semibold">The impact</FormLabel>
+                      <FormLabel className="text-small text-muted-foreground">The impact</FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
-                          rows={3}
-                          className="resize-y text-body"
+                          rows={4}
+                          className="resize-y text-body bg-background border-border rounded-sm p-4"
                           data-testid="textarea-the-impact"
                         />
                       </FormControl>
@@ -364,12 +369,12 @@ export default function ProductForm() {
                   name="features"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-body font-semibold">Features (one per line)</FormLabel>
+                      <FormLabel className="text-small text-muted-foreground">Features (one per line)</FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
-                          rows={4}
-                          className="resize-y text-body"
+                          rows={5}
+                          className="resize-y text-body bg-background border-border rounded-sm p-4"
                           data-testid="textarea-features"
                         />
                       </FormControl>
@@ -377,47 +382,51 @@ export default function ProductForm() {
                     </FormItem>
                   )}
                 />
+              </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="image"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-body font-semibold">Image URL</FormLabel>
-                        <FormControl>
-                          <Input {...field} className="h-10 text-body" data-testid="input-image" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+              <div className="space-y-8">
+                <h2 className="text-h3 text-foreground">Media & Resources</h2>
+                
+                <FormField
+                  control={form.control}
+                  name="image"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-small text-muted-foreground">Primary Image URL</FormLabel>
+                      <FormControl>
+                        <Input {...field} className="h-12 text-body bg-background border-border rounded-sm" data-testid="input-image" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                  <FormField
-                    control={form.control}
-                    name="website"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-body font-semibold">Website (Optional)</FormLabel>
-                        <FormControl>
-                          <Input {...field} className="h-10 text-body" data-testid="input-website" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <FormField
+                  control={form.control}
+                  name="website"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-small text-muted-foreground">Website URL (Optional)</FormLabel>
+                      <FormControl>
+                        <Input {...field} className="h-12 text-body bg-background border-border rounded-sm" data-testid="input-website" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <FormField
                     control={form.control}
                     name="videoUrl"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-body font-semibold">Video URL (Optional)</FormLabel>
+                        <FormLabel className="text-small text-muted-foreground">Video URL (Optional)</FormLabel>
                         <FormControl>
                           <div className="flex gap-4 items-center">
                             <Input 
                               {...field} 
-                              className="h-10 text-body flex-1"
+                              className="h-12 text-body flex-1 bg-background border-border rounded-sm"
                               data-testid="input-video-url"
                             />
                             <ObjectUploader
@@ -429,7 +438,7 @@ export default function ProductForm() {
                             >
                               <>
                                 <Upload className="w-4 h-4 mr-2" />
-                                Upload video
+                                Upload
                               </>
                             </ObjectUploader>
                           </div>
@@ -444,13 +453,13 @@ export default function ProductForm() {
                     name="videoType"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-body font-semibold">Video type (Optional)</FormLabel>
+                        <FormLabel className="text-small text-muted-foreground">Video type (Optional)</FormLabel>
                         <Select
                           value={field.value || "__NONE__"}
                           onValueChange={field.onChange}
                         >
                           <FormControl>
-                            <SelectTrigger className="h-10 text-body" data-testid="select-video-type">
+                            <SelectTrigger className="h-12 text-body bg-background border-border rounded-sm" data-testid="select-video-type">
                               <SelectValue />
                             </SelectTrigger>
                           </FormControl>
@@ -471,13 +480,13 @@ export default function ProductForm() {
                   name="brochureUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-body font-semibold">Product brochure (Optional)</FormLabel>
+                      <FormLabel className="text-small text-muted-foreground">Product brochure (Optional)</FormLabel>
                       <FormControl>
                         <div className="flex gap-4 items-center">
                           <Input 
                             {...field} 
                             readOnly
-                            className="h-10 text-body bg-muted flex-1"
+                            className="h-12 text-body bg-muted flex-1 border-border rounded-sm opacity-70"
                             data-testid="input-brochure-url"
                           />
                           <ObjectUploader
@@ -498,34 +507,34 @@ export default function ProductForm() {
                     </FormItem>
                   )}
                 />
+              </div>
 
-                <div className="flex justify-end gap-3 pt-4 border-t border-border mt-8">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    onClick={() => setLocation("/admin")}
-                    className="h-12 px-6 text-body"
-                    data-testid="button-cancel"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    className="h-12 px-8 text-body shadow-1"
-                    disabled={createMutation.isPending || updateMutation.isPending}
-                    data-testid="button-submit"
-                  >
-                    {(createMutation.isPending || updateMutation.isPending)
-                      ? "Saving..."
-                      : isEditMode
-                      ? "Save changes"
-                      : "Add product"}
-                  </Button>
-                </div>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
+              <div className="flex flex-col sm:flex-row justify-end gap-4 pt-8 border-t border-border mt-12">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setLocation("/admin")}
+                  className="h-14 px-8 text-body rounded-sm border-border hover:bg-white/5"
+                  data-testid="button-cancel"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="h-14 px-10 text-body rounded-sm"
+                  disabled={createMutation.isPending || updateMutation.isPending}
+                  data-testid="button-submit"
+                >
+                  {(createMutation.isPending || updateMutation.isPending)
+                    ? "Saving..."
+                    : isEditMode
+                    ? "Save changes"
+                    : "Add product"}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Roboto+Mono:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Lilex:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,64 +6,65 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 257 53% 55%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
+    --background: 0 0% 4%; /* #0a0a0a */
+    --foreground: 0 0% 100%;
+    --card: 0 0% 13%; /* #202020 */
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 13%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 201 25% 60%; /* #80a2b4 */
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 6%; /* #0f0f0f */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 6%;
+    --muted-foreground: 0 0% 60%; 
+    --accent: 0 0% 13%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 90% 61%; /* #f54343 */
     --destructive-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
+    --warning: 38 92% 49%; /* #f1ae0a */
     --success: 142 71% 45%;
-    --info: 221 83% 53%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 257 53% 55%;
+    --info: 201 25% 60%;
+    --border: 0 0% 30%; /* #4d4d4d */
+    --input: 0 0% 30%;
+    --ring: 201 25% 60%;
     
     --radius: 0.5rem;
 
-    --chart-1: 222 47% 11%;
-    --chart-2: 257 53% 55%;
-    --chart-3: 199 89% 48%;
-    --chart-4: 38 92% 50%;
-    --chart-5: 0 84% 60%;
+    --chart-1: 201 25% 60%;
+    --chart-2: 0 90% 61%;
+    --chart-3: 38 92% 49%;
+    --chart-4: 0 0% 60%;
+    --chart-5: 0 0% 100%;
 
-    --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, monospace;
+    --font-sans: "Inter Tight", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-mono: "Lilex", ui-monospace, SFMono-Regular, monospace;
     
-    --shadow-1: 0 1px 2px rgba(0,0,0,0.05);
-    --shadow-2: 0 8px 24px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-1: 0 1px 2px rgba(0,0,0,0.5);
+    --shadow-2: 0 8px 24px rgba(0,0,0,0.8), 0 2px 4px rgba(0,0,0,0.4);
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 257 53% 65%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217 32% 17%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 257 53% 65%;
+    --background: 0 0% 4%; /* #0a0a0a */
+    --foreground: 0 0% 100%;
+    --card: 0 0% 13%; /* #202020 */
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 13%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 201 25% 60%; /* #80a2b4 */
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 6%; /* #0f0f0f */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 6%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 0% 13%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 90% 61%; /* #f54343 */
+    --destructive-foreground: 0 0% 100%;
+    --warning: 38 92% 49%; /* #f1ae0a */
+    --border: 0 0% 30%; /* #4d4d4d */
+    --input: 0 0% 30%;
+    --ring: 201 25% 60%;
   }
 
   * {
@@ -94,12 +95,12 @@
   .text-h2 {
     font-size: 24px;
     line-height: 32px;
-    font-weight: 600;
+    font-weight: 700;
   }
   .text-h3 {
     font-size: 20px;
     line-height: 28px;
-    font-weight: 600;
+    font-weight: 700;
   }
   .text-body {
     font-size: 14px;
@@ -107,6 +108,7 @@
     font-weight: 400;
   }
   .text-small {
+    font-family: var(--font-mono);
     font-size: 12px;
     line-height: 16px;
     font-weight: 400;
@@ -115,7 +117,7 @@
     font-family: var(--font-mono);
     font-size: 30px;
     line-height: 36px;
-    font-weight: 600;
+    font-weight: 700;
   }
   .text-code {
     font-family: var(--font-mono);

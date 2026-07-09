@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { ChevronRight, Video } from "lucide-react";
 import type { Product } from "@shared/schema";
 
@@ -14,42 +13,43 @@ export default function ProductCard({ product, onTap }: ProductCardProps) {
   };
 
   return (
-    <Card 
-      className="product-card overflow-hidden cursor-pointer hover:shadow-2 transition-all h-full flex flex-col shadow-1 border-border"
+    <div 
+      className="product-card overflow-hidden cursor-pointer hover:border-primary transition-colors h-full flex flex-col border border-border bg-card rounded-sm"
       onClick={onTap}
       data-testid={`product-card-${product.id}`}
     >
       <div 
-        className="aspect-video bg-muted relative overflow-hidden"
+        className="aspect-video bg-secondary relative overflow-hidden"
         onClick={handleImageClick}
       >
         <img 
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
           data-testid={`product-image-${product.id}`}
         />
         {product.videoUrl && (
-          <div className="absolute top-3 right-3 bg-primary text-primary-foreground px-2 py-1 rounded text-small font-semibold flex items-center gap-1 shadow-1">
-            <Video className="w-3 h-3" />
-            Video
+          <div className="absolute top-4 right-4 bg-background border border-border text-foreground px-3 py-1.5 rounded-sm text-small font-mono flex items-center gap-2">
+            <Video className="w-3.5 h-3.5 text-primary" />
+            VIDEO
           </div>
         )}
       </div>
-      <CardContent className="p-4 md:p-5 flex-1 flex flex-col bg-card">
-        <h3 className="text-h3 text-foreground mb-1 line-clamp-2" data-testid={`product-name-${product.id}`}>
+      <div className="p-6 md:p-8 flex-1 flex flex-col">
+        <h3 className="text-h3 text-foreground mb-2 line-clamp-2" data-testid={`product-name-${product.id}`}>
           {product.name}
         </h3>
-        <p className="text-body font-semibold text-primary mb-2 md:mb-3" data-testid={`product-company-${product.id}`}>
+        <p className="text-body text-muted-foreground mb-6" data-testid={`product-company-${product.id}`}>
           {product.company}
         </p>
-        <p className="text-body text-muted-foreground leading-relaxed mb-4 line-clamp-3 flex-1" data-testid={`product-description-${product.id}`}>
+        <p className="text-body text-muted-foreground leading-relaxed mb-8 line-clamp-3 flex-1" data-testid={`product-description-${product.id}`}>
           {product.description}
         </p>
-        <div className="flex items-center justify-end mt-auto">
-          <ChevronRight className="text-primary w-5 h-5 flex-shrink-0" />
+        <div className="flex items-center justify-between mt-auto pt-6 border-t border-border">
+          <span className="text-small font-mono text-muted-foreground uppercase">{product.type}</span>
+          <ChevronRight className="text-muted-foreground w-5 h-5 flex-shrink-0" />
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

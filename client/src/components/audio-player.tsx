@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Play, Pause } from "lucide-react";
 
@@ -59,29 +58,30 @@ export default function AudioPlayer({ audioUrl }: AudioPlayerProps) {
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <Card className="bg-muted border border-border rounded-lg shadow-1">
-      <CardContent className="p-4">
-        <div className="flex items-center gap-4">
+    <div className="bg-card border border-border rounded-sm">
+      <div className="p-6">
+        <div className="flex items-center gap-6">
           <Button
+            variant="outline"
             onClick={togglePlayPause}
-            className="w-12 h-12 rounded-md flex-shrink-0"
+            className="w-14 h-14 rounded-sm flex-shrink-0 border-border hover:bg-white/5"
             data-testid="audio-play-pause-button"
           >
-            {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+            {isPlaying ? <Pause className="w-6 h-6 text-foreground" /> : <Play className="w-6 h-6 text-foreground" />}
           </Button>
           
           <div className="flex-1">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-body font-semibold text-foreground" data-testid="audio-guide-label">
-                Audio guide
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-small font-mono text-muted-foreground" data-testid="audio-guide-label">
+                AUDIO GUIDE
               </span>
-              <span className="text-code text-muted-foreground" data-testid="audio-time">
+              <span className="text-small font-mono text-muted-foreground" data-testid="audio-time">
                 {formatTime(currentTime)} / {formatTime(duration)}
               </span>
             </div>
-            <div className="progress-bar bg-neutral-200">
+            <div className="h-1 bg-background relative w-full overflow-hidden">
               <div 
-                className="progress-fill bg-primary" 
+                className="absolute top-0 left-0 h-full bg-primary transition-all duration-300 ease-linear" 
                 style={{ width: `${progressPercentage}%` }}
                 data-testid="audio-progress-bar"
               />
@@ -90,7 +90,7 @@ export default function AudioPlayer({ audioUrl }: AudioPlayerProps) {
         </div>
         
         <audio ref={audioRef} src={audioUrl} preload="metadata" />
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

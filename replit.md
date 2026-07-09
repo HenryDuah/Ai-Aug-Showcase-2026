@@ -64,6 +64,15 @@ The application utilizes Drizzle ORM with a PostgreSQL database, specifically Ne
 
 ## Recent Changes
 
+**July 9, 2026 - Sand Brand Identity Rebrand (Dark Mode)**
+- Applied the official Sand Tech Visual Identity (V1.0) across the entire app, per `design_guidelines/sand-brand-identity.md` (distilled from the uploaded brand deck)
+- Dark, high-contrast monochrome palette: Almost Black #0a0a0a backgrounds, Oil #0f0f0f / Onyx #202020 surfaces, Gravel #4d4d4d muted text and hairline dividers
+- 90/10 accent rule: Cadet Grey #80a2b4 reserved for the single primary action per screen; Coral Red #f54343 and Squash #f1ae0a only for key analytics highlights
+- Typography switched to Inter Tight (headlines/body) and Lilex monospace (technical labels, tags, metric numbers); Google Fonts link trimmed to these two families
+- New monochrome logos: white logo (Sand_Monochrome_Primary_Logo-03) on welcome, overview, section, and feedback pages; no logo on product detail pages (avoids brand confusion with featured companies)
+- Left-aligned Swiss-grid layouts with generous margins and hairline section dividers; QR codes kept on white tiles for scannability
+- All functionality, routes, forms, tracking, and data-testids preserved
+
 **October 17, 2025 - Analytics Tracking and QR Code Enhancements**
 - **Analytics Tracking Implementation**: Added comprehensive visitor engagement tracking system
   - Database columns added: `viewCount`, `videoClickCount`, `websiteClickCount` to products table

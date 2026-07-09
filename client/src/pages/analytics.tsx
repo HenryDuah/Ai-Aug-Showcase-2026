@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, Eye, Video, ExternalLink, MessageSquare, Download, TrendingUp } from "lucide-react";
 import { Link } from "wouter";
@@ -21,13 +20,13 @@ export default function Analytics() {
 
   if (productsLoading || feedbackLoading || productFeedbackLoading) {
     return (
-      <div className="min-h-[100dvh] bg-background p-6">
+      <div className="min-h-[100dvh] bg-background p-8">
         <div className="max-w-6xl mx-auto">
-          <Skeleton className="h-12 w-64 mb-8" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <Skeleton className="h-32 rounded-lg" />
-            <Skeleton className="h-32 rounded-lg" />
-            <Skeleton className="h-32 rounded-lg" />
+          <Skeleton className="h-12 w-64 mb-12 bg-muted" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <Skeleton className="h-40 rounded-sm bg-muted" />
+            <Skeleton className="h-40 rounded-sm bg-muted" />
+            <Skeleton className="h-40 rounded-sm bg-muted" />
           </div>
         </div>
       </div>
@@ -71,171 +70,161 @@ export default function Analytics() {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-background pb-20">
-      <div className="bg-muted px-6 py-6 border-b border-border mb-8">
+    <div className="min-h-[100dvh] bg-background pb-32">
+      <div className="bg-secondary px-8 py-8 border-b border-border mb-12">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <Link href="/admin">
-              <Button variant="ghost" size="icon" className="hover:bg-neutral-200" data-testid="button-back">
+              <Button variant="ghost" size="icon" className="hover:bg-white/5 rounded-sm" data-testid="button-back">
                 <ArrowLeft className="h-5 w-5 text-foreground" />
               </Button>
             </Link>
-            <h1 className="text-h1 text-foreground">Analytics</h1>
+            <h1 className="text-display text-foreground">Analytics</h1>
           </div>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-h2 text-foreground mb-4">Engagement metrics</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <Card className="shadow-1 rounded-lg border-border" data-testid="card-stat-views">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4 text-muted-foreground">
-                <span className="text-body font-semibold text-foreground">Product views</span>
-                <Eye className="h-4 w-4" />
+      <div className="max-w-6xl mx-auto px-8">
+        <div className="mb-16">
+          <h2 className="text-small font-mono text-muted-foreground mb-6">ENGAGEMENT METRICS</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="border border-border bg-card p-8 rounded-sm" data-testid="card-stat-views">
+              <div className="flex items-center justify-between mb-6 text-muted-foreground">
+                <span className="text-small font-mono">PRODUCT VIEWS</span>
+                <Eye className="h-5 w-5" />
               </div>
-              <div className="text-metric text-foreground" data-testid="text-total-views">{totalViews.toLocaleString()}</div>
-            </CardContent>
-          </Card>
+              <div className="text-[48px] leading-[56px] font-mono font-bold text-destructive" data-testid="text-total-views">{totalViews.toLocaleString()}</div>
+            </div>
 
-          <Card className="shadow-1 rounded-lg border-border" data-testid="card-stat-video-clicks">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4 text-muted-foreground">
-                <span className="text-body font-semibold text-foreground">Video clicks</span>
-                <Video className="h-4 w-4" />
+            <div className="border border-border bg-card p-8 rounded-sm" data-testid="card-stat-video-clicks">
+              <div className="flex items-center justify-between mb-6 text-muted-foreground">
+                <span className="text-small font-mono">VIDEO CLICKS</span>
+                <Video className="h-5 w-5" />
               </div>
-              <div className="text-metric text-foreground" data-testid="text-total-video-clicks">{totalVideoClicks.toLocaleString()}</div>
-            </CardContent>
-          </Card>
+              <div className="text-[48px] leading-[56px] font-mono font-bold text-warning" data-testid="text-total-video-clicks">{totalVideoClicks.toLocaleString()}</div>
+            </div>
 
-          <Card className="shadow-1 rounded-lg border-border" data-testid="card-stat-website-clicks">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4 text-muted-foreground">
-                <span className="text-body font-semibold text-foreground">Website clicks</span>
-                <ExternalLink className="h-4 w-4" />
+            <div className="border border-border bg-card p-8 rounded-sm" data-testid="card-stat-website-clicks">
+              <div className="flex items-center justify-between mb-6 text-muted-foreground">
+                <span className="text-small font-mono">WEBSITE CLICKS</span>
+                <ExternalLink className="h-5 w-5" />
               </div>
-              <div className="text-metric text-foreground" data-testid="text-total-website-clicks">{totalWebsiteClicks.toLocaleString()}</div>
-            </CardContent>
-          </Card>
+              <div className="text-[48px] leading-[56px] font-mono font-bold text-foreground" data-testid="text-total-website-clicks">{totalWebsiteClicks.toLocaleString()}</div>
+            </div>
+          </div>
         </div>
 
-        <h2 className="text-h2 text-foreground mb-4">Feedback summary</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          <Card className="shadow-1 rounded-lg border-border" data-testid="card-general-feedback">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4 text-muted-foreground">
-                <span className="text-body font-semibold text-foreground">Tour feedback</span>
-                <MessageSquare className="h-4 w-4" />
+        <div className="mb-16">
+          <h2 className="text-small font-mono text-muted-foreground mb-6">FEEDBACK SUMMARY</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="border border-border bg-card p-8 rounded-sm" data-testid="card-general-feedback">
+              <div className="flex items-center justify-between mb-6 text-muted-foreground">
+                <span className="text-small font-mono">TOUR FEEDBACK</span>
+                <MessageSquare className="h-5 w-5" />
               </div>
-              <div className="text-metric text-foreground mb-6" data-testid="text-general-feedback">{totalGeneralFeedback.toLocaleString()}</div>
+              <div className="text-[48px] leading-[56px] font-mono font-bold text-foreground mb-8" data-testid="text-general-feedback">{totalGeneralFeedback.toLocaleString()}</div>
               <Button 
                 onClick={exportGeneralFeedback}
                 variant="outline"
-                className="w-full h-10 gap-2 text-body"
+                className="w-full h-12 gap-3 text-body rounded-sm border-border hover:bg-white/5"
                 disabled={totalGeneralFeedback === 0}
                 data-testid="button-export-general-feedback"
               >
-                <Download className="h-4 w-4" />
+                <Download className="h-4 w-4 text-muted-foreground" />
                 Export CSV
               </Button>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card className="shadow-1 rounded-lg border-border" data-testid="card-product-feedback">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4 text-muted-foreground">
-                <span className="text-body font-semibold text-foreground">Product feedback</span>
-                <TrendingUp className="h-4 w-4" />
+            <div className="border border-border bg-card p-8 rounded-sm" data-testid="card-product-feedback">
+              <div className="flex items-center justify-between mb-6 text-muted-foreground">
+                <span className="text-small font-mono">PRODUCT FEEDBACK</span>
+                <TrendingUp className="h-5 w-5" />
               </div>
-              <div className="text-metric text-foreground mb-6" data-testid="text-product-feedback">{totalProductFeedback.toLocaleString()}</div>
+              <div className="text-[48px] leading-[56px] font-mono font-bold text-foreground mb-8" data-testid="text-product-feedback">{totalProductFeedback.toLocaleString()}</div>
               <Button 
                 onClick={exportProductFeedback}
                 variant="outline"
-                className="w-full h-10 gap-2 text-body"
+                className="w-full h-12 gap-3 text-body rounded-sm border-border hover:bg-white/5"
                 disabled={totalProductFeedback === 0}
                 data-testid="button-export-product-feedback"
               >
-                <Download className="h-4 w-4" />
+                <Download className="h-4 w-4 text-muted-foreground" />
                 Export CSV
               </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <Card className="shadow-1 rounded-lg border-border" data-testid="card-most-viewed">
-            <CardContent className="p-0">
-              <div className="p-6 border-b border-border bg-muted/30">
-                <h3 className="text-h3 text-foreground">Top products by view</h3>
-              </div>
-              {mostViewedProducts.length > 0 ? (
-                <div className="divide-y divide-border">
-                  {mostViewedProducts.map((product) => (
-                    <div key={product.id} className="flex items-center gap-4 p-4" data-testid={`row-viewed-product-${product.id}`}>
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-12 h-12 rounded-md object-cover flex-shrink-0"
-                        data-testid={`img-product-${product.id}`}
-                      />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-body font-semibold text-foreground truncate" data-testid={`text-product-name-${product.id}`}>
-                          {product.name}
-                        </p>
-                        <p className="text-small text-muted-foreground truncate">{product.company}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-metric text-foreground" style={{fontSize: '20px', lineHeight: '28px'}} data-testid={`text-views-${product.id}`}>
-                          {product.viewCount?.toLocaleString()}
-                        </p>
-                      </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="border border-border bg-card rounded-sm" data-testid="card-most-viewed">
+            <div className="p-6 border-b border-border bg-background">
+              <h3 className="text-small font-mono text-muted-foreground">TOP PRODUCTS BY VIEW</h3>
+            </div>
+            {mostViewedProducts.length > 0 ? (
+              <div className="divide-y divide-border">
+                {mostViewedProducts.map((product) => (
+                  <div key={product.id} className="flex items-center gap-6 p-6" data-testid={`row-viewed-product-${product.id}`}>
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-16 h-16 rounded-sm object-cover flex-shrink-0 bg-muted"
+                      data-testid={`img-product-${product.id}`}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-h3 text-foreground truncate mb-1" data-testid={`text-product-name-${product.id}`}>
+                        {product.name}
+                      </p>
+                      <p className="text-body text-muted-foreground truncate">{product.company}</p>
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="p-8 text-center text-body text-muted-foreground" data-testid="text-no-views">
-                  No views recorded.
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                    <div className="text-right pl-4">
+                      <p className="text-metric text-destructive" data-testid={`text-views-${product.id}`}>
+                        {product.viewCount?.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-12 text-center text-body text-muted-foreground" data-testid="text-no-views">
+                No views recorded.
+              </div>
+            )}
+          </div>
 
-          <Card className="shadow-1 rounded-lg border-border" data-testid="card-most-feedback">
-            <CardContent className="p-0">
-              <div className="p-6 border-b border-border bg-muted/30">
-                <h3 className="text-h3 text-foreground">Top products by feedback</h3>
-              </div>
-              {mostFeedbackProducts.length > 0 ? (
-                <div className="divide-y divide-border">
-                  {mostFeedbackProducts.map(({ product, count }) => (
-                    <div key={product.id} className="flex items-center gap-4 p-4" data-testid={`row-feedback-product-${product.id}`}>
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-12 h-12 rounded-md object-cover flex-shrink-0"
-                        data-testid={`img-feedback-product-${product.id}`}
-                      />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-body font-semibold text-foreground truncate" data-testid={`text-feedback-product-name-${product.id}`}>
-                          {product.name}
-                        </p>
-                        <p className="text-small text-muted-foreground truncate">{product.company}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-metric text-foreground" style={{fontSize: '20px', lineHeight: '28px'}} data-testid={`text-feedback-count-${product.id}`}>
-                          {count.toLocaleString()}
-                        </p>
-                      </div>
+          <div className="border border-border bg-card rounded-sm" data-testid="card-most-feedback">
+            <div className="p-6 border-b border-border bg-background">
+              <h3 className="text-small font-mono text-muted-foreground">TOP PRODUCTS BY FEEDBACK</h3>
+            </div>
+            {mostFeedbackProducts.length > 0 ? (
+              <div className="divide-y divide-border">
+                {mostFeedbackProducts.map(({ product, count }) => (
+                  <div key={product.id} className="flex items-center gap-6 p-6" data-testid={`row-feedback-product-${product.id}`}>
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-16 h-16 rounded-sm object-cover flex-shrink-0 bg-muted"
+                      data-testid={`img-feedback-product-${product.id}`}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-h3 text-foreground truncate mb-1" data-testid={`text-feedback-product-name-${product.id}`}>
+                        {product.name}
+                      </p>
+                      <p className="text-body text-muted-foreground truncate">{product.company}</p>
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="p-8 text-center text-body text-muted-foreground" data-testid="text-no-product-feedback">
-                  No product feedback recorded.
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                    <div className="text-right pl-4">
+                      <p className="text-metric text-warning" data-testid={`text-feedback-count-${product.id}`}>
+                        {count.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-12 text-center text-body text-muted-foreground" data-testid="text-no-product-feedback">
+                No product feedback recorded.
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
