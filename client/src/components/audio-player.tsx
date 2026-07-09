@@ -59,12 +59,12 @@ export default function AudioPlayer({ audioUrl }: AudioPlayerProps) {
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <Card className="bg-accent border border-border">
-      <CardContent className="pt-4">
+    <Card className="bg-muted border border-border rounded-lg shadow-1">
+      <CardContent className="p-4">
         <div className="flex items-center gap-4">
           <Button
             onClick={togglePlayPause}
-            className="w-12 h-12 rounded-full flex-shrink-0"
+            className="w-12 h-12 rounded-md flex-shrink-0"
             data-testid="audio-play-pause-button"
           >
             {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
@@ -72,16 +72,16 @@ export default function AudioPlayer({ audioUrl }: AudioPlayerProps) {
           
           <div className="flex-1">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-semibold text-foreground" data-testid="audio-guide-label">
-                Audio Guide
+              <span className="text-body font-semibold text-foreground" data-testid="audio-guide-label">
+                Audio guide
               </span>
-              <span className="text-xs text-muted-foreground" data-testid="audio-time">
+              <span className="text-code text-muted-foreground" data-testid="audio-time">
                 {formatTime(currentTime)} / {formatTime(duration)}
               </span>
             </div>
-            <div className="progress-bar">
+            <div className="progress-bar bg-neutral-200">
               <div 
-                className="progress-fill" 
+                className="progress-fill bg-primary" 
                 style={{ width: `${progressPercentage}%` }}
                 data-testid="audio-progress-bar"
               />

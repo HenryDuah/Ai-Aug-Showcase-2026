@@ -54,7 +54,7 @@ The application utilizes Drizzle ORM with a PostgreSQL database, specifically Ne
 
 ## External Dependencies
 
-- **Database**: Neon serverless PostgreSQL (`@neondatabase/serverless`) via Drizzle ORM.
+- **Database**: PostgreSQL via Drizzle ORM using the standard `pg` (node-postgres) driver with a connection pool. (Note: the previous Neon HTTP driver was removed because it silently dropped RETURNING rows, breaking write endpoints.)
 - **Object Storage**: Replit Object Storage (Google Cloud Storage) for video and brochure file uploads, using `@google-cloud/storage`.
 - **UI Libraries**: shadcn/ui (built on Radix UI), Tailwind CSS, Lucide React for icons.
 - **Form & Validation**: React Hook Form, Zod, and Hookform resolvers.

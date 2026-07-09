@@ -1,15 +1,15 @@
 import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
+import pg from "pg";
+import { drizzle } from "drizzle-orm/node-postgres";
 import { products } from "@shared/schema";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const sql = neon(process.env.DATABASE_URL!);
-const db = drizzle(sql);
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL! });
+const db = drizzle(pool);
 
 const PRODUCTS_FILE = join(__dirname, "data", "products.json");
 
@@ -64,6 +64,8 @@ async function migrateProducts() {
   } catch (error) {
     console.error("Migration failed:", error);
     process.exit(1);
+  } finally {
+    await pool.end();
   }
 }
 

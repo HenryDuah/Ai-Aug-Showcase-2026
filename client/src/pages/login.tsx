@@ -44,37 +44,48 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
+    <div className="min-h-[100dvh] bg-background flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <Card>
-          <CardHeader className="space-y-1">
-            <div className="flex items-center justify-center mb-4">
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Lock className="h-6 w-6 text-primary" />
-              </div>
+        <div className="mb-8">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => setLocation("/")}
+            className="text-muted-foreground hover:text-foreground text-body p-0 h-auto font-normal"
+            data-testid="button-back-to-tour"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to tour
+          </Button>
+        </div>
+        
+        <Card className="shadow-2 rounded-lg border-border">
+          <CardHeader className="space-y-2 pb-6 text-center">
+            <div className="mx-auto w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-2">
+              <Lock className="h-5 w-5 text-foreground" />
             </div>
-            <CardTitle className="text-2xl text-center">Admin Login</CardTitle>
-            <CardDescription className="text-center">
-              Enter your credentials to access the admin panel
+            <CardTitle className="text-h2">Admin access</CardTitle>
+            <CardDescription className="text-body text-muted-foreground">
+              Sign in to manage lab products
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                 <FormField
                   control={form.control}
                   name="username"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Username</FormLabel>
+                      <FormLabel className="text-body">Username</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input
                             {...field}
                             type="text"
                             placeholder="Enter username"
-                            className="pl-10"
+                            className="pl-10 h-12 text-body"
                             data-testid="input-username"
                           />
                         </div>
@@ -88,15 +99,15 @@ export default function Login() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel className="text-body">Password</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input
                             {...field}
                             type="password"
                             placeholder="Enter password"
-                            className="pl-10"
+                            className="pl-10 h-12 text-body"
                             data-testid="input-password"
                           />
                         </div>
@@ -107,21 +118,11 @@ export default function Login() {
                 />
                 <Button
                   type="submit"
-                  className="w-full"
+                  className="w-full h-12 text-body shadow-1 mt-4"
                   disabled={loginMutation.isPending}
                   data-testid="button-login"
                 >
-                  {loginMutation.isPending ? "Logging in..." : "Login"}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => setLocation("/")}
-                  data-testid="button-back-to-tour"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Tour
+                  {loginMutation.isPending ? "Authenticating..." : "Sign in"}
                 </Button>
               </form>
             </Form>

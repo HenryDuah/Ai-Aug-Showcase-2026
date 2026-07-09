@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, useLocation } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { ArrowLeft, Upload, X } from "lucide-react";
+import { ArrowLeft, Upload } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Product, InsertProduct } from "@shared/schema";
@@ -41,7 +41,7 @@ export default function ProductForm() {
   const { productId } = useParams<{ productId?: string }>();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  const isEditMode = !!productId && productId !== "new"; // Edit mode unless on /admin/products/new route
+  const isEditMode = !!productId && productId !== "new";
 
   const { data: product, isLoading } = useQuery<Product>({
     queryKey: ["/api/products", productId],
@@ -62,7 +62,7 @@ export default function ProductForm() {
       website: "",
       theImpact: "",
       sectionId: 1,
-      sectionName: "",
+      sectionName: sectionsData.sections[0].name,
       features: "",
       onDisplay: true,
     },
@@ -98,7 +98,7 @@ export default function ProductForm() {
       queryClient.invalidateQueries({ queryKey: ["/api/products"] });
       toast({
         title: "Success",
-        description: "Product created successfully.",
+        description: "Product added.",
       });
       setLocation("/admin");
     },
@@ -120,7 +120,7 @@ export default function ProductForm() {
       queryClient.invalidateQueries({ queryKey: ["/api/products"] });
       toast({
         title: "Success",
-        description: "Product updated successfully.",
+        description: "Product updated.",
       });
       setLocation("/admin");
     },
@@ -134,7 +134,6 @@ export default function ProductForm() {
   });
 
   const onSubmit = (data: ProductFormData) => {
-    // Clean up video fields - convert empty, "none", "__NONE__", or falsy values to null (not undefined, so PATCH includes them)
     const cleanVideoUrl = data.videoUrl?.trim() && data.videoUrl.toLowerCase() !== "none" 
       ? data.videoUrl 
       : null;
@@ -173,20 +172,15 @@ export default function ProductForm() {
       const uploadURL = result.successful[0].uploadURL;
       if (uploadURL) {
         try {
-          // Normalize the upload URL to get the proper object path
           const response = await apiRequest("POST", "/api/objects/normalize", { 
             uploadURL: uploadURL.split("?")[0] 
           });
           const data = await response.json();
           form.setValue("videoUrl", data.normalizedPath);
-          toast({
-            title: "Success",
-            description: "Video file uploaded successfully.",
-          });
         } catch (error) {
           toast({
             title: "Error",
-            description: "Failed to process uploaded video.",
+            description: "Upload failed.",
             variant: "destructive",
           });
         }
@@ -199,20 +193,15 @@ export default function ProductForm() {
       const uploadURL = result.successful[0].uploadURL;
       if (uploadURL) {
         try {
-          // Normalize the upload URL to get the proper object path
           const response = await apiRequest("POST", "/api/objects/normalize", { 
             uploadURL: uploadURL.split("?")[0] 
           });
           const data = await response.json();
           form.setValue("brochureUrl", data.normalizedPath);
-          toast({
-            title: "Success",
-            description: "Brochure uploaded successfully.",
-          });
         } catch (error) {
           toast({
             title: "Error",
-            description: "Failed to process uploaded brochure.",
+            description: "Upload failed.",
             variant: "destructive",
           });
         }
@@ -230,143 +219,121 @@ export default function ProductForm() {
 
   if (isLoading && isEditMode) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>Loading...</p>
+      <div className="min-h-[100dvh] flex items-center justify-center bg-background">
+        <p className="text-muted-foreground text-body">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4">
-      <div className="max-w-3xl mx-auto">
-        <Button
-          variant="ghost"
-          onClick={() => setLocation("/admin")}
-          className="mb-4"
-          data-testid="button-back"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Admin
-        </Button>
+    <div className="min-h-[100dvh] bg-background pb-20">
+      <div className="bg-muted px-6 py-6 border-b border-border mb-8">
+        <div className="max-w-3xl mx-auto">
+          <Button
+            variant="ghost"
+            onClick={() => setLocation("/admin")}
+            className="text-muted-foreground hover:text-foreground p-0 h-auto font-normal text-body mb-4"
+            data-testid="button-back"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to admin
+          </Button>
+          <h1 className="text-h1 text-foreground">
+            {isEditMode ? "Edit product" : "Add product"}
+          </h1>
+        </div>
+      </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>{isEditMode ? "Edit Product" : "Add New Product"}</CardTitle>
-          </CardHeader>
-          <CardContent>
+      <div className="max-w-3xl mx-auto px-6">
+        <Card className="shadow-1 rounded-lg border-border">
+          <CardContent className="p-6 md:p-8">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Product Name</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="Enter product name" data-testid="input-name" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="company"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Company</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="Enter company name" data-testid="input-company" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="website"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Website (Optional)</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="Enter product website URL" data-testid="input-website" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="type"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Product Type</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="Enter product type" data-testid="input-type" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="sectionId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Section</FormLabel>
-                      <Select
-                        value={field.value.toString()}
-                        onValueChange={handleSectionChange}
-                      >
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-body font-semibold">Product name</FormLabel>
                         <FormControl>
-                          <SelectTrigger data-testid="select-section">
-                            <SelectValue placeholder="Select a section" />
-                          </SelectTrigger>
+                          <Input {...field} className="h-10 text-body" data-testid="input-name" />
                         </FormControl>
-                        <SelectContent>
-                          {sectionsData.sections.map((section) => (
-                            <SelectItem key={section.id} value={section.id.toString()}>
-                              Section {section.id}: {section.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="company"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-body font-semibold">Company</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-10 text-body" data-testid="input-company" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="type"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-body font-semibold">Product type</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-10 text-body" data-testid="input-type" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="sectionId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-body font-semibold">Section</FormLabel>
+                        <Select
+                          value={field.value.toString()}
+                          onValueChange={handleSectionChange}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="h-10 text-body" data-testid="select-section">
+                              <SelectValue />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {sectionsData.sections.map((section) => (
+                              <SelectItem key={section.id} value={section.id.toString()}>
+                                Section {section.id}: {section.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
                 <FormField
                   control={form.control}
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Description</FormLabel>
+                      <FormLabel className="text-body font-semibold">Description</FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
-                          placeholder="Enter product description"
                           rows={4}
+                          className="resize-y text-body"
                           data-testid="textarea-description"
                         />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="image"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Image URL</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="https://example.com/image.jpg" data-testid="input-image" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -378,95 +345,14 @@ export default function ProductForm() {
                   name="theImpact"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>The Impact</FormLabel>
+                      <FormLabel className="text-body font-semibold">The impact</FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
-                          placeholder="Describe the impact of this product"
                           rows={3}
+                          className="resize-y text-body"
                           data-testid="textarea-the-impact"
                         />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="videoUrl"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Product Video URL (Optional)</FormLabel>
-                      <FormControl>
-                        <Input 
-                          {...field} 
-                          placeholder="Enter YouTube or Vimeo video URL" 
-                          data-testid="input-video-url"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="videoType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Video Type (Optional)</FormLabel>
-                      <Select
-                        value={field.value || "__NONE__"}
-                        onValueChange={field.onChange}
-                      >
-                        <FormControl>
-                          <SelectTrigger data-testid="select-video-type">
-                            <SelectValue placeholder="Select video type (optional)" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="__NONE__">No video type</SelectItem>
-                          <SelectItem value="Overview Video">Overview Video</SelectItem>
-                          <SelectItem value="Demo Video">Demo Video</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="brochureUrl"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Product Brochure (Optional)</FormLabel>
-                      <FormControl>
-                        <div className="space-y-3">
-                          <Input 
-                            {...field} 
-                            placeholder="Brochure URL (auto-filled when you upload)" 
-                            data-testid="input-brochure-url"
-                            readOnly
-                            className="bg-muted"
-                          />
-                          <div>
-                            <ObjectUploader
-                              maxNumberOfFiles={1}
-                              allowedFileTypes={[".pdf", "application/pdf"]}
-                              onGetUploadParameters={handleGetUploadParameters}
-                              onComplete={handleBrochureUploadComplete}
-                              buttonVariant="outline"
-                            >
-                              <>
-                                <Upload className="w-4 h-4 mr-2" />
-                                Upload PDF Brochure
-                              </>
-                            </ObjectUploader>
-                            <p className="text-sm text-muted-foreground mt-2">Upload a PDF file for product details</p>
-                          </div>
-                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -478,12 +364,12 @@ export default function ProductForm() {
                   name="features"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Features (one per line)</FormLabel>
+                      <FormLabel className="text-body font-semibold">Features (one per line)</FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
-                          placeholder="Feature 1&#10;Feature 2&#10;Feature 3"
-                          rows={5}
+                          rows={4}
+                          className="resize-y text-body"
                           data-testid="textarea-features"
                         />
                       </FormControl>
@@ -492,25 +378,148 @@ export default function ProductForm() {
                   )}
                 />
 
-                <div className="flex gap-3 pt-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="image"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-body font-semibold">Image URL</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-10 text-body" data-testid="input-image" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="website"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-body font-semibold">Website (Optional)</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-10 text-body" data-testid="input-website" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="videoUrl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-body font-semibold">Video URL (Optional)</FormLabel>
+                        <FormControl>
+                          <div className="flex gap-4 items-center">
+                            <Input 
+                              {...field} 
+                              className="h-10 text-body flex-1"
+                              data-testid="input-video-url"
+                            />
+                            <ObjectUploader
+                              maxNumberOfFiles={1}
+                              allowedFileTypes={["video/*"]}
+                              onGetUploadParameters={handleGetUploadParameters}
+                              onComplete={handleUploadComplete}
+                              buttonVariant="outline"
+                            >
+                              <>
+                                <Upload className="w-4 h-4 mr-2" />
+                                Upload video
+                              </>
+                            </ObjectUploader>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="videoType"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-body font-semibold">Video type (Optional)</FormLabel>
+                        <Select
+                          value={field.value || "__NONE__"}
+                          onValueChange={field.onChange}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="h-10 text-body" data-testid="select-video-type">
+                              <SelectValue />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="__NONE__">None</SelectItem>
+                            <SelectItem value="Overview Video">Overview</SelectItem>
+                            <SelectItem value="Demo Video">Demo</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="brochureUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-body font-semibold">Product brochure (Optional)</FormLabel>
+                      <FormControl>
+                        <div className="flex gap-4 items-center">
+                          <Input 
+                            {...field} 
+                            readOnly
+                            className="h-10 text-body bg-muted flex-1"
+                            data-testid="input-brochure-url"
+                          />
+                          <ObjectUploader
+                            maxNumberOfFiles={1}
+                            allowedFileTypes={[".pdf", "application/pdf"]}
+                            onGetUploadParameters={handleGetUploadParameters}
+                            onComplete={handleBrochureUploadComplete}
+                            buttonVariant="outline"
+                          >
+                            <>
+                              <Upload className="w-4 h-4 mr-2" />
+                              Upload PDF
+                            </>
+                          </ObjectUploader>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="flex justify-end gap-3 pt-4 border-t border-border mt-8">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={() => setLocation("/admin")}
+                    className="h-12 px-6 text-body"
+                    data-testid="button-cancel"
+                  >
+                    Cancel
+                  </Button>
                   <Button
                     type="submit"
+                    className="h-12 px-8 text-body shadow-1"
                     disabled={createMutation.isPending || updateMutation.isPending}
                     data-testid="button-submit"
                   >
                     {(createMutation.isPending || updateMutation.isPending)
                       ? "Saving..."
                       : isEditMode
-                      ? "Update Product"
-                      : "Add Product"}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setLocation("/admin")}
-                    data-testid="button-cancel"
-                  >
-                    Cancel
+                      ? "Save changes"
+                      : "Add product"}
                   </Button>
                 </div>
               </form>

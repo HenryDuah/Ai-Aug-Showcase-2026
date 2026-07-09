@@ -3,17 +3,17 @@ import { randomUUID } from "crypto";
 import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
-import { eq, and } from "drizzle-orm";
+import pg from "pg";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { eq, and, sql } from "drizzle-orm";
 import session from "express-session";
 import createMemoryStore from "memorystore";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const sql = neon(process.env.DATABASE_URL!);
-const db = drizzle(sql);
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL! });
+const db = drizzle(pool);
 
 const MemoryStore = createMemoryStore(session);
 
@@ -302,33 +302,24 @@ export class DbStorage implements IStorage {
   }
 
   async incrementViewCount(productId: string): Promise<Product | undefined> {
-    const product = await this.getProductById(productId);
-    if (!product) return undefined;
-    
     const [updated] = await db.update(products)
-      .set({ viewCount: (product.viewCount ?? 0) + 1 })
+      .set({ viewCount: sql`COALESCE(${products.viewCount}, 0) + 1` })
       .where(eq(products.id, productId))
       .returning();
     return updated;
   }
 
   async incrementVideoClickCount(productId: string): Promise<Product | undefined> {
-    const product = await this.getProductById(productId);
-    if (!product) return undefined;
-    
     const [updated] = await db.update(products)
-      .set({ videoClickCount: (product.videoClickCount ?? 0) + 1 })
+      .set({ videoClickCount: sql`COALESCE(${products.videoClickCount}, 0) + 1` })
       .where(eq(products.id, productId))
       .returning();
     return updated;
   }
 
   async incrementWebsiteClickCount(productId: string): Promise<Product | undefined> {
-    const product = await this.getProductById(productId);
-    if (!product) return undefined;
-    
     const [updated] = await db.update(products)
-      .set({ websiteClickCount: (product.websiteClickCount ?? 0) + 1 })
+      .set({ websiteClickCount: sql`COALESCE(${products.websiteClickCount}, 0) + 1` })
       .where(eq(products.id, productId))
       .returning();
     return updated;

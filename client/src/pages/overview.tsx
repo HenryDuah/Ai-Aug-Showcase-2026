@@ -9,14 +9,6 @@ import sectionsData from "@/data/products.json";
 import type { Product } from "@shared/schema";
 import sandLogo from "@assets/Sand Tech_ Logo_Light_1760649606645.png";
 
-const sectionColors = [
-  "bg-primary text-primary-foreground",
-  "bg-chart-2 text-white",
-  "bg-chart-1 text-white", 
-  "bg-chart-4 text-white",
-  "bg-secondary text-secondary-foreground"
-];
-
 export default function Overview() {
   const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,37 +29,39 @@ export default function Overview() {
   const showSearchResults = searchQuery.trim().length > 0 && !isLoading && !isError;
   
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-[100dvh] bg-background">
       <div className="fade-in">
         {/* Header */}
-        <div className="bg-gradient-to-r from-primary to-secondary text-white px-6 py-8">
-          <div className="flex items-start justify-between mb-4">
-            <Button
-              variant="ghost"
-              onClick={() => setLocation("/")}
-              className="text-white p-0 h-auto font-normal"
-              data-testid="button-back-welcome"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Button>
-            <img src={sandLogo} alt="Sand Technologies Logo" className="h-12 w-auto" data-testid="sand-logo-overview" />
+        <div className="bg-primary text-primary-foreground px-6 py-6 md:py-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-start justify-between mb-8">
+              <Button
+                variant="ghost"
+                onClick={() => setLocation("/")}
+                className="text-primary-foreground hover:text-primary-foreground hover:bg-white/10 p-0 h-auto font-normal text-body"
+                data-testid="button-back-welcome"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+              <img src={sandLogo} alt="Sand Technologies Logo" className="h-8 w-auto" data-testid="sand-logo-overview" />
+            </div>
+            <h1 className="text-h1" data-testid="title-lab-overview">Showcase Overview</h1>
           </div>
-          <h1 className="text-3xl font-bold mb-2" data-testid="title-lab-overview">Showcase Overview</h1>
         </div>
 
         {/* Search Bar */}
-        <div className="px-6 py-6 bg-card">
-          <div className="max-w-4xl mx-auto">
-            <div className="relative mb-4">
+        <div className="px-6 py-6 border-b border-border bg-card">
+          <div className="max-w-4xl mx-auto flex flex-col sm:flex-row gap-4">
+            <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input 
                 type="text"
-                placeholder={isLoading ? "Loading products..." : isError ? "Error loading products" : "Search products by name, company, type, or description..."}
+                placeholder={isLoading ? "Loading products..." : isError ? "Error loading products" : "Search products..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 disabled={isLoading || isError}
-                className="pl-10 pr-10 py-6 text-base"
+                className="pl-10 pr-10 h-12 text-body rounded-md bg-white border-neutral-200"
                 data-testid="input-search"
               />
               {searchQuery && !isLoading && (
@@ -75,7 +69,8 @@ export default function Overview() {
                   variant="ghost"
                   size="icon"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 text-muted-foreground"
+                  aria-label="Clear search"
                   data-testid="button-clear-search"
                 >
                   <X className="w-4 h-4" />
@@ -83,27 +78,28 @@ export default function Overview() {
               )}
             </div>
             <Button 
+              variant="outline"
               onClick={() => setLocation("/feedback")} 
-              className="w-full px-6 py-3 rounded-lg font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/90"
+              className="h-12 px-6 rounded-md text-body shadow-1"
               data-testid="button-skip-to-feedback"
             >
-              Skip Tour - Share Your Thoughts
-              <ArrowRight className="w-5 h-5 ml-2" />
+              Skip tour - Share your thoughts
+              <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>
         </div>
 
         {/* Error State */}
         {isError && (
-          <div className="px-6 py-6">
+          <div className="px-6 py-8">
             <div className="max-w-4xl mx-auto">
-              <Card className="border-destructive">
-                <CardContent className="pt-6 text-center">
-                  <p className="text-destructive font-semibold mb-3" data-testid="text-error">
-                    Failed to load products for search
-                  </p>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    Unable to fetch product data. You can still browse sections below.
+              <Card className="border-destructive shadow-1 rounded-lg">
+                <CardContent className="p-6">
+                  <h3 className="text-h3 text-destructive mb-2" data-testid="text-error">
+                    Failed to load products
+                  </h3>
+                  <p className="text-body text-muted-foreground mb-4">
+                    Please check your connection and try again.
                   </p>
                   <Button 
                     onClick={() => refetch()} 
@@ -120,17 +116,17 @@ export default function Overview() {
 
         {/* Search Results */}
         {showSearchResults && !isError && (
-          <div className="px-6 py-6">
+          <div className="px-6 py-8">
             <div className="max-w-4xl mx-auto">
-              <h3 className="text-xl font-bold mb-4 text-foreground" data-testid="title-search-results">
+              <h2 className="text-h2 mb-6 text-foreground" data-testid="title-search-results">
                 Search Results ({filteredProducts.length})
-              </h3>
+              </h2>
               {filteredProducts.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {filteredProducts.map((product) => (
                     <Card 
                       key={product.id} 
-                      className="cursor-pointer hover:shadow-lg transition-shadow"
+                      className="cursor-pointer hover:shadow-2 transition-shadow shadow-1 rounded-lg"
                       onClick={() => setLocation(`/product/${product.id}`)}
                       data-testid={`card-search-product-${product.id}`}
                     >
@@ -138,106 +134,90 @@ export default function Overview() {
                         <img 
                           src={product.image} 
                           alt={product.name}
-                          className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
+                          className="w-20 h-20 object-cover rounded-md flex-shrink-0 bg-muted"
                           data-testid={`img-search-product-${product.id}`}
                         />
                         <div className="flex-1">
-                          <h4 className="font-bold text-foreground mb-1" data-testid={`text-search-name-${product.id}`}>
+                          <h3 className="text-h3 mb-1 line-clamp-1" data-testid={`text-search-name-${product.id}`}>
                             {product.name}
-                          </h4>
-                          <p className="text-sm text-muted-foreground mb-2">{product.company}</p>
-                          <p className="text-xs text-muted-foreground">{product.sectionName}</p>
+                          </h3>
+                          <p className="text-body text-muted-foreground line-clamp-1 mb-1">{product.company}</p>
+                          <p className="text-small text-muted-foreground">{product.sectionName}</p>
                         </div>
                       </CardContent>
                     </Card>
                   ))}
                 </div>
               ) : (
-                <Card>
-                  <CardContent className="pt-6 text-center text-muted-foreground" data-testid="text-no-results">
-                    No products found matching "{searchQuery}"
-                  </CardContent>
-                </Card>
+                <div className="text-body text-muted-foreground" data-testid="text-no-results">
+                  <p>No products found matching "{searchQuery}"</p>
+                  <p>Try adjusting your search terms.</p>
+                </div>
               )}
             </div>
           </div>
         )}
 
-        {/* Lab Introduction */}
+        {/* Main Content */}
         {!showSearchResults && (
-          <div className="px-6 py-6 bg-card">
+          <div className="px-6 py-8">
             <div className="max-w-4xl mx-auto">
-              <Card>
-                <CardContent className="pt-6">
-                  <h2 className="text-2xl font-bold mb-4 text-foreground" data-testid="title-about-tour">About This Tour</h2>
-                  <p className="text-foreground/80 leading-relaxed mb-4" data-testid="description-lab-intro-1">
-                    Welcome to Sand's <span className="font-bold">Innovative Healthcare Solutions Showcase</span>, where we explore cutting-edge medical innovations empowering frontline healthcare workers to deliver better patient outcomes.
+              
+              <div className="mb-12">
+                <h2 className="text-h2 mb-4 text-foreground" data-testid="title-about-tour">About This Tour</h2>
+                <div className="text-body text-foreground space-y-4 max-w-3xl">
+                  <p data-testid="description-lab-intro-1">
+                    Welcome to Sand's Innovative Healthcare Solutions Showcase, where we explore cutting-edge medical innovations empowering frontline healthcare workers to deliver better patient outcomes.
                   </p>
-                  <p className="text-foreground/80 leading-relaxed mb-4" data-testid="description-lab-intro-2">
+                  <p data-testid="description-lab-intro-2">
                     This interactive tour will guide you through five specialized sections, each showcasing breakthrough technologies designed to improve healthcare outcomes at the frontlines.
                   </p>
-                  <p className="text-foreground/80 leading-relaxed" data-testid="description-lab-intro-3">
-                    Take your time exploring each section, view product details, and watch product demo videos to learn more about these transformative medical solutions.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        )}
+                </div>
+              </div>
 
-        {/* Floor Plan Visualization */}
-        {!showSearchResults && (
-          <div className="px-6 py-6">
-            <div className="max-w-4xl mx-auto">
-              <h3 className="text-xl font-bold mb-6 text-foreground" data-testid="title-tour-sections">Tour Sections</h3>
-              
-              <Card className="mb-6">
-              <CardContent className="pt-6">
-                {/* Visual Floor Plan */}
-                <div className="flex items-center gap-2 mb-6" data-testid="floor-plan">
-                  {sectionsData.sections.map((_, index) => (
-                    <div key={index} className="flex-1 relative">
-                      <div className={`floor-plan-section ${index === 0 ? 'active' : ''}`}>
-                        {index === 0 && <div className="floor-plan-dot"></div>}
+              <div>
+                <h2 className="text-h2 mb-6 text-foreground" data-testid="title-tour-sections">Tour Sections</h2>
+                
+                <div className="mb-8" data-testid="floor-plan">
+                  <div className="flex items-center gap-1 bg-muted p-1 rounded-full">
+                    {sectionsData.sections.map((_, index) => (
+                      <div key={index} className="flex-1 h-2 rounded-full relative">
+                        {index === 0 && <div className="absolute w-4 h-4 bg-white border-2 border-primary rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-1"></div>}
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
 
-                {/* Section Cards */}
-                <div className="space-y-3">
+                <div className="space-y-4 mb-8">
                   {sectionsData.sections.map((section, index) => (
-                    <div 
+                    <Card 
                       key={section.id}
+                      className="shadow-1 hover:shadow-2 transition-shadow cursor-pointer rounded-lg border-neutral-200"
                       onClick={() => setLocation(`/section/${section.id}`)}
-                      className={`flex items-center gap-4 p-4 rounded-lg border-l-4 cursor-pointer transition-all hover:shadow-md ${
-                        index === 0 
-                          ? 'bg-primary/5 border-primary hover:bg-primary/10' 
-                          : 'bg-muted border-muted hover:bg-muted/80'
-                      }`}
                       data-testid={`section-card-${section.id}`}
                     >
-                      <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0 ${sectionColors[index]}`}>
-                        {section.id}
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-bold text-foreground" data-testid={`section-name-${section.id}`}>{section.name}</h4>
-                      </div>
-                      <ChevronRight className={`w-5 h-5 ${index === 0 ? 'text-primary' : 'text-muted-foreground'}`} />
-                    </div>
+                      <CardContent className="p-4 flex items-center gap-4">
+                        <div className="w-10 h-10 rounded bg-muted flex items-center justify-center text-h3 text-foreground font-mono flex-shrink-0">
+                          {section.id}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-h3 text-foreground" data-testid={`section-name-${section.id}`}>{section.name}</h3>
+                        </div>
+                        <ChevronRight className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                      </CardContent>
+                    </Card>
                   ))}
                 </div>
-              </CardContent>
-            </Card>
 
-              <Button 
-                onClick={() => setLocation("/section/1")} 
-                className="w-full bg-primary text-primary-foreground px-6 py-4 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all"
-                data-testid="button-start-section-1"
-              >
-                Start with Section 1: Maternal
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
+                <Button 
+                  onClick={() => setLocation("/section/1")} 
+                  className="w-full sm:w-auto h-12 px-8 min-w-[200px] text-body rounded-md shadow-1"
+                  data-testid="button-start-section-1"
+                >
+                  Start with section 1: Maternal
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </div>
             </div>
           </div>
         )}

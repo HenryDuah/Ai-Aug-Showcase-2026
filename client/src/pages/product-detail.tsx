@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { X, ArrowLeft, ArrowRight, Tag, CheckCircle, FileText, MessageSquare } from "lucide-react";
+import { X, Tag, CheckCircle, FileText, MessageSquare } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import ImageOverlay from "@/components/image-overlay";
 import { useState, useEffect } from "react";
@@ -55,27 +55,25 @@ export default function ProductDetail() {
     },
     onSuccess: () => {
       toast({
-        title: "Thank you!",
-        description: "Your feedback has been submitted successfully.",
+        title: "Thank you",
+        description: "Feedback submitted.",
       });
       feedbackForm.reset();
     },
     onError: () => {
       toast({
         title: "Error",
-        description: "Failed to submit feedback. Please try again.",
+        description: "Failed to submit feedback.",
         variant: "destructive",
       });
     },
   });
 
-  // Analytics tracking
   const trackView = async () => {
     if (productId) {
       try {
         await apiRequest("POST", `/api/products/${productId}/track-view`, {});
       } catch (error) {
-        // Silent fail - don't disrupt user experience
         console.error("Failed to track view:", error);
       }
     }
@@ -105,7 +103,6 @@ export default function ProductDetail() {
     queryKey: ["/api/products", productId],
   });
 
-  // Track product view when component mounts and product is loaded
   useEffect(() => {
     if (product) {
       trackView();
@@ -120,34 +117,18 @@ export default function ProductDetail() {
     }
   };
 
-  const handlePreviousSection = () => {
-    if (product && product.sectionId > 1) {
-      setLocation(`/section/${product.sectionId - 1}`);
-    } else {
-      setLocation("/overview");
-    }
-  };
-
-  const handleNextSection = () => {
-    if (product && product.sectionId < 5) {
-      setLocation(`/section/${product.sectionId + 1}`);
-    } else {
-      setLocation("/feedback");
-    }
-  };
-
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background">
-        <div className="bg-gradient-to-r from-primary to-secondary text-white px-6 py-6">
+      <div className="min-h-[100dvh] bg-background">
+        <div className="bg-primary text-primary-foreground px-6 py-6">
           <Skeleton className="h-6 w-16 mb-4 bg-white/20" />
           <Skeleton className="h-8 w-3/4 mb-2 bg-white/20" />
           <Skeleton className="h-5 w-1/2 bg-white/20" />
         </div>
-        <div className="px-6 py-6 space-y-6">
-          <Skeleton className="aspect-video w-full rounded-xl" />
-          <Skeleton className="h-20 w-full" />
-          <Skeleton className="h-32 w-full" />
+        <div className="px-6 py-6 space-y-6 max-w-4xl mx-auto">
+          <Skeleton className="aspect-video w-full rounded-lg" />
+          <Skeleton className="h-20 w-full rounded-lg" />
+          <Skeleton className="h-32 w-full rounded-lg" />
         </div>
       </div>
     );
@@ -155,13 +136,13 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-6">
-        <Card className="w-full max-w-md">
+      <div className="min-h-[100dvh] bg-background flex items-center justify-center p-6">
+        <Card className="w-full max-w-md shadow-1 rounded-lg">
           <CardContent className="pt-6 text-center">
-            <h2 className="text-xl font-bold text-foreground mb-2" data-testid="product-not-found">Product Not Found</h2>
-            <p className="text-muted-foreground mb-4">The requested product could not be found.</p>
-            <Button onClick={() => setLocation("/overview")} data-testid="button-back-overview">
-              Back to Overview
+            <h2 className="text-h2 text-foreground mb-2" data-testid="product-not-found">Product not found</h2>
+            <p className="text-body text-muted-foreground mb-6">The requested product could not be found.</p>
+            <Button onClick={() => setLocation("/overview")} data-testid="button-back-overview" className="h-12 w-full text-body">
+              Back to overview
             </Button>
           </CardContent>
         </Card>
@@ -170,27 +151,29 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <div className="min-h-[100dvh] bg-background pb-24">
       <div className="fade-in">
-        <div className="bg-gradient-to-r from-primary to-secondary text-white px-6 py-6">
-          <Button
-            variant="ghost"
-            onClick={handleClose}
-            className="text-white mb-4 p-0 h-auto font-normal"
-            data-testid="button-close-product"
-          >
-            <X className="w-4 h-4 mr-2" />
-            Close
-          </Button>
-          <h1 className="text-3xl font-bold mb-2" data-testid="product-name">{product.name}</h1>
-          <p className="text-white/90 text-lg" data-testid="product-company">{product.company}</p>
+        <div className="bg-primary text-primary-foreground px-6 py-6 border-b border-border">
+          <div className="max-w-4xl mx-auto">
+            <Button
+              variant="ghost"
+              onClick={handleClose}
+              className="text-primary-foreground hover:text-primary-foreground hover:bg-white/10 mb-4 p-0 h-auto font-normal text-body"
+              data-testid="button-close-product"
+            >
+              <X className="w-4 h-4 mr-2" />
+              Close
+            </Button>
+            <h1 className="text-h1 mb-2" data-testid="product-name">{product.name}</h1>
+            <p className="text-h3 opacity-90" data-testid="product-company">{product.company}</p>
+          </div>
         </div>
 
-        <div className="px-6 py-6">
+        <div className="px-6 py-8">
           <div className="max-w-4xl mx-auto space-y-6">
             {/* Product Image */}
             <div 
-              className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl overflow-hidden cursor-pointer"
+              className="aspect-video bg-muted rounded-lg overflow-hidden cursor-pointer"
               onClick={() => setShowImageOverlay(true)}
               data-testid="product-image-container"
             >
@@ -203,23 +186,23 @@ export default function ProductDetail() {
             </div>
 
             {/* Product Type */}
-            <Card>
-              <CardContent className="pt-4">
+            <Card className="shadow-1 rounded-lg border-border">
+              <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <Tag className="text-primary text-xl flex-shrink-0" size={20} />
                   <div>
-                    <p className="text-xs text-muted-foreground mb-1">Product Type</p>
-                    <p className="font-semibold text-foreground" data-testid="product-type">{product.type}</p>
+                    <p className="text-small text-muted-foreground mb-1">Product type</p>
+                    <p className="text-body font-semibold text-foreground" data-testid="product-type">{product.type}</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Description */}
-            <Card>
-              <CardContent className="pt-5">
-                <h3 className="text-lg font-bold text-foreground mb-3">Description</h3>
-                <p className="text-foreground/80 leading-relaxed" data-testid="product-description">
+            <Card className="shadow-1 rounded-lg border-border">
+              <CardContent className="p-5 md:p-6">
+                <h3 className="text-h3 text-foreground mb-3">Description</h3>
+                <p className="text-body text-muted-foreground leading-relaxed" data-testid="product-description">
                   {product.description}
                 </p>
               </CardContent>
@@ -227,17 +210,17 @@ export default function ProductDetail() {
 
             {/* Product Video */}
             {product.videoUrl && (
-              <Card>
-                <CardContent className="pt-5">
-                  <h3 className="text-lg font-bold text-foreground mb-1">Product Video</h3>
+              <Card className="shadow-1 rounded-lg border-border">
+                <CardContent className="p-5 md:p-6">
+                  <h3 className="text-h3 text-foreground mb-1">Product video</h3>
                   {product.videoType && (
-                    <p className="text-sm text-muted-foreground mb-3" data-testid="product-video-type">
+                    <p className="text-small text-muted-foreground mb-4" data-testid="product-video-type">
                       {product.videoType}
                     </p>
                   )}
-                  {!product.videoType && <div className="mb-3"></div>}
+                  {!product.videoType && <div className="mb-4"></div>}
                   {product.videoUrl.includes('youtube.com') || product.videoUrl.includes('youtu.be') ? (
-                    <div className="aspect-video" onClick={trackVideoClick}>
+                    <div className="aspect-video rounded-lg overflow-hidden bg-neutral-900" onClick={trackVideoClick}>
                       <iframe
                         width="100%"
                         height="100%"
@@ -250,7 +233,7 @@ export default function ProductDetail() {
                       />
                     </div>
                   ) : product.videoUrl.includes('vimeo.com') ? (
-                    <div className="aspect-video" onClick={trackVideoClick}>
+                    <div className="aspect-video rounded-lg overflow-hidden bg-neutral-900" onClick={trackVideoClick}>
                       <iframe
                         width="100%"
                         height="100%"
@@ -263,18 +246,17 @@ export default function ProductDetail() {
                       />
                     </div>
                   ) : (
-                    <div className="aspect-video">
+                    <div className="aspect-video rounded-lg overflow-hidden bg-neutral-900">
                       <video
                         controls
                         preload="metadata"
-                        className="w-full h-full rounded-lg object-contain bg-black"
+                        className="w-full h-full object-contain"
                         onPlay={trackVideoClick}
                         data-testid="product-video"
                       >
                         <source src={product.videoUrl} type="video/mp4" />
                         <source src={product.videoUrl} type="video/webm" />
                         <source src={product.videoUrl} type="video/ogg" />
-                        Your browser does not support the video tag.
                       </video>
                     </div>
                   )}
@@ -284,10 +266,10 @@ export default function ProductDetail() {
 
             {/* The Impact */}
             {product.theImpact && (
-              <Card>
-                <CardContent className="pt-5">
-                  <h3 className="text-lg font-bold text-foreground mb-3">The Impact</h3>
-                  <p className="text-foreground/80 leading-relaxed" data-testid="product-impact">
+              <Card className="shadow-1 rounded-lg border-border">
+                <CardContent className="p-5 md:p-6">
+                  <h3 className="text-h3 text-foreground mb-3">The impact</h3>
+                  <p className="text-body text-muted-foreground leading-relaxed" data-testid="product-impact">
                     {product.theImpact}
                   </p>
                 </CardContent>
@@ -296,20 +278,20 @@ export default function ProductDetail() {
 
             {/* Product Brochure */}
             {product.brochureUrl && (
-              <Card>
-                <CardContent className="pt-5">
-                  <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+              <Card className="shadow-1 rounded-lg border-border">
+                <CardContent className="p-5 md:p-6">
+                  <h3 className="text-h3 text-foreground mb-4 flex items-center gap-2">
                     <FileText className="text-primary" size={20} />
-                    Product Brochure
+                    Product brochure
                   </h3>
                   <Button 
                     variant="outline"
                     onClick={() => setShowBrochure(true)}
-                    className="w-full sm:w-auto"
+                    className="w-full sm:w-auto h-12 text-body"
                     data-testid="button-view-brochure"
                   >
                     <FileText className="w-4 h-4 mr-2" />
-                    View Brochure (PDF)
+                    View brochure
                   </Button>
                 </CardContent>
               </Card>
@@ -317,17 +299,17 @@ export default function ProductDetail() {
 
             {/* Key Features */}
             {product.features && product.features.length > 0 && (
-              <Card>
-                <CardContent className="pt-5">
-                  <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+              <Card className="shadow-1 rounded-lg border-border">
+                <CardContent className="p-5 md:p-6">
+                  <h3 className="text-h3 text-foreground mb-4 flex items-center gap-2">
                     <CheckCircle className="text-primary" size={20} />
-                    Key Features
+                    Key features
                   </h3>
-                  <ul className="space-y-2" data-testid="product-features">
+                  <ul className="space-y-3" data-testid="product-features">
                     {product.features.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <CheckCircle className="text-primary mt-1 flex-shrink-0" size={16} />
-                        <span className="text-foreground/80" data-testid={`feature-${index}`}>{feature}</span>
+                      <li key={index} className="flex items-start gap-3">
+                        <CheckCircle className="text-primary mt-0.5 flex-shrink-0" size={16} />
+                        <span className="text-body text-muted-foreground" data-testid={`feature-${index}`}>{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -337,19 +319,19 @@ export default function ProductDetail() {
 
             {/* Website */}
             {product.website && (
-              <Card>
-                <CardContent className="pt-4">
+              <Card className="shadow-1 rounded-lg border-border">
+                <CardContent className="p-5 md:p-6">
                   <div>
-                    <p className="text-xs text-muted-foreground mb-1">Website</p>
+                    <p className="text-small text-muted-foreground mb-1">Website</p>
                     <a 
                       href={product.website} 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       onClick={trackWebsiteClick}
-                      className="font-semibold text-primary hover:underline" 
+                      className="text-body font-semibold text-primary hover:underline" 
                       data-testid="product-website"
                     >
-                      Link
+                      Visit external site
                     </a>
                   </div>
                 </CardContent>
@@ -357,12 +339,13 @@ export default function ProductDetail() {
             )}
 
             {/* Product Feedback */}
-            <Card className="mb-20">
-              <CardContent className="pt-5">
-                <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+            <Card className="mb-20 shadow-1 rounded-lg border-border">
+              <CardContent className="p-5 md:p-6">
+                <h3 className="text-h3 text-foreground mb-4 flex items-center gap-2">
                   <MessageSquare className="text-primary" size={20} />
-                  Share your views on this product (Optional)
+                  Share your views
                 </h3>
+                <p className="text-body text-muted-foreground mb-6">Optional product feedback.</p>
                 <Form {...feedbackForm}>
                   <form onSubmit={feedbackForm.handleSubmit((data) => feedbackMutation.mutate(data))} className="space-y-4">
                     <FormField
@@ -370,9 +353,9 @@ export default function ProductDetail() {
                       name="visitorName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Name (Optional)</FormLabel>
+                          <FormLabel className="text-body">Name</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="Your name" data-testid="input-product-feedback-name" />
+                            <Input {...field} placeholder="Your name" className="h-12" data-testid="input-product-feedback-name" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -384,9 +367,9 @@ export default function ProductDetail() {
                       name="visitorEmail"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email (Optional)</FormLabel>
+                          <FormLabel className="text-body">Email</FormLabel>
                           <FormControl>
-                            <Input {...field} type="email" placeholder="your.email@example.com" data-testid="input-product-feedback-email" />
+                            <Input {...field} type="email" placeholder="your.email@example.com" className="h-12" data-testid="input-product-feedback-email" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -398,12 +381,13 @@ export default function ProductDetail() {
                       name="comments"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Your Feedback (Optional)</FormLabel>
+                          <FormLabel className="text-body">Feedback</FormLabel>
                           <FormControl>
                             <Textarea
                               {...field}
                               placeholder="Share your thoughts about this product..."
                               rows={4}
+                              className="resize-y"
                               data-testid="textarea-product-feedback-comments"
                             />
                           </FormControl>
@@ -414,11 +398,11 @@ export default function ProductDetail() {
 
                     <Button 
                       type="submit" 
-                      className="w-full" 
+                      className="w-full h-12 text-body" 
                       disabled={feedbackMutation.isPending}
                       data-testid="button-submit-product-feedback"
                     >
-                      {feedbackMutation.isPending ? "Submitting..." : "Submit Feedback"}
+                      {feedbackMutation.isPending ? "Submitting..." : "Submit feedback"}
                     </Button>
                   </form>
                 </Form>
@@ -428,15 +412,18 @@ export default function ProductDetail() {
         </div>
 
         {/* Navigation */}
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-border p-4 shadow-lg">
-          <Button 
-            onClick={handleClose}
-            className="w-full"
-            data-testid="button-close-return-section"
-          >
-            <X className="w-4 h-4 mr-2" />
-            Close
-          </Button>
+        <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border p-4 shadow-2 z-10">
+          <div className="max-w-4xl mx-auto">
+            <Button 
+              variant="outline"
+              onClick={handleClose}
+              className="w-full h-12 text-body"
+              data-testid="button-close-return-section"
+            >
+              <X className="w-4 h-4 mr-2" />
+              Close product
+            </Button>
+          </div>
         </div>
 
         {/* Image Overlay */}
@@ -449,17 +436,17 @@ export default function ProductDetail() {
 
         {/* Brochure Dialog */}
         <Dialog open={showBrochure} onOpenChange={setShowBrochure}>
-          <DialogContent className="max-w-4xl max-h-[90vh] p-0">
-            <DialogHeader className="p-6 pb-4">
-              <DialogTitle className="flex items-center gap-2">
-                <FileText className="text-primary" size={24} />
-                Product Brochure
+          <DialogContent className="max-w-4xl max-h-[90vh] p-0 rounded-lg overflow-hidden">
+            <DialogHeader className="p-4 border-b border-border bg-muted">
+              <DialogTitle className="flex items-center gap-2 text-h3">
+                <FileText className="text-primary" size={20} />
+                Product brochure
               </DialogTitle>
             </DialogHeader>
-            <div className="px-6 pb-6 h-[70vh]">
+            <div className="h-[70vh]">
               <iframe
                 src={product.brochureUrl || ""}
-                className="w-full h-full rounded-lg border"
+                className="w-full h-full border-0"
                 title="Product Brochure"
                 data-testid="brochure-viewer"
               />

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, Eye, Video, ExternalLink, MessageSquare, Download, TrendingUp } from "lucide-react";
 import { Link } from "wouter";
@@ -21,13 +21,13 @@ export default function Analytics() {
 
   if (productsLoading || feedbackLoading || productFeedbackLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4">
+      <div className="min-h-[100dvh] bg-background p-6">
         <div className="max-w-6xl mx-auto">
           <Skeleton className="h-12 w-64 mb-8" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <Skeleton className="h-32" />
-            <Skeleton className="h-32" />
-            <Skeleton className="h-32" />
+            <Skeleton className="h-32 rounded-lg" />
+            <Skeleton className="h-32 rounded-lg" />
+            <Skeleton className="h-32 rounded-lg" />
           </div>
         </div>
       </div>
@@ -71,185 +71,172 @@ export default function Analytics() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
+    <div className="min-h-[100dvh] bg-background pb-20">
+      <div className="bg-muted px-6 py-6 border-b border-border mb-8">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/admin">
-              <Button variant="ghost" size="icon" data-testid="button-back">
-                <ArrowLeft className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="hover:bg-neutral-200" data-testid="button-back">
+                <ArrowLeft className="h-5 w-5 text-foreground" />
               </Button>
             </Link>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Analytics Dashboard</h1>
+            <h1 className="text-h1 text-foreground">Analytics</h1>
           </div>
         </div>
+      </div>
 
-        {/* Engagement Stats */}
-        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Engagement Metrics</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card data-testid="card-stat-views">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Product Views</CardTitle>
-              <Eye className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold" data-testid="text-total-views">{totalViews}</div>
-              <p className="text-xs text-muted-foreground">Times products were viewed</p>
+      <div className="max-w-6xl mx-auto px-6">
+        <h2 className="text-h2 text-foreground mb-4">Engagement metrics</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <Card className="shadow-1 rounded-lg border-border" data-testid="card-stat-views">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4 text-muted-foreground">
+                <span className="text-body font-semibold text-foreground">Product views</span>
+                <Eye className="h-4 w-4" />
+              </div>
+              <div className="text-metric text-foreground" data-testid="text-total-views">{totalViews.toLocaleString()}</div>
             </CardContent>
           </Card>
 
-          <Card data-testid="card-stat-video-clicks">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Video Clicks</CardTitle>
-              <Video className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold" data-testid="text-total-video-clicks">{totalVideoClicks}</div>
-              <p className="text-xs text-muted-foreground">Times videos were played</p>
+          <Card className="shadow-1 rounded-lg border-border" data-testid="card-stat-video-clicks">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4 text-muted-foreground">
+                <span className="text-body font-semibold text-foreground">Video clicks</span>
+                <Video className="h-4 w-4" />
+              </div>
+              <div className="text-metric text-foreground" data-testid="text-total-video-clicks">{totalVideoClicks.toLocaleString()}</div>
             </CardContent>
           </Card>
 
-          <Card data-testid="card-stat-website-clicks">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Website Clicks</CardTitle>
-              <ExternalLink className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold" data-testid="text-total-website-clicks">{totalWebsiteClicks}</div>
-              <p className="text-xs text-muted-foreground">Times websites were visited</p>
+          <Card className="shadow-1 rounded-lg border-border" data-testid="card-stat-website-clicks">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4 text-muted-foreground">
+                <span className="text-body font-semibold text-foreground">Website clicks</span>
+                <ExternalLink className="h-4 w-4" />
+              </div>
+              <div className="text-metric text-foreground" data-testid="text-total-website-clicks">{totalWebsiteClicks.toLocaleString()}</div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Feedback Stats */}
-        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Feedback Summary</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <Card data-testid="card-general-feedback">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">General Feedback</CardTitle>
-              <MessageSquare className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold mb-2" data-testid="text-general-feedback">{totalGeneralFeedback}</div>
-              <p className="text-xs text-muted-foreground mb-4">Tour feedback submissions</p>
+        <h2 className="text-h2 text-foreground mb-4">Feedback summary</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <Card className="shadow-1 rounded-lg border-border" data-testid="card-general-feedback">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4 text-muted-foreground">
+                <span className="text-body font-semibold text-foreground">Tour feedback</span>
+                <MessageSquare className="h-4 w-4" />
+              </div>
+              <div className="text-metric text-foreground mb-6" data-testid="text-general-feedback">{totalGeneralFeedback.toLocaleString()}</div>
               <Button 
                 onClick={exportGeneralFeedback}
                 variant="outline"
-                size="sm"
-                className="w-full gap-2"
+                className="w-full h-10 gap-2 text-body"
                 disabled={totalGeneralFeedback === 0}
                 data-testid="button-export-general-feedback"
               >
                 <Download className="h-4 w-4" />
-                Download General Feedback CSV
+                Export CSV
               </Button>
             </CardContent>
           </Card>
 
-          <Card data-testid="card-product-feedback">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Product-Specific Feedback</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold mb-2" data-testid="text-product-feedback">{totalProductFeedback}</div>
-              <p className="text-xs text-muted-foreground mb-4">Product feedback submissions</p>
+          <Card className="shadow-1 rounded-lg border-border" data-testid="card-product-feedback">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4 text-muted-foreground">
+                <span className="text-body font-semibold text-foreground">Product feedback</span>
+                <TrendingUp className="h-4 w-4" />
+              </div>
+              <div className="text-metric text-foreground mb-6" data-testid="text-product-feedback">{totalProductFeedback.toLocaleString()}</div>
               <Button 
                 onClick={exportProductFeedback}
                 variant="outline"
-                size="sm"
-                className="w-full gap-2"
+                className="w-full h-10 gap-2 text-body"
                 disabled={totalProductFeedback === 0}
                 data-testid="button-export-product-feedback"
               >
                 <Download className="h-4 w-4" />
-                Download Product Feedback CSV
+                Export CSV
               </Button>
             </CardContent>
           </Card>
         </div>
 
-        {/* Most Viewed Products */}
-        <Card className="mb-8" data-testid="card-most-viewed">
-          <CardHeader>
-            <CardTitle>Most Viewed Products</CardTitle>
-            <CardDescription>Products with the most page views</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {mostViewedProducts.length > 0 ? (
-              <div className="space-y-4">
-                {mostViewedProducts.map((product, index) => (
-                  <div key={product.id} className="flex items-center gap-4" data-testid={`row-viewed-product-${product.id}`}>
-                    <div className="flex-shrink-0 w-8 text-center font-bold text-2xl text-gray-400">
-                      {index + 1}
-                    </div>
-                    <img 
-                      src={product.image} 
-                      alt={product.name}
-                      className="w-16 h-16 object-cover rounded-lg"
-                      data-testid={`img-product-${product.id}`}
-                    />
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 dark:text-white" data-testid={`text-product-name-${product.id}`}>
-                        {product.name}
-                      </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{product.company}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-blue-600 dark:text-blue-400" data-testid={`text-views-${product.id}`}>
-                        {product.viewCount}
-                      </div>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">views</p>
-                    </div>
-                  </div>
-                ))}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <Card className="shadow-1 rounded-lg border-border" data-testid="card-most-viewed">
+            <CardContent className="p-0">
+              <div className="p-6 border-b border-border bg-muted/30">
+                <h3 className="text-h3 text-foreground">Top products by view</h3>
               </div>
-            ) : (
-              <p className="text-gray-500 text-center py-8" data-testid="text-no-views">No product views yet</p>
-            )}
-          </CardContent>
-        </Card>
+              {mostViewedProducts.length > 0 ? (
+                <div className="divide-y divide-border">
+                  {mostViewedProducts.map((product) => (
+                    <div key={product.id} className="flex items-center gap-4 p-4" data-testid={`row-viewed-product-${product.id}`}>
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-12 h-12 rounded-md object-cover flex-shrink-0"
+                        data-testid={`img-product-${product.id}`}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-body font-semibold text-foreground truncate" data-testid={`text-product-name-${product.id}`}>
+                          {product.name}
+                        </p>
+                        <p className="text-small text-muted-foreground truncate">{product.company}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-metric text-foreground" style={{fontSize: '20px', lineHeight: '28px'}} data-testid={`text-views-${product.id}`}>
+                          {product.viewCount?.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-8 text-center text-body text-muted-foreground" data-testid="text-no-views">
+                  No views recorded.
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
-        {/* Products with Most Feedback */}
-        <Card data-testid="card-most-feedback">
-          <CardHeader>
-            <CardTitle>Products with Most Feedback</CardTitle>
-            <CardDescription>Products receiving the most visitor feedback</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {mostFeedbackProducts.length > 0 ? (
-              <div className="space-y-4">
-                {mostFeedbackProducts.map(({ product, count }, index) => (
-                  <div key={product.id} className="flex items-center gap-4" data-testid={`row-feedback-product-${product.id}`}>
-                    <div className="flex-shrink-0 w-8 text-center font-bold text-2xl text-gray-400">
-                      {index + 1}
-                    </div>
-                    <img 
-                      src={product.image} 
-                      alt={product.name}
-                      className="w-16 h-16 object-cover rounded-lg"
-                      data-testid={`img-feedback-product-${product.id}`}
-                    />
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 dark:text-white" data-testid={`text-feedback-product-name-${product.id}`}>
-                        {product.name}
-                      </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{product.company}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-green-600 dark:text-green-400" data-testid={`text-feedback-count-${product.id}`}>
-                        {count}
-                      </div>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">feedback</p>
-                    </div>
-                  </div>
-                ))}
+          <Card className="shadow-1 rounded-lg border-border" data-testid="card-most-feedback">
+            <CardContent className="p-0">
+              <div className="p-6 border-b border-border bg-muted/30">
+                <h3 className="text-h3 text-foreground">Top products by feedback</h3>
               </div>
-            ) : (
-              <p className="text-gray-500 text-center py-8" data-testid="text-no-product-feedback">No product feedback yet</p>
-            )}
-          </CardContent>
-        </Card>
+              {mostFeedbackProducts.length > 0 ? (
+                <div className="divide-y divide-border">
+                  {mostFeedbackProducts.map(({ product, count }) => (
+                    <div key={product.id} className="flex items-center gap-4 p-4" data-testid={`row-feedback-product-${product.id}`}>
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-12 h-12 rounded-md object-cover flex-shrink-0"
+                        data-testid={`img-feedback-product-${product.id}`}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-body font-semibold text-foreground truncate" data-testid={`text-feedback-product-name-${product.id}`}>
+                          {product.name}
+                        </p>
+                        <p className="text-small text-muted-foreground truncate">{product.company}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-metric text-foreground" style={{fontSize: '20px', lineHeight: '28px'}} data-testid={`text-feedback-count-${product.id}`}>
+                          {count.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-8 text-center text-body text-muted-foreground" data-testid="text-no-product-feedback">
+                  No product feedback recorded.
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ export default function ImageOverlay({ isOpen, imageUrl, altText, onClose }: Ima
 
   return (
     <div 
-      className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-5"
+      className="fixed inset-0 bg-neutral-900/95 z-50 flex items-center justify-center p-5"
       onClick={handleOverlayClick}
       data-testid="image-overlay"
     >
@@ -27,7 +27,7 @@ export default function ImageOverlay({ isOpen, imageUrl, altText, onClose }: Ima
         variant="ghost"
         size="icon"
         onClick={onClose}
-        className="absolute top-6 right-6 w-12 h-12 bg-white/10 backdrop-blur-sm text-white rounded-full hover:bg-white/20 z-10"
+        className="absolute top-6 right-6 w-12 h-12 bg-neutral-800 text-white hover:bg-neutral-700 z-10 rounded-md"
         data-testid="button-close-overlay"
       >
         <X className="w-6 h-6" />

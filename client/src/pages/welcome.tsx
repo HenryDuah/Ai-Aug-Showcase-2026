@@ -7,39 +7,38 @@ export default function Welcome() {
   const [, setLocation] = useLocation();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 bg-gradient-to-br from-primary/5 via-background to-accent/10">
-      <div className="fade-in flex flex-col items-center">
+    <div className="min-h-[100dvh] flex flex-col items-center justify-center px-6 bg-background">
+      <div className="fade-in flex flex-col items-center w-full max-w-2xl text-center">
         {/* Sand Logo */}
-        <div className="mb-8" data-testid="sand-logo">
-          <img src={sandLogo} alt="Sand Technologies Logo" className="h-24 md:h-32 w-auto" />
+        <div className="mb-12" data-testid="sand-logo">
+          <img src={sandLogo} alt="Sand Technologies Logo" className="h-16 w-auto" />
         </div>
         
-        <h1 className="text-3xl md:text-4xl font-bold text-center mb-4" data-testid="title-welcome">
-          <div className="text-black">Welcome to the</div>
-          <div className="text-primary">Innovative Healthcare Solutions Showcase</div>
+        <h1 className="text-display mb-6" data-testid="title-welcome">
+          Welcome to the Innovative Healthcare Solutions Showcase
         </h1>
         
-        <p className="text-lg md:text-xl text-center text-muted-foreground max-w-2xl mb-12" data-testid="description-welcome">
-          Discover AI-enabled Medical Devices and Software Innovations for Frontline Healthcare workers
+        <p className="text-h3 text-muted-foreground mb-12" data-testid="description-welcome">
+          Discover AI-enabled medical devices and software innovations for frontline healthcare workers.
         </p>
 
         <Button 
           onClick={() => setLocation("/overview")} 
-          className="bg-primary text-primary-foreground px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all flex items-center gap-3"
+          className="w-full sm:w-auto h-12 px-8 min-w-[200px] text-body rounded-md shadow-1 hover:shadow-2"
           data-testid="button-begin-tour"
         >
-          Begin Tour
-          <ArrowRight className="w-5 h-5" />
+          Begin tour
+          <ArrowRight className="w-5 h-5 ml-2" />
         </Button>
 
         <Button
           variant="ghost"
           onClick={() => setLocation("/admin")}
-          className="mt-8 text-muted-foreground hover:text-foreground"
+          className="mt-8 text-muted-foreground hover:text-foreground text-body"
           data-testid="button-admin"
         >
           <Settings className="w-4 h-4 mr-2" />
-          Admin Panel
+          Admin panel
         </Button>
       </div>
     </div>

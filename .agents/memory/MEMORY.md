@@ -1,0 +1,1 @@
+- [DB driver: node-postgres only](db-driver-returning.md) — the Neon HTTP proxy drops RETURNING rows, making writes look like 404s; always use pg Pool with Drizzle.
