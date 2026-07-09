@@ -29,8 +29,8 @@ export default function ProductCard({ product, onTap }: ProductCardProps) {
           data-testid={`product-image-${product.id}`}
         />
         {product.videoUrl && (
-          <div className="absolute top-4 right-4 bg-background border border-border text-foreground px-3 py-1.5 rounded-sm text-small font-mono flex items-center gap-2">
-            <Video className="w-3.5 h-3.5 text-primary" />
+          <div className="absolute top-4 right-4 bg-squash text-black px-3 py-1.5 rounded-sm text-small font-mono flex items-center gap-2">
+            <Video className="w-3.5 h-3.5 text-white" />
             VIDEO
           </div>
         )}
