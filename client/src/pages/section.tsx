@@ -49,7 +49,7 @@ export default function Section() {
     <div className="min-h-[100dvh] bg-background pb-32">
       <div className="fade-in">
         {/* Section Header */}
-        <div className="bg-secondary border-b border-border px-8 py-8 md:py-12">
+        <div className="bg-gravel border-b border-border px-8 py-8 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-start justify-between mb-16">
               <Button
@@ -65,7 +65,7 @@ export default function Section() {
             </div>
             
             <div className="flex items-end gap-6 mb-12 border-l-2 border-primary pl-6">
-              <div className="text-small font-mono text-muted-foreground pb-2" data-testid={`section-number-${sectionId}`}>
+              <div className="text-small font-mono text-squash pb-2" data-testid={`section-number-${sectionId}`}>
                 SEC 0{sectionId}
               </div>
               <h1 className="text-display" data-testid={`section-title-${sectionId}`}>{section.name}</h1>
@@ -87,7 +87,7 @@ export default function Section() {
 
         {/* Products Grid */}
         <div className="px-8 py-16 max-w-6xl mx-auto space-y-10">
-          <div className="flex items-center gap-3 text-small text-muted-foreground font-mono">
+          <div className="flex items-center gap-3 text-small text-coral font-mono">
             <Info className="w-4 h-4" />
             <span>Tap on any product card to view details</span>
           </div>

@@ -39,14 +39,14 @@ export default function ProductCard({ product, onTap }: ProductCardProps) {
         <h3 className="text-h3 text-foreground mb-2 line-clamp-2" data-testid={`product-name-${product.id}`}>
           {product.name}
         </h3>
-        <p className="text-body text-muted-foreground mb-6" data-testid={`product-company-${product.id}`}>
+        <p className="text-body text-cadet mb-6" data-testid={`product-company-${product.id}`}>
           {product.company}
         </p>
         <p className="text-body text-muted-foreground leading-relaxed mb-8 line-clamp-3 flex-1" data-testid={`product-description-${product.id}`}>
           {product.description}
         </p>
         <div className="flex items-center justify-between mt-auto pt-6 border-t border-border">
-          <span className="text-small font-mono text-muted-foreground uppercase">{product.type}</span>
+          <span className="text-small font-mono text-cadet uppercase">{product.type}</span>
           <ChevronRight className="text-muted-foreground w-5 h-5 flex-shrink-0" />
         </div>
       </div>

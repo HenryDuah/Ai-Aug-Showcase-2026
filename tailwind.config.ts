@@ -48,6 +48,10 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        gravel: "#4d4d4d",
+        cadet: "#80a2b4",
+        squash: "#f1ae0a",
+        coral: "#f54343",
         chart: {
           "1": "hsl(var(--chart-1))",
           "2": "hsl(var(--chart-2))",

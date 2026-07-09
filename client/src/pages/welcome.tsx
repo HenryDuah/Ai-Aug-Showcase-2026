@@ -2,12 +2,13 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Settings } from "lucide-react";
 import sandLogo from "@assets/Sand_Monochrome_Primary_Logo-03_1783596847037.png";
+import globeGraphic from "@assets/Picture_1_1783603440126.png";
 
 export default function Welcome() {
   const [, setLocation] = useLocation();
 
   return (
-    <div className="min-h-[100dvh] flex flex-col items-start justify-center px-8 md:px-16 bg-background">
+    <div className="min-h-[100dvh] flex items-center justify-between gap-12 px-8 md:px-16 bg-background relative overflow-hidden">
       <div className="fade-in flex flex-col items-start w-full max-w-3xl">
         {/* Sand Logo */}
         <div className="mb-16" data-testid="sand-logo">
@@ -42,6 +43,15 @@ export default function Welcome() {
             Admin panel
           </Button>
         </div>
+      </div>
+
+      <div className="hidden lg:flex flex-shrink-0 items-center justify-center fade-in" data-testid="img-globe-graphic">
+        <img
+          src={globeGraphic}
+          alt=""
+          aria-hidden="true"
+          className="w-[380px] xl:w-[460px] h-auto opacity-80 select-none pointer-events-none"
+        />
       </div>
     </div>
   );

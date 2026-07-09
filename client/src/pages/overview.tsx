@@ -78,9 +78,8 @@ export default function Overview() {
               )}
             </div>
             <Button 
-              variant="outline"
               onClick={() => setLocation("/feedback")} 
-              className="h-14 px-8 rounded-sm text-body border-border hover:bg-white/5 whitespace-nowrap"
+              className="h-14 px-8 rounded-sm text-body bg-gravel text-white hover:bg-gravel/80 border border-gravel whitespace-nowrap"
               data-testid="button-skip-to-feedback"
             >
               Skip tour - Share your thoughts
@@ -193,12 +192,12 @@ export default function Overview() {
                   {sectionsData.sections.map((section, index) => (
                     <Card 
                       key={section.id}
-                      className="shadow-none hover:border-primary transition-colors cursor-pointer rounded-sm border-border bg-card"
+                      className="group shadow-none hover:border-primary transition-colors cursor-pointer rounded-sm border-border bg-card"
                       onClick={() => setLocation(`/section/${section.id}`)}
                       data-testid={`section-card-${section.id}`}
                     >
                       <CardContent className="p-6 flex items-center gap-6">
-                        <div className="text-small text-muted-foreground font-mono flex-shrink-0 w-8">
+                        <div className="text-small text-muted-foreground group-hover:text-squash transition-colors font-mono flex-shrink-0 w-8">
                           0{section.id}
                         </div>
                         <div className="flex-1 border-l border-border pl-6">

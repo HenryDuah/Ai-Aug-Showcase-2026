@@ -388,9 +388,8 @@ export default function ProductDetail() {
         <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border p-6 z-10">
           <div className="max-w-4xl mx-auto flex justify-end">
             <Button 
-              variant="outline"
               onClick={handleClose}
-              className="h-14 px-8 text-body rounded-sm border-border hover:bg-white/5"
+              className="h-14 px-8 text-body rounded-sm bg-gravel text-white hover:bg-gravel/80 border border-gravel"
               data-testid="button-close-return-section"
             >
               <X className="w-5 h-5 mr-3" />
