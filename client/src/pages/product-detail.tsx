@@ -151,7 +151,7 @@ export default function ProductDetail() {
   return (
     <div className="min-h-[100dvh] bg-background pb-32">
       <div className="fade-in">
-        <div className="bg-secondary px-8 py-10 border-b border-border">
+        <div className="bg-onyx px-8 py-10 border-b border-border">
           <div className="max-w-4xl mx-auto">
             <Button
               variant="ghost"
@@ -164,13 +164,13 @@ export default function ProductDetail() {
             </Button>
             
             <div className="flex gap-4 items-center mb-6">
-              <span className="text-small font-mono border border-border px-3 py-1 rounded-sm text-muted-foreground uppercase" data-testid="product-type">
+              <span className="text-small font-mono border border-border px-3 py-1 rounded-sm text-cadet uppercase" data-testid="product-type">
                 {product.type}
               </span>
             </div>
             
             <h1 className="text-display mb-4" data-testid="product-name">{product.name}</h1>
-            <p className="text-h2 text-muted-foreground" data-testid="product-company">{product.company}</p>
+            <p className="text-h2 text-cadet" data-testid="product-company">{product.company}</p>
           </div>
         </div>
 

@@ -49,7 +49,7 @@ export default function Section() {
     <div className="min-h-[100dvh] bg-background pb-32">
       <div className="fade-in">
         {/* Section Header */}
-        <div className="bg-gravel border-b border-border px-8 py-8 md:py-12">
+        <div className="bg-onyx border-b border-border px-8 py-8 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-start justify-between mb-16">
               <Button

@@ -49,6 +49,7 @@ export default {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         gravel: "#4d4d4d",
+        onyx: "#202020",
         cadet: "#80a2b4",
         squash: "#f1ae0a",
         coral: "#f54343",

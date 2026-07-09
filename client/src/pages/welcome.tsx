@@ -50,7 +50,7 @@ export default function Welcome() {
           src={globeGraphic}
           alt=""
           aria-hidden="true"
-          className="w-[380px] xl:w-[460px] h-auto opacity-80 select-none pointer-events-none"
+          className="w-[440px] xl:w-[540px] h-auto opacity-80 select-none pointer-events-none"
         />
       </div>
     </div>
