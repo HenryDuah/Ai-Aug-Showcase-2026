@@ -302,7 +302,7 @@ export default function ProductDetail() {
                         className="w-full h-14 px-8 text-body rounded-sm border-border hover:bg-white/5 justify-start text-primary"
                         data-testid="product-website"
                       >
-                        Visit external site
+                        Solution Provider Website
                       </Button>
                     </a>
                   )}

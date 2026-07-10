@@ -172,6 +172,9 @@ export default function Overview() {
                   <p data-testid="description-lab-intro-2">
                     This interactive tour will guide you through five specialized sections, each showcasing breakthrough technologies designed to improve healthcare outcomes at the frontlines.
                   </p>
+                  <p data-testid="description-lab-intro-3">
+                    The showcased technologies are illustrative industry examples from leading solution providers and are presented to highlight current innovation trends, potential use cases, and opportunities for advancing healthcare services.
+                  </p>
                 </div>
               </div>
 
