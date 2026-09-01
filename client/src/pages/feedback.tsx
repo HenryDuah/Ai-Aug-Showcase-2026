@@ -32,6 +32,9 @@ export default function Feedback() {
       visitorCompany: "",
       visitorEmail: "",
       visitorPhone: "",
+      standoutSolutions: "",
+      contextOpportunity: "",
+      realWorldChallenges: "",
       comments: "",
     },
   });
@@ -231,25 +234,33 @@ export default function Feedback() {
                     Share your thoughts on the use of AI devices and solutions for frontline healthcare.
                   </p>
                 </div>
-                <FormField
-                  control={form.control}
-                  name="comments"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          rows={8}
-                          placeholder="Your comments..."
-                          className="resize-y text-body bg-card border-border rounded-sm p-4"
-                          data-testid="textarea-comments"
-                          value={field.value || ""}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {([
+                  ["standoutSolutions", "Which one or two solutions stood out most to you, and why?"],
+                  ["contextOpportunity", "What use case, problem, or opportunity could these solutions address in your context?"],
+                  ["realWorldChallenges", "What challenges or constraints might affect their use in real-world settings?"],
+                  ["comments", "Any other comments"],
+                ] as const).map(([name, label]) => (
+                  <FormField
+                    key={name}
+                    control={form.control}
+                    name={name}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-small text-muted-foreground">{label} (Optional)</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            rows={4}
+                            className="resize-y text-body bg-card border-border rounded-sm p-4"
+                            data-testid={`textarea-${name}`}
+                            value={field.value || ""}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                ))}
               </div>
 
               <Button 

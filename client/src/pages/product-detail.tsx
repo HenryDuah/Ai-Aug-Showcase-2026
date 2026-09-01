@@ -18,8 +18,12 @@ import { useToast } from "@/hooks/use-toast";
 import type { Product } from "@shared/schema";
 
 const productFeedbackFormSchema = z.object({
-  visitorName: z.string().optional(),
+  visitorName: z.string().trim().min(1, "Name is required"),
+  visitorCompany: z.string().trim().min(1, "Organisation or company is required"),
   visitorEmail: z.string().email("Invalid email").optional().or(z.literal("")),
+  contextOpportunity: z.string().optional(),
+  standoutFeatures: z.string().optional(),
+  realWorldChallenges: z.string().optional(),
   comments: z.string().optional(),
 });
 
@@ -38,7 +42,11 @@ export default function ProductDetail() {
     resolver: zodResolver(productFeedbackFormSchema),
     defaultValues: {
       visitorName: "",
+      visitorCompany: "",
       visitorEmail: "",
+      contextOpportunity: "",
+      standoutFeatures: "",
+      realWorldChallenges: "",
       comments: "",
     },
   });
@@ -47,8 +55,12 @@ export default function ProductDetail() {
     mutationFn: async (data: ProductFeedbackFormData) => {
       const response = await apiRequest("POST", "/api/product-feedback", {
         productId,
-        visitorName: data.visitorName || null,
+        visitorName: data.visitorName,
+        visitorCompany: data.visitorCompany,
         visitorEmail: data.visitorEmail || null,
+        contextOpportunity: data.contextOpportunity || null,
+        standoutFeatures: data.standoutFeatures || null,
+        realWorldChallenges: data.realWorldChallenges || null,
         comments: data.comments || null,
       });
       return response.json();
@@ -316,7 +328,7 @@ export default function ProductDetail() {
                 <MessageSquare className="w-6 h-6 text-muted-foreground" />
                 Share your views
               </h3>
-              <p className="text-body text-muted-foreground mb-8">Optional product feedback.</p>
+              <p className="text-body text-muted-foreground mb-8">Name and organisation are required. All feedback questions are optional.</p>
               
               <Form {...feedbackForm}>
                 <form onSubmit={feedbackForm.handleSubmit((data) => feedbackMutation.mutate(data))} className="space-y-6">
@@ -326,9 +338,23 @@ export default function ProductDetail() {
                       name="visitorName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-small text-muted-foreground">Name</FormLabel>
+                          <FormLabel className="text-small text-muted-foreground">Name <span className="text-destructive">*</span></FormLabel>
                           <FormControl>
                             <Input {...field} placeholder="Your name" className="h-14 bg-background border-border" data-testid="input-product-feedback-name" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={feedbackForm.control}
+                      name="visitorCompany"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-small text-muted-foreground">Your organisation or company <span className="text-destructive">*</span></FormLabel>
+                          <FormControl>
+                            <Input {...field} placeholder="Your organisation or company" className="h-14 bg-background border-border" data-testid="input-product-feedback-company" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -350,25 +376,27 @@ export default function ProductDetail() {
                     />
                   </div>
 
-                  <FormField
-                    control={feedbackForm.control}
-                    name="comments"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-small text-muted-foreground">Feedback</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            {...field}
-                            placeholder="Share your thoughts about this product..."
-                            rows={5}
-                            className="resize-y bg-background border-border p-4"
-                            data-testid="textarea-product-feedback-comments"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  {([
+                    ["contextOpportunity", "What use case, problem, or opportunity do you see this solution addressing in your context?"],
+                    ["standoutFeatures", "What stands out to you about this solution?"],
+                    ["realWorldChallenges", "What challenges or constraints might affect its use in real-world settings?"],
+                    ["comments", "Any other comments"],
+                  ] as const).map(([name, label]) => (
+                    <FormField
+                      key={name}
+                      control={feedbackForm.control}
+                      name={name}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-small text-muted-foreground">{label}</FormLabel>
+                          <FormControl>
+                            <Textarea {...field} rows={4} className="resize-y bg-background border-border p-4" data-testid={`textarea-product-feedback-${name}`} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ))}
 
                   <Button 
                     type="submit" 

@@ -188,6 +188,9 @@ export class MemStorage implements IStorage {
       visitorCompany: insertFeedback.visitorCompany,
       visitorEmail: insertFeedback.visitorEmail ?? null,
       visitorPhone: insertFeedback.visitorPhone ?? null,
+      standoutSolutions: insertFeedback.standoutSolutions ?? null,
+      contextOpportunity: insertFeedback.contextOpportunity ?? null,
+      realWorldChallenges: insertFeedback.realWorldChallenges ?? null,
       comments: insertFeedback.comments ?? null,
     }).returning();
     return newFeedback;
@@ -200,8 +203,12 @@ export class MemStorage implements IStorage {
   async createProductFeedback(insertProductFeedback: InsertProductFeedback): Promise<ProductFeedback> {
     const [newProductFeedback] = await db.insert(productFeedback).values({
       productId: insertProductFeedback.productId,
-      visitorName: insertProductFeedback.visitorName ?? null,
+      visitorName: insertProductFeedback.visitorName,
+      visitorCompany: insertProductFeedback.visitorCompany,
       visitorEmail: insertProductFeedback.visitorEmail ?? null,
+      contextOpportunity: insertProductFeedback.contextOpportunity ?? null,
+      standoutFeatures: insertProductFeedback.standoutFeatures ?? null,
+      realWorldChallenges: insertProductFeedback.realWorldChallenges ?? null,
       comments: insertProductFeedback.comments ?? null,
     }).returning();
     return newProductFeedback;
@@ -331,6 +338,9 @@ export class DbStorage implements IStorage {
       visitorCompany: insertFeedback.visitorCompany,
       visitorEmail: insertFeedback.visitorEmail ?? null,
       visitorPhone: insertFeedback.visitorPhone ?? null,
+      standoutSolutions: insertFeedback.standoutSolutions ?? null,
+      contextOpportunity: insertFeedback.contextOpportunity ?? null,
+      realWorldChallenges: insertFeedback.realWorldChallenges ?? null,
       comments: insertFeedback.comments ?? null,
     }).returning();
     return newFeedback;
@@ -343,8 +353,12 @@ export class DbStorage implements IStorage {
   async createProductFeedback(insertProductFeedback: InsertProductFeedback): Promise<ProductFeedback> {
     const [newProductFeedback] = await db.insert(productFeedback).values({
       productId: insertProductFeedback.productId,
-      visitorName: insertProductFeedback.visitorName ?? null,
+      visitorName: insertProductFeedback.visitorName,
+      visitorCompany: insertProductFeedback.visitorCompany,
       visitorEmail: insertProductFeedback.visitorEmail ?? null,
+      contextOpportunity: insertProductFeedback.contextOpportunity ?? null,
+      standoutFeatures: insertProductFeedback.standoutFeatures ?? null,
+      realWorldChallenges: insertProductFeedback.realWorldChallenges ?? null,
       comments: insertProductFeedback.comments ?? null,
     }).returning();
     return newProductFeedback;

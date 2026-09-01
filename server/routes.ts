@@ -95,7 +95,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         'Company',
         'Email',
         'Phone',
-        'Comments'
+        'Solutions That Stood Out',
+        'Context Use Case or Opportunity',
+        'Real-World Challenges',
+        'Other Comments'
       ];
       
       // Create CSV rows
@@ -106,6 +109,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           escapeCSV(f.visitorCompany || ''),
           escapeCSV(f.visitorEmail || ''),
           escapeCSV(f.visitorPhone || ''),
+          escapeCSV(f.standoutSolutions || ''),
+          escapeCSV(f.contextOpportunity || ''),
+          escapeCSV(f.realWorldChallenges || ''),
           escapeCSV(f.comments || '')
         ].join(',');
       });
@@ -169,8 +175,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         'Product ID',
         'Product Name',
         'Visitor Name',
+        'Organisation or Company',
         'Email',
-        'Comments'
+        'Context Use Case or Opportunity',
+        'What Stands Out',
+        'Real-World Challenges',
+        'Other Comments'
       ];
       
       // Create CSV rows
@@ -181,7 +191,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           escapeCSV(f.productId || ''),
           escapeCSV(product?.name || 'Unknown'),
           escapeCSV(f.visitorName || ''),
+          escapeCSV(f.visitorCompany || ''),
           escapeCSV(f.visitorEmail || ''),
+          escapeCSV(f.contextOpportunity || ''),
+          escapeCSV(f.standoutFeatures || ''),
+          escapeCSV(f.realWorldChallenges || ''),
           escapeCSV(f.comments || '')
         ].join(',');
       }));

@@ -35,10 +35,13 @@ export const products = pgTable("products", {
 // Feedback schema
 export const feedback = pgTable("feedback", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  visitorName: text("visitor_name").notNull(),
-  visitorCompany: text("visitor_company").notNull(),
+  visitorName: text("visitor_name"),
+  visitorCompany: text("visitor_company"),
   visitorEmail: text("visitor_email"),
   visitorPhone: text("visitor_phone"),
+  standoutSolutions: text("standout_solutions"),
+  contextOpportunity: text("context_opportunity"),
+  realWorldChallenges: text("real_world_challenges"),
   comments: text("comments"),
   submittedAt: text("submitted_at").default(sql`CURRENT_TIMESTAMP`),
 });
@@ -47,8 +50,12 @@ export const feedback = pgTable("feedback", {
 export const productFeedback = pgTable("product_feedback", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   productId: varchar("product_id").notNull(),
-  visitorName: text("visitor_name"),
+  visitorName: text("visitor_name").notNull(),
+  visitorCompany: text("visitor_company").notNull(),
   visitorEmail: text("visitor_email"),
+  contextOpportunity: text("context_opportunity"),
+  standoutFeatures: text("standout_features"),
+  realWorldChallenges: text("real_world_challenges"),
   comments: text("comments"),
   submittedAt: text("submitted_at").default(sql`CURRENT_TIMESTAMP`),
 });
@@ -61,13 +68,26 @@ export const insertFeedbackSchema = createInsertSchema(feedback).pick({
   visitorCompany: true,
   visitorEmail: true,
   visitorPhone: true,
+  standoutSolutions: true,
+  contextOpportunity: true,
+  realWorldChallenges: true,
   comments: true,
+}).extend({
+  visitorName: z.string().trim().min(1, "Name is required"),
+  visitorCompany: z.string().trim().min(1, "Company is required"),
 });
 export const insertProductFeedbackSchema = createInsertSchema(productFeedback).pick({
   productId: true,
   visitorName: true,
+  visitorCompany: true,
   visitorEmail: true,
+  contextOpportunity: true,
+  standoutFeatures: true,
+  realWorldChallenges: true,
   comments: true,
+}).extend({
+  visitorName: z.string().trim().min(1, "Name is required"),
+  visitorCompany: z.string().trim().min(1, "Organisation or company is required"),
 });
 
 // Types
