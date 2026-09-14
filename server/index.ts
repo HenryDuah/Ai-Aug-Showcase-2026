@@ -9,7 +9,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   if (process.env.NODE_ENV === 'production') {
     const secret = req.headers['x-proxy-secret'];
     if (secret !== process.env.PROXY_SECRET) {
-      return res.status(403).json({ error: 'Forbidden' });
+      return res.redirect("https://showcase.sandtech.com");
     }
   }
   next();
