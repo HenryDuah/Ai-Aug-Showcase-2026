@@ -5,16 +5,6 @@ import { execSync } from "child_process";
 
 const app = express();
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  if (process.env.NODE_ENV === 'production') {
-    const secret = req.headers['x-proxy-secret'];
-    if (secret !== process.env.PROXY_SECRET) {
-      return res.redirect("https://showcase.sandtech.com");
-    }
-  }
-  next();
-});
-
 declare module 'http' {
   interface IncomingMessage {
     rawBody: unknown
