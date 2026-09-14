@@ -6,9 +6,11 @@ import { execSync } from "child_process";
 const app = express();
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-  const secret = req.headers["x-proxy-secret"];
-  if (secret !== process.env.PROXY_SECRET) {
-    return res.status(403).json({ error: "Forbidden" });
+  if (process.env.NODE_ENV === 'production') {
+    const secret = req.headers['x-proxy-secret'];
+    if (secret !== process.env.PROXY_SECRET) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
   }
   next();
 });
