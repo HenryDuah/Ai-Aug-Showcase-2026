@@ -9,7 +9,7 @@ app.use('/api', (req: Request, res: Response, next: NextFunction) => {
   if (process.env.NODE_ENV === 'production') {
     const secret = req.headers['x-proxy-secret'];
     if (secret !== process.env.PROXY_SECRET) {
-      return res.redirect(301, 'https://showcase.sandtech.com');
+      return res.redirect(302, 'https://showcase.sandtech.com');
     }
   }
   next();
