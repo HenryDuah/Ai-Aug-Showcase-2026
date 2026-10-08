@@ -1,0 +1,28 @@
+# Dependencies
+node_modules
+
+# Build output (rebuilt inside Docker)
+dist
+
+# Environment files (secrets go in Cloud Run, not the image)
+.env
+.env.*
+
+# Replit specific
+.replit
+replit.md
+.agents
+
+# Dev/design files not needed in production
+design_guidelines
+design_guidelines.md
+attached_assets
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Logs
+*.log
+npm-debug.log*
